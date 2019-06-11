@@ -1,0 +1,32 @@
+{
+  "name": "open-cities",
+  "version": "1.0.0",
+  "repository": "git@github.com:deivoff/open-cities.git",
+  "author": "Evgeny Mazurov <deivoff@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.0.40",
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.2.0",
+    "types": "^0.1.1",
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "@types/koa-views": "^2.0.3",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-views": "^6.2.0",
+    "pug": "^2.0.3"
+  }
+}
