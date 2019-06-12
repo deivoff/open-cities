@@ -1,5 +1,6 @@
 import Koa from 'koa';
 import koaBody from 'koa-body';
+import views from 'koa-views';
 import router from './routes';
 
 class App {
@@ -16,6 +17,11 @@ class App {
 
   private config(): void {
     this.app.use(koaBody())
+    this.app.use(views(__dirname + '/views/', {
+      extension: 'pug'
+    }))
+
+    console.log(__dirname)
   }
 }
 
