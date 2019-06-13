@@ -22,7 +22,6 @@ LICENSE
 
 # Dependency directory
 node_modules
-frontend/node_modules
 bower_components
 
 # Editors
