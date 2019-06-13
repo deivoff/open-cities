@@ -12,6 +12,7 @@
     "@types/koa-router": "^7.0.40",
     "@types/koa-static": "^4.0.1",
     "@types/koa-views": "^2.0.3",
+    "@types/mongoose": "^5.5.6",
     "nodemon": "^1.19.1",
     "ts-node": "^8.2.0",
     "typescript": "^3.5.1"
@@ -22,6 +23,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
+    "mongoose": "^5.5.15",
     "pug": "^2.0.3"
   }
 }

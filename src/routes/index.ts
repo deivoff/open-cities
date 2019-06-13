@@ -14,7 +14,7 @@ class OSRoutes {
         });
       })
       .get('/maps', async(ctx) => {
-        return ctx.render('index', {
+        return ctx.render('map', {
           title: 'Открытые города',
           pageTitle: 'Карты'
         });

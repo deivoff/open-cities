@@ -1,7 +1,14 @@
 import Koa from 'koa';
 import koaBody from 'koa-body';
+
+// db
+import mongoose from 'mongoose';
+
+// Pages and static
 import views from 'koa-views';
 import serve from 'koa-static';
+
+// Routes
 import router from './routes';
 
 class App {
@@ -14,7 +21,9 @@ class App {
 
     this.app
       .use(this.router.routes())
-      .use(this.router.allowedMethods())      
+      .use(this.router.allowedMethods())
+      
+    this.mongoSetup();
   }
 
   private config(): void {
@@ -22,6 +31,12 @@ class App {
       .use(koaBody())
       .use(views(__dirname + '/views/', { extension: 'pug' }))
       .use(serve(__dirname + '/public/'))
+  }
+
+  private mongoSetup(): void {
+    mongoose.connect('mongodb://localhost:27017/myos', {useNewUrlParser: true})
+      .then(() => console.log('MongoDB Connected'))
+      .catch((err) => console.log(err));
   }
 }
 
