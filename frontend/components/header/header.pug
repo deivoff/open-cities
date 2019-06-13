@@ -1,16 +1,15 @@
-header#os-header
-  ul
-    li
-      a(href='/about') О нас
-    li
-      a(href='/maps') Карты
-    li
-      a(href='news') Статьи
-    
+header#os-header.os-header._transparent
+  nav.os-nav
+    ul.os-nav__list
+      li.os-nav__elem
+        a.os-nav__link(href='/about') О нас
+      li.os-nav__elem
+        a.os-nav__link(href='/maps') Карты
+      li.os-nav__elem
+        a.os-nav__link(href='/news') Статьи
+
     if authorised
-      li
-        a(href='#') Евгений Мазуров
+      a.os-profile(href='#') Евгений Мазуров
     else
-      li
-        a(href='#') Войти
+      a.os-button(href='#') Войти
     
