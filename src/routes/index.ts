@@ -1,9 +1,37 @@
 import Router from 'koa-router';
 
-const router = new Router();
+class OSRoutes {
+  public router: Router;
 
-router.get('/', async(ctx) => {
-  return ctx.render('index');
-})
+  constructor() {
+    this.router = new Router();
 
-export default router;
+    this.router
+      .get('/', async(ctx) => {
+        return ctx.render('index', {
+          title: 'Открытые города',
+          pageTitle: 'Главная',
+        });
+      })
+      .get('/maps', async(ctx) => {
+        return ctx.render('index', {
+          title: 'Открытые города',
+          pageTitle: 'Карты'
+        });
+      })
+      .get('/news', async(ctx) => {
+        return ctx.render('index', {
+          title: 'Открытые города',
+          pageTitle: 'Статьи'
+        });
+      })
+      .get('/about', async(ctx) => {
+        return ctx.render('index', {
+          title: 'Открытые города',
+          pageTitle: 'О нас'
+        });
+      })
+  }
+}
+
+export default new OSRoutes().router;

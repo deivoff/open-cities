@@ -1,5 +1,16 @@
 header#os-header
   ul
-    li About us
-    li Maps
-    li News
+    li
+      a(href='/about') О нас
+    li
+      a(href='/maps') Карты
+    li
+      a(href='news') Статьи
+    
+    if authorised
+      li
+        a(href='#') Евгений Мазуров
+    else
+      li
+        a(href='#') Войти
+    

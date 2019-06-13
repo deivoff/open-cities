@@ -1,0 +1,7 @@
+{
+  "name": "open-cities_frontend",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "deivoff",
+  "license": "MIT"
+}
