@@ -2,35 +2,38 @@ import Router from 'koa-router';
 
 class OSRoutes {
   public router: Router;
+  public PAGE_CONFIG = {
+    title: 'Открытые города',
+    mainPage: {
+      title: 'Главная',
+    },
+    mapPage: {
+      title: 'Карты',
+    },
+    newsPage: {
+      title: 'Статьи',
+    },
+    aboutPage: {
+      title: 'О нас',
+    },
+  };
 
-  constructor() {
+  public constructor() {
     this.router = new Router();
 
     this.router
-      .get('/', async(ctx) => {
-        return ctx.render('index', {
-          title: 'Открытые города',
-          pageTitle: 'Главная',
-        });
-      })
-      .get('/maps', async(ctx) => {
-        return ctx.render('map', {
-          title: 'Открытые города',
-          pageTitle: 'Карты'
-        });
-      })
-      .get('/news', async(ctx) => {
-        return ctx.render('index', {
-          title: 'Открытые города',
-          pageTitle: 'Статьи'
-        });
-      })
-      .get('/about', async(ctx) => {
-        return ctx.render('index', {
-          title: 'Открытые города',
-          pageTitle: 'О нас'
-        });
-      })
+      .get('/', async ctx =>
+        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.mainPage.title }),
+      )
+      .get('/maps', async ctx =>
+        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.mapPage.title }),
+      )
+      .get('/about', async ctx =>
+        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.aboutPage.title }),
+      )
+      .get('/news', async ctx =>
+        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.newsPage.title }),
+      );
   }
 }
 

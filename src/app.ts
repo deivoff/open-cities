@@ -14,15 +14,14 @@ import router from './routes';
 class App {
   public app: Koa;
   public router = router;
-  
-  constructor() {
+
+  public constructor() {
     this.app = new Koa();
     this.config();
 
-    this.app
-      .use(this.router.routes())
-      .use(this.router.allowedMethods())
-      
+    this.app.use(this.router.routes())
+    this.app.use(this.router.allowedMethods());
+
     this.mongoSetup();
   }
 
@@ -30,13 +29,14 @@ class App {
     this.app
       .use(koaBody())
       .use(views(__dirname + '/views/', { extension: 'pug' }))
-      .use(serve(__dirname + '/public/'))
+      .use(serve(__dirname + '/public/'));
   }
 
   private mongoSetup(): void {
-    mongoose.connect('mongodb://localhost:27017/myos', {useNewUrlParser: true})
-      .then(() => console.log('MongoDB Connected'))
-      .catch((err) => console.log(err));
+    mongoose
+      .connect('mongodb://localhost:27017/myos', { useNewUrlParser: true })
+      .then((): void => console.log('MongoDB Connected'))
+      .catch((err): void => console.log(err));
   }
 }
 

@@ -1,5 +1,5 @@
-const css = require('./../stylus/main.styl');
+import './../stylus/main.styl';
 
-(() => {
+((): void => {
   console.log('youre faggot');
-})()
+})();
