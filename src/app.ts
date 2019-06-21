@@ -1,5 +1,6 @@
 import Koa from 'koa';
-import koaBody from 'koa-body';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const koaBody = require('koa-body');
 
 // db
 import mongoose from 'mongoose';
@@ -9,18 +10,17 @@ import views from 'koa-views';
 import serve from 'koa-static';
 
 // Routes
-import router from './routes';
+import routers from './routes/index';
 
 class App {
   public app: Koa;
-  public router = router;
+  public routers = routers;
 
   public constructor() {
     this.app = new Koa();
     this.config();
 
-    this.app.use(this.router.routes())
-    this.app.use(this.router.allowedMethods());
+    this.routers.forEach(route => this.app.use(route.routes()));
 
     this.mongoSetup();
   }

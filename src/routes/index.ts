@@ -1,40 +1,20 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import Router from 'koa-router';
+import OSRouterIndex from './static/index';
+import OSRouterAbout from './static/about';
+import OSRouterMaps from './static/maps';
+import OSRouterNews from './static/news';
 
 class OSRoutes {
-  public router: Router;
-  public PAGE_CONFIG = {
-    title: 'Открытые города',
-    mainPage: {
-      title: 'Главная',
-    },
-    mapPage: {
-      title: 'Карты',
-    },
-    newsPage: {
-      title: 'Статьи',
-    },
-    aboutPage: {
-      title: 'О нас',
-    },
-  };
+  public routers: Router[];
 
   public constructor() {
-    this.router = new Router();
+    this.routers = [OSRouterIndex, OSRouterAbout, OSRouterNews, OSRouterMaps].map(block => {
+      return block.router;
+    });
 
-    this.router
-      .get('/', async ctx =>
-        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.mainPage.title }),
-      )
-      .get('/maps', async ctx =>
-        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.mapPage.title }),
-      )
-      .get('/about', async ctx =>
-        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.aboutPage.title }),
-      )
-      .get('/news', async ctx =>
-        ctx.render('index', { title: this.PAGE_CONFIG.title, pageTitle: this.PAGE_CONFIG.newsPage.title }),
-      );
+    this.routers.forEach(router => router.allowedMethods());
   }
 }
 
-export default new OSRoutes().router;
+export default new OSRoutes().routers;
