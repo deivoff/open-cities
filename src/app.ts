@@ -4,6 +4,7 @@ const koaBody = require('koa-body');
 
 // db
 import mongoose from 'mongoose';
+require('dotenv').config();
 
 // Pages and static
 import views from 'koa-views';
@@ -34,7 +35,7 @@ class App {
 
   private mongoSetup(): void {
     mongoose
-      .connect('mongodb://localhost:27017/myos', { useNewUrlParser: true })
+      .connect(`mongodb+srv://user12:jpfeaW8NUVSXb6f@opeb-cities-ffxwj.mongodb.net/myos?retryWrites=true&w=majority`, { useNewUrlParser: true })
       .then((): void => console.log('MongoDB Connected'))
       .catch((err): void => console.log(err));
   }

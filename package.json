@@ -5,12 +5,13 @@
   "author": "Evgeny Mazurov <deivoff@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/index.ts",
+    "server": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/index.ts node -r dotenv/config",
     "build": "webpack --mode=production",
     "dev": "webpack --watch"
   },
   "dependencies": {
     "core-js": "3",
+    "dotenv": "^8.0.0",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
     "koa-router": "^7.4.0",
@@ -28,6 +29,7 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/geojson": "^7946.0.7",
     "@types/koa": "^2.0.48",
     "@types/koa-router": "^7.0.40",
     "@types/koa-static": "^4.0.1",
