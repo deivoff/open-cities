@@ -2,9 +2,10 @@ doctype html
 html
   include ../components/head/head.pug
   body
-    include ../components/header/header.pug
-    
-    block yield
+    .container._main
+      include ../components/header/header.pug
 
-    include ../components/footer/footer.pug
+      block yield
+
+      include ../components/footer/footer.pug
     script(src='/js/main.bundle.js')

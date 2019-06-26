@@ -1,7 +1,9 @@
 extends ../../frontend/layouts/blank.pug
 
 block yield
-  h1 #{pageTitle}
+  main.os-main
+    .container._wrapper
+      h1 #{pageTitle}
 
-  h2 Карта города
-  include ../../frontend/components/map/map.pug
+      h2 Карта города
+      include ../../frontend/components/map/map.pug
