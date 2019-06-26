@@ -1,7 +1,7 @@
 import Router, { RouterContext } from 'koa-router';
 import setting from './../../configs/cite-config';
 import { staticController } from './../../controllers/static/staticController';
-import { CMapsCity } from './../../controllers/maps/CMaps';
+import { MapsController } from '../../controllers/maps/maps';
 
 class OSRouterIndex {
   public router: Router;
@@ -22,8 +22,8 @@ class OSRouterIndex {
       .get('/maps', async (ctx: RouterContext) => {
         await staticController(ctx, { title: setting.title, pageTitle: setting.pages.maps }, 'map');
       })
-      .get('/maps/:city', async (ctx: RouterContext) => {
-        await CMapsCity.getCityMapsPage(ctx, { title: setting.title });
+      .get('/maps/:route', async (ctx: RouterContext) => {
+        await MapsController.getCityMapsPage(ctx, { title: setting.title });
       });
   }
 }
