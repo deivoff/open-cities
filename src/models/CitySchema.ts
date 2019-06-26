@@ -6,4 +6,5 @@ export const CitySchema = new Schema({
     required: 'Необходимо задать название города!',
   },
   route: String,
+  coordinates: Array,
 });

@@ -9,11 +9,14 @@ export class CMapsCity {
     const route = ctx.params.city;
     const cityDocument: any = await City.find({ route });
     const cityObj = cityDocument[0];
-    const { name } = cityObj;
+    const { name, coordinates } = cityObj;
     const city = name;
+    console.log(cityObj.coordinates);
+    const cityCenter = `${coordinates[0]}, ${coordinates[1]}`;
     options = {
       ...options,
       city,
+      cityCenter,
     };
     console.log(options, name);
     return ctx.render(view, options);
