@@ -1,6 +1,5 @@
 import { OSMap } from './map';
 import { Map, MapOptions, TileLayer, geoJSON, LatLng, circleMarker } from 'leaflet';
-import { GeoJsonObject } from 'geojson';
 
 export class OSLeafletMap extends OSMap<Map> {
   public static init(): void {

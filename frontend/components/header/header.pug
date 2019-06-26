@@ -1,4 +1,5 @@
 header#os-header.os-header._transparent
+  a.os-header__logo(href='/')= title
   nav.os-nav
     ul.os-nav__list
       li.os-nav__elem
@@ -11,5 +12,5 @@ header#os-header.os-header._transparent
     if authorised
       a.os-profile(href='#') Евгений Мазуров
     else
-      a.os-button(href='#') Войти
+      button.os-button Войти
     

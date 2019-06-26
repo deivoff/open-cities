@@ -1,3 +1,9 @@
 # Open Cities Project
 
-First commit
+## Docker
+
+## Миграции
+
+## Запуск проекта
+
+## Развертывание проекта на бою

@@ -19,6 +19,7 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
     "leaflet": "^1.5.1",
+    "migrate-mongo": "^6.0.0",
     "mongoose": "^5.5.15",
     "pug": "^2.0.3"
   },
