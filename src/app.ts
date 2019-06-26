@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import Koa from 'koa';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const koaBody = require('koa-body');
 
 // db
 import mongoose from 'mongoose';
 require('dotenv').config();
 
-// Pages and static
+// Pages, static, favicon
 import views from 'koa-views';
 import serve from 'koa-static';
+const favicon = require('koa-favicon');
 
 // Routes
 import routers from './routes/index';
@@ -30,6 +31,7 @@ class App {
     this.app
       .use(koaBody())
       .use(views(__dirname + '/views/', { extension: 'pug' }))
+      .use(favicon(__dirname + '/public/favicon.ico'))
       .use(serve(__dirname + '/public/'));
   }
 
