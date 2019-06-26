@@ -9,8 +9,8 @@ export class OSLeafletMap extends OSMap<Map> {
       const options: MapOptions = {
         center: this.stringToCoordinates(container.dataset.center)
           ? this.stringToCoordinates(container.dataset.center)
-          : [56.887239066816484, 60.595798721043394],
-        zoom: 13,
+          : [55.751244, 37.618423],
+        zoom: 11,
       };
 
       const lefletMap = new Map(container, options);
