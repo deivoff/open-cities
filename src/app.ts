@@ -4,7 +4,9 @@ const koaBody = require('koa-body');
 
 // db
 import mongoose from 'mongoose';
-require('dotenv').config();
+
+import { join } from 'path';
+require('dotenv').config({ path: join(__dirname + './../.env') });
 
 // Pages, static, favicon
 import views from 'koa-views';
