@@ -9,26 +9,19 @@ export class MapsController {
   public static async getCityMapsPage(ctx: RouterContext, options?: any, view: string = 'map') {
     const { route } = ctx.params;
 
-    return await City.findOne({ route }, (err: Error, res: ICityDocument) => {
-      if (err) {
-        console.error(err);
-        options = {
-          ...options,
-          status: ctx.status = 500,
-          statusMessage: 'Так, на сервере какая-то ошибка, уже чиним',
-        };
+    try {
+      const cityDocument: ICityDocument | null = await City.findOne({ route });
 
-        return new Promise(ctx.render('error', options));
-      } else if (res === null) {
+      if (!cityDocument) {
         options = {
           ...options,
           status: ctx.status = 404,
           statusMessage: 'Данного города пока у нас нет :(',
         };
 
-        return new Promise(ctx.render('error', options));
+        return ctx.render('error', options);
       } else {
-        const { name, coordinates } = res;
+        const { name, coordinates } = cityDocument;
         const cityCenter = coordinates ? `${coordinates[0]}, ${coordinates[1]}` : undefined;
 
         options = {
@@ -37,8 +30,17 @@ export class MapsController {
           cityCenter,
         };
 
-        return new Promise(ctx.render(view, options));
+        return ctx.render(view, options);
       }
-    });
+    } catch (err) {
+      console.error(err);
+      options = {
+        ...options,
+        status: ctx.status = 500,
+        statusMessage: 'Так, на сервере какая-то ошибка, уже чиним',
+      };
+
+      return ctx.render('error', options);
+    }
   }
 }
