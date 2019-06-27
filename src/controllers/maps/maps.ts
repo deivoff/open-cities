@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 import { CitySchema } from '../../models/CitySchema';
 import { ICityDocument } from 'src/interfaces/ICity';
 import { json } from 'body-parser';
+import querystring from 'querystring';
 
 const City = mongoose.model('city', CitySchema);
 
@@ -62,5 +63,36 @@ export class MapsController {
     };
 
     return ctx.render(view, options);
+  }
+
+  public static async getDots(ctx: RouterContext) {
+    const { city, polygon } = ctx.query;
+
+    if (!city) {
+      ctx.status = 404;
+      ctx.message = 'City not found';
+      return ctx;
+    } else if (!polygon) {
+      ctx.status = 404;
+      ctx.message = 'Polygon not detected';
+      return ctx;
+    } else {
+      const dotSchema = new Schema({
+        type: String,
+        geometry: {
+          type: String,
+          coordinates: [Number, Number],
+        },
+      });
+
+      const dotModel = mongoose.model('dot', dotSchema, `${city}_crime`);
+      try {
+        const response = await dotModel.find({});
+
+        return (ctx.body = response);
+      } catch (error) {
+        return (ctx.body = error);
+      }
+    }
   }
 }

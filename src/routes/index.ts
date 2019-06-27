@@ -1,11 +1,12 @@
 import Router from 'koa-router';
-import OSRouterIndex from './static/index';
+import OSRouterStatic from './static/index';
+import OSRouterApi from './api/index';
 
 class OSRoutes {
   public routers: Router[];
 
   public constructor() {
-    this.routers = [OSRouterIndex].map(block => {
+    this.routers = [OSRouterStatic, OSRouterApi].map(block => {
       return block.router;
     });
 

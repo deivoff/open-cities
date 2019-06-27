@@ -3,7 +3,7 @@ import setting from './../../configs/cite-config';
 import { staticController } from './../../controllers/static/staticController';
 import { MapsController } from '../../controllers/maps/maps';
 
-class OSRouterIndex {
+class OSRouterStatic {
   public router: Router;
 
   public constructor() {
@@ -28,4 +28,4 @@ class OSRouterIndex {
   }
 }
 
-export default new OSRouterIndex();
+export default new OSRouterStatic();
