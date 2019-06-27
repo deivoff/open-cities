@@ -20,7 +20,7 @@ class OSRouterIndex {
         await staticController(ctx, { title: setting.title, pageTitle: setting.pages.news });
       })
       .get('/maps', async (ctx: RouterContext) => {
-        await staticController(ctx, { title: setting.title, pageTitle: setting.pages.maps }, 'map');
+        await MapsController.getCitiesList(ctx, { title: setting.title, pageTitle: setting.pages.maps });
       })
       .get('/maps/:route', async (ctx: RouterContext) => {
         await MapsController.getCityMapsPage(ctx, { title: setting.title });

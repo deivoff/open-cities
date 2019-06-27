@@ -2,6 +2,7 @@ import { RouterContext } from 'koa-router';
 import mongoose, { Schema } from 'mongoose';
 import { CitySchema } from '../../models/CitySchema';
 import { ICityDocument } from 'src/interfaces/ICity';
+import { json } from 'body-parser';
 
 const City = mongoose.model('city', CitySchema);
 
@@ -42,5 +43,24 @@ export class MapsController {
 
       return ctx.render('error', options);
     }
+  }
+
+  public static async getCitiesList(ctx: RouterContext, options?: any, view: string = 'index') {
+    const cities: ICityDocument[] = await City.find({});
+
+    const citiesList = cities.map(cityDocument => {
+      const { name, route } = cityDocument;
+      const link = `${ctx.href}/${route}`;
+      if (name) {
+        return { name, link };
+      }
+    });
+
+    options = {
+      ...options,
+      citiesList,
+    };
+
+    return ctx.render(view, options);
   }
 }

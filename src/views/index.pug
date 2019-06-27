@@ -5,4 +5,12 @@ block yield
     .container._wrapper
       h1 #{pageTitle}
 
+      if citiesList
+        ul.os-cities-list
+          each val in citiesList ? citiesList : ['К сожалению, городов не нашлось']
+            li.os-cities-list__elem
+              a.os-cities-list__link(href= val.link)= val.name
+
+
+
     
