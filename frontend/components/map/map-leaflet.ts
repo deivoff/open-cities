@@ -1,9 +1,12 @@
 import { OSMap } from './map';
-import { Map, MapOptions, TileLayer, geoJSON, LatLng, circleMarker } from 'leaflet';
+import { Map, MapOptions, TileLayer, geoJSON, LatLng, circleMarker, markerClusterGroup } from 'leaflet';
+import 'leaflet.markercluster';
 import { differenceWith, isEqual, concat } from 'lodash';
 
 export class OSLeafletMap extends OSMap<Map> {
   private data: any = [];
+  private layer = markerClusterGroup();
+  private gettingPolygon: any;
 
   public static init(): void {
     const container = document.getElementById('os-leaflet__map');
@@ -45,7 +48,7 @@ export class OSLeafletMap extends OSMap<Map> {
   }
 
   private async getDots() {
-    const res = await fetch(`http://open-cities.ru/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
+    const res = await fetch(`http://localhost:3002/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
     const resJson = await res.json();
     let dataIsExist = true;
     if (!this.data.length) {
@@ -55,8 +58,10 @@ export class OSLeafletMap extends OSMap<Map> {
     this.data = concat(this.data, ...diff);
     if (dataIsExist) {
       this.addGeoJsonToMap(diff);
+      this.map.addLayer(this.layer);
     } else {
       this.addGeoJsonToMap(this.data);
+      this.map.addLayer(this.layer);
     }
   }
 
@@ -87,7 +92,7 @@ export class OSLeafletMap extends OSMap<Map> {
         coordsToLatLng: coords => {
           return new LatLng(coords[1], coords[0]);
         },
-      }).addTo(this.map);
+      }).addTo(this.layer);
     });
     return this;
   }
