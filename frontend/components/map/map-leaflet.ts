@@ -30,7 +30,7 @@ export class OSLeafletMap extends OSMap<Map> {
     }).addTo(this.map);
 
     this.map.on('moveend', async () => {
-      const res = await fetch(`http://localhost:3002/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
+      const res = await fetch(`http://open-cities.ru/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
       const resJson = await res.json();
       let dataIsExist = true;
       if (!this.data.length) {
