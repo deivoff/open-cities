@@ -2,10 +2,14 @@ import { RouterContext } from 'koa-router';
 import mongoose, { Schema } from 'mongoose';
 import { CitySchema } from '../../models/CitySchema';
 import { ICityDocument } from 'src/interfaces/ICity';
-import { json } from 'body-parser';
-import querystring from 'querystring';
 
 const City = mongoose.model('city', CitySchema);
+const dotSchema = new Schema({
+  type: String,
+  geometry: {},
+  properties: {},
+});
+const dotModel = mongoose.model('dot', dotSchema, `ekb_crime`);
 
 export class MapsController {
   public static async getCityMapsPage(ctx: RouterContext, options?: any, view: string = 'map') {
@@ -66,7 +70,7 @@ export class MapsController {
   }
 
   public static async getDots(ctx: RouterContext) {
-    const { city, polygon } = ctx.query;
+    let { city, polygon } = ctx.query;
 
     if (!city) {
       ctx.status = 404;
@@ -77,17 +81,15 @@ export class MapsController {
       ctx.message = 'Polygon not detected';
       return ctx;
     } else {
-      const dotSchema = new Schema({
-        type: String,
-        geometry: {
-          type: String,
-          coordinates: [Number, Number],
-        },
-      });
-
-      const dotModel = mongoose.model('dot', dotSchema, `${city}_crime`);
       try {
-        const response = await dotModel.find({});
+        polygon = polygon.split(',').map(el => parseFloat(el));
+        const response = await dotModel.find({
+          geometry: {
+            $geoWithin: {
+              $box: [[polygon[0], polygon[1]], [polygon[2], polygon[3]]],
+            },
+          },
+        });
 
         return (ctx.body = response);
       } catch (error) {
