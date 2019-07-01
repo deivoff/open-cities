@@ -48,7 +48,7 @@ export class OSLeafletMap extends OSMap<Map> {
   }
 
   private async getDots() {
-    const res = await fetch(`http://localhost:3002/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
+    const res = await fetch(`/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
     const resJson = await res.json();
     let dataIsExist = true;
     if (!this.data.length) {
