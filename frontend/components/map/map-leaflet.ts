@@ -29,21 +29,11 @@ export class OSLeafletMap extends OSMap<Map> {
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     }).addTo(this.map);
 
-    this.map.on('moveend', async () => {
-      const res = await fetch(`http://open-cities.ru/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
-      const resJson = await res.json();
-      let dataIsExist = true;
-      if (!this.data.length) {
-        dataIsExist = false;
-      }
-      const diff = differenceWith(resJson, this.data, isEqual);
-      this.data = concat(this.data, ...diff);
-
-      if (dataIsExist) {
-        this.addGeoJsonToMap(diff);
-      } else {
-        this.addGeoJsonToMap(this.data);
-      }
+    this.map.on('load', () => {
+      this.getDots();
+    });
+    this.map.on('moveend', () => {
+      this.getDots();
     });
   }
 
@@ -52,6 +42,22 @@ export class OSLeafletMap extends OSMap<Map> {
     const southWest = [sizes.getSouthWest().lng, sizes.getSouthWest().lat];
     const northEast = [sizes.getNorthEast().lng, sizes.getNorthEast().lat];
     return [southWest, northEast];
+  }
+
+  private async getDots() {
+    const res = await fetch(`http://open-cities.ru/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
+    const resJson = await res.json();
+    let dataIsExist = true;
+    if (!this.data.length) {
+      dataIsExist = false;
+    }
+    const diff = differenceWith(resJson, this.data, isEqual);
+    this.data = concat(this.data, ...diff);
+    if (dataIsExist) {
+      this.addGeoJsonToMap(diff);
+    } else {
+      this.addGeoJsonToMap(this.data);
+    }
   }
 
   private addGeoJsonToMap(dots): OSLeafletMap {
