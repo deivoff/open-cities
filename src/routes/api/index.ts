@@ -1,5 +1,5 @@
 import Router, { RouterContext } from 'koa-router';
-import { MapsController } from '../../controllers/maps/maps';
+import { DotsController } from '../../controllers/maps/dots';
 
 class OSRouterApi {
   public router: Router;
@@ -7,8 +7,8 @@ class OSRouterApi {
   public constructor() {
     this.router = new Router({ prefix: '/api' });
 
-    this.router.get('/maps/dots', async (ctx: RouterContext) => {
-      await MapsController.getDots(ctx);
+    this.router.get('/dots', async (ctx: RouterContext) => {
+      await DotsController.getDots(ctx);
     });
   }
 }

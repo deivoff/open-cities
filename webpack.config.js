@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const autoprefixer = require('autoprefixer-stylus');
-const rupture = require('rupture');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin'),
+  MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+  autoprefixer = require('autoprefixer-stylus'),
+  rupture = require('rupture'),
+  OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const urlLoader = {
   test: /\.(png|woff|woff2|eot|ttf|svg)$/,

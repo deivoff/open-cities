@@ -6,7 +6,7 @@ import { differenceWith, isEqual, concat } from 'lodash';
 export class OSLeafletMap extends OSMap<Map> {
   private data: any = [];
   private layer = markerClusterGroup();
-  private gettingPolygon: any;
+  private currentZoom: number;
 
   public static init(): void {
     const container = document.getElementById('os-leaflet__map');
@@ -32,11 +32,14 @@ export class OSLeafletMap extends OSMap<Map> {
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     }).addTo(this.map);
 
-    this.map.on('load', () => {
-      this.getDots();
-    });
+    this.getDots();
+    this.currentZoom = this.map.getZoom();
+
     this.map.on('moveend', () => {
-      this.getDots();
+      if (this.currentZoom >= this.map.getZoom()) {
+        this.getDots();
+        this.currentZoom = this.map.getZoom();
+      }
     });
   }
 
@@ -48,7 +51,7 @@ export class OSLeafletMap extends OSMap<Map> {
   }
 
   private async getDots() {
-    const res = await fetch(`/api/maps/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
+    const res = await fetch(`/api/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
     const resJson = await res.json();
     let dataIsExist = true;
     if (!this.data.length) {
@@ -65,7 +68,7 @@ export class OSLeafletMap extends OSMap<Map> {
     }
   }
 
-  private addGeoJsonToMap(dots): OSLeafletMap {
+  private addGeoJsonToMap(dots) {
     const myStyle = {
       color: '#ff7800',
       weight: 5,
@@ -84,7 +87,13 @@ export class OSLeafletMap extends OSMap<Map> {
       geoJSON(feature, {
         style: myStyle,
         onEachFeature: (feature, layer) => {
-          layer.bindPopup(`<h3>${feature.properties.address}</h3><p>${feature.properties.descrip}</p>`);
+          layer.bindPopup(`
+            <h3>${feature.properties.address}</h3>
+            <p>${feature.properties.description}</p>
+            ${feature.properties.links.reduce((links, link, i) => {
+              return links + `<a href='${link}' target='_blank'>Источник №${i + 1}</a></br>`;
+            }, '')}
+          `);
         },
         pointToLayer: (feature, latlng) => {
           return circleMarker(latlng, geojsonMarkerOptions);
@@ -94,6 +103,5 @@ export class OSLeafletMap extends OSMap<Map> {
         },
       }).addTo(this.layer);
     });
-    return this;
   }
 }
