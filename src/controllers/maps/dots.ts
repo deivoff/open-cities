@@ -5,26 +5,21 @@ import { DotSchema } from '../../models/DotSchemas';
 const Dot = mongoose.model('dot', DotSchema);
 export class DotsController {
   public static async getDots(ctx: RouterContext) {
-    let { city, polygon } = ctx.query;
+    let { city, layer } = ctx.query;
     if (!city) {
       ctx.status = 404;
       ctx.message = 'City not found';
       return ctx;
-    } else if (!polygon) {
+    } else if (!layer) {
       ctx.status = 404;
       ctx.message = 'Polygon not detected';
       return ctx;
     } else {
       try {
-        polygon = polygon.split(',').map(el => parseFloat(el));
         const response = await Dot.find(
           {
             city,
-            geometry: {
-              $geoWithin: {
-                $box: [[polygon[0], polygon[1]], [polygon[2], polygon[3]]],
-              },
-            },
+            layer,
           },
           {
             _id: 0,

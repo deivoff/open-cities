@@ -1,13 +1,20 @@
 import { OSMap } from './map';
-import { Map, MapOptions, TileLayer, geoJSON, LatLng, circleMarker, markerClusterGroup } from 'leaflet';
+import {
+  Map,
+  MapOptions,
+  TileLayer,
+  geoJSON,
+  LatLng,
+  circleMarker,
+  markerClusterGroup,
+  MarkerClusterGroup,
+} from 'leaflet';
 import 'leaflet.markercluster';
 import { differenceWith, isEqual, concat } from 'lodash';
 
 export class OSLeafletMap extends OSMap<Map> {
-  private data: any = [];
-  private layer = markerClusterGroup();
-  private currentZoom: number;
-  private city = location.pathname.slice(-3);
+  private layers = {};
+  private city = location.pathname.split('/')[2];
 
   public static init(): void {
     const container = document.getElementById('os-leaflet__map');
@@ -33,43 +40,20 @@ export class OSLeafletMap extends OSMap<Map> {
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     }).addTo(this.map);
 
-    this.getDots();
-    this.currentZoom = this.map.getZoom();
-
-    this.map.on('moveend', () => {
-      if (this.currentZoom >= this.map.getZoom()) {
-        this.getDots();
-        this.currentZoom = this.map.getZoom();
-      }
-    });
+    this.getDots('crime');
   }
 
-  private getMapBoxCoords() {
-    const sizes = this.map.getBounds();
-    const southWest = [sizes.getSouthWest().lng, sizes.getSouthWest().lat];
-    const northEast = [sizes.getNorthEast().lng, sizes.getNorthEast().lat];
-    return [southWest, northEast];
-  }
-
-  private async getDots() {
-    const res = await fetch(`/api/dots?city=${this.city}&polygon=${this.getMapBoxCoords()}`);
+  public async getDots(layer: string) {
+    this.layers[layer] = markerClusterGroup();
+    console.log(this.layers);
+    const res = await fetch(`/api/dots?city=${this.city}&layer=${layer}`);
     const resJson = await res.json();
-    let dataIsExist = true;
-    if (!this.data.length) {
-      dataIsExist = false;
-    }
-    const diff = differenceWith(resJson, this.data, isEqual);
-    this.data = concat(this.data, ...diff);
-    if (dataIsExist) {
-      this.addGeoJsonToMap(diff);
-      this.map.addLayer(this.layer);
-    } else {
-      this.addGeoJsonToMap(this.data);
-      this.map.addLayer(this.layer);
-    }
+
+    this.addGeoJsonToLayer(resJson, this.layers[layer]);
+    this.map.addLayer(this.layers[layer]);
   }
 
-  private addGeoJsonToMap(dots) {
+  private addGeoJsonToLayer(dots, layer: MarkerClusterGroup) {
     const myStyle = {
       color: '#ff7800',
       weight: 5,
@@ -102,7 +86,7 @@ export class OSLeafletMap extends OSMap<Map> {
         coordsToLatLng: coords => {
           return new LatLng(coords[1], coords[0]);
         },
-      }).addTo(this.layer);
+      }).addTo(layer);
     });
   }
 }
