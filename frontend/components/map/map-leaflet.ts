@@ -7,6 +7,7 @@ export class OSLeafletMap extends OSMap<Map> {
   private data: any = [];
   private layer = markerClusterGroup();
   private currentZoom: number;
+  private city = location.pathname.slice(-3);
 
   public static init(): void {
     const container = document.getElementById('os-leaflet__map');
@@ -51,7 +52,7 @@ export class OSLeafletMap extends OSMap<Map> {
   }
 
   private async getDots() {
-    const res = await fetch(`/api/dots?city=ekb&polygon=${this.getMapBoxCoords()}`);
+    const res = await fetch(`/api/dots?city=${this.city}&polygon=${this.getMapBoxCoords()}`);
     const resJson = await res.json();
     let dataIsExist = true;
     if (!this.data.length) {
