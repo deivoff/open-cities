@@ -33,58 +33,57 @@ class GeoController {
 
   private async switchRequestGeoType({ type, layer, city }) {
     switch (type) {
-      case 'Polygon': {
-        const polygons: any[] = await Polygon.find(
-          {
-            city,
-            layer,
-            'geometry.type': type,
-          },
-          {
-            _id: 0,
-            city: 0,
-            layer: 0,
-          },
-        );
+      case 'Polygon':
+        {
+          const polygons: any[] = await Polygon.find(
+            {
+              city,
+              layer,
+              'geometry.type': type,
+            },
+            {
+              _id: 0,
+              city: 0,
+              layer: 0,
+            },
+          );
 
-        if (polygons.length && layer === 'district') {
-          let newPolygons: any = [];
-          const promises = await Promise.all(
-            polygons.map(async (elem: IGeoDocument) => {
-              elem.properties.common = await Dot.aggregate([
-                {
-                  $match: {
-                    layer: 'buildings',
-                    /* geometry: {
+          if (polygons.length && layer === 'district') {
+            const promises = await Promise.all(
+              polygons.map(async (elem: IGeoDocument) => {
+                elem.properties.common = await Dot.aggregate([
+                  {
+                    $match: {
+                      layer: 'buildings',
+                      /* geometry: {
                       $geoWithin: {
                         $polygon: elem.geometry.coordinates,
                       }
                     } */
-                  }
-                },
-                {
-                  $group: {
-                    _id: 'Sum',
-                    square: {
-                      $sum: {
-                        $convert: {
-                          input: '$properties.square',
-                          to: 'double',
-                          onError: 0,
-                          onNull: 0,
-                        }
-                      }
-                    }
-                  }
-                }])
-              return elem;
-            })
-          )
-          return await promises;
+                    },
+                  },
+                  {
+                    $group: {
+                      _id: 'Sum',
+                      square: {
+                        $sum: {
+                          $convert: {
+                            input: '$properties.square',
+                            to: 'double',
+                            onError: 0,
+                            onNull: 0,
+                          },
+                        },
+                      },
+                    },
+                  },
+                ]);
+                return elem;
+              }),
+            );
+            return await promises;
+          }
         }
-
-
-      }
         break;
       default:
         return await Dot.find(

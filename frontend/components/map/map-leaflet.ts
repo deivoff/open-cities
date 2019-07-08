@@ -42,13 +42,14 @@ export class OSLeafletMap extends OSMap<Map> {
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     }).addTo(this.map);
 
-    Promise.all([
-      this.getPolygons('district'),
-      this.getDots('crime')
-    ]).then(() => control.layers({}, this.layers, {
-      hideSingleBase: true,
-      collapsed: false,
-    }).addTo(this.map))
+    Promise.all([this.getPolygons('district'), this.getDots('crime')]).then(() =>
+      control
+        .layers({}, this.layers, {
+          hideSingleBase: true,
+          collapsed: false,
+        })
+        .addTo(this.map),
+    );
   }
 
   public async getPolygons(layer: string) {
@@ -62,26 +63,16 @@ export class OSLeafletMap extends OSMap<Map> {
             fillOpacity: 0.05,
             stroke: true,
             weight: 1,
-            fillColor: this.getRandomColor(),
-            color: this.getRandomColor(),
           },
           onEachFeature: (feature, layer) => {
             layer.bindPopup(`
               <h3>${feature.properties.name}</h3>
-              <p>Процент доступности среды: ${this.getRandomPersent()}%</p>
-              <p>Процент аварийного жилья: ${this.getRandomPersent()}%</p>
-              <p>Процент количества ДТП относительно ДТП в городе: ${this.getRandomPersent()}%</p>
             `);
           },
         });
       });
       this.layers[layer] = layerGroup(leafletPolygons);
     }
-
-  }
-
-  private getRandomPersent() {
-    return Math.floor(Math.random() * 100) + 1
   }
 
   public async getDots(layer: string) {
@@ -96,15 +87,6 @@ export class OSLeafletMap extends OSMap<Map> {
   private async geoFetch(layer: string, type: string) {
     const res = await fetch(`/api/geo?city=${this.city}&layer=${layer}&type=${type}`);
     return await res.json();
-  }
-
-  private getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
   }
 
   private addGeoJsonToLayer(dots, layer: MarkerClusterGroup) {
@@ -130,8 +112,8 @@ export class OSLeafletMap extends OSMap<Map> {
             <h3>${feature.properties.address}</h3>
             <p>${feature.properties.description}</p>
             ${feature.properties.links.reduce((links, link, i) => {
-            return links + `<a href='${link}' target='_blank'>Источник №${i + 1}</a></br>`;
-          }, '')}
+              return links + `<a href='${link}' target='_blank'>Источник №${i + 1}</a></br>`;
+            }, '')}
           `);
         },
         pointToLayer: (feature, latlng) => {
