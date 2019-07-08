@@ -55,7 +55,8 @@ export class OSLeafletMap extends OSMap<Map> {
   public async getPolygons(layer: string) {
     const polygons = await this.geoFetch(layer, 'Polygon');
 
-    if (polygons.length) {
+    console.log(polygons);
+    if (Array.isArray(polygons) && polygons.length) {
       const leafletPolygons = polygons.map(feature => {
         feature.geometry.coordinates = deepArrayReverse(feature.geometry.coordinates, true);
         return geoJSON(feature, {
@@ -78,7 +79,8 @@ export class OSLeafletMap extends OSMap<Map> {
   public async getDots(layer: string) {
     const dots = await this.geoFetch(layer, 'Point');
 
-    if (dots.length) {
+    console.log(dots);
+    if (Array.isArray(dots) && dots.length) {
       this.layers[layer] = markerClusterGroup();
       this.addGeoJsonToLayer(dots, this.layers[layer]);
     }
@@ -86,7 +88,12 @@ export class OSLeafletMap extends OSMap<Map> {
 
   private async geoFetch(layer: string, type: string) {
     const res = await fetch(`/api/geo?city=${this.city}&layer=${layer}&type=${type}`);
-    return await res.json();
+
+    if (res.status === 200) {
+      return await res.json();
+    } else {
+      return await [];
+    }
   }
 
   private addGeoJsonToLayer(dots, layer: MarkerClusterGroup) {
