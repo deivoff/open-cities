@@ -11,8 +11,7 @@ import {
   control,
 } from 'leaflet';
 import 'leaflet.markercluster';
-import { IGeoSchema } from './../../../src/interfaces/IGeo';
-import { deepArrayReverse } from '../../../src/helpers/array';
+import { deepArrayReverse, isArrayExist } from '../../../src/helpers/array';
 
 export class OSLeafletMap extends OSMap<Map> {
   private layers = {};
@@ -55,7 +54,7 @@ export class OSLeafletMap extends OSMap<Map> {
   public async getPolygons(layer: string) {
     const polygons = await this.geoFetch(layer, 'Polygon');
 
-    if (Array.isArray(polygons) && polygons.length) {
+    if (isArrayExist(polygons)) {
       const leafletPolygons = polygons.map(feature => {
         feature.geometry.coordinates = deepArrayReverse(feature.geometry.coordinates, true);
         return geoJSON(feature, {
@@ -78,7 +77,7 @@ export class OSLeafletMap extends OSMap<Map> {
   public async getDots(layer: string) {
     const dots = await this.geoFetch(layer, 'Point');
 
-    if (Array.isArray(dots) && dots.length) {
+    if (isArrayExist(dots)) {
       this.layers[layer] = markerClusterGroup();
       this.addGeoJsonToLayer(dots, this.layers[layer]);
     }
