@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": { "*": ["types/*"] },
+    "paths": { 
+      "@controllers/*": ["src/controllers/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@models/*": ["src/models/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+    },
     "typeRoots": [
       "node_modules/koa-body",
       "node_modules/@types",

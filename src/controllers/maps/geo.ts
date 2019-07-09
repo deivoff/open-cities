@@ -1,8 +1,7 @@
 import { RouterContext } from 'koa-router';
 import mongoose from 'mongoose';
 import { GeoSchema } from '../../models/GeoSchemas';
-import { IGeoDocument } from '../../interfaces/IGeo';
-import { deepArrayReverse } from '../../helpers/array';
+import { IGeoDocument } from '@interfaces/IGeo';
 
 const Dot = mongoose.model('dot', GeoSchema, 'dots');
 const Polygon = mongoose.model('polygon', GeoSchema, 'polygons');

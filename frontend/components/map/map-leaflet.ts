@@ -11,7 +11,7 @@ import {
   control,
 } from 'leaflet';
 import 'leaflet.markercluster';
-import { deepArrayReverse, isArrayExist } from '../../../src/helpers/array';
+import { deepArrayReverse, isArrayExist } from '@helpers/array';
 
 export class OSLeafletMap extends OSMap<Map> {
   private layers = {};

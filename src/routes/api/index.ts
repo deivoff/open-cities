@@ -1,5 +1,5 @@
 import Router, { RouterContext } from 'koa-router';
-import GeoController from '../../controllers/maps/geo';
+import GeoController from '@controllers/maps/geo';
 
 class OSRouterApi {
   public router: Router;

@@ -5,6 +5,13 @@ const TerserPlugin = require('terser-webpack-plugin'),
   rupture = require('rupture'),
   OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
+const path = require('path');
+
+const srcPath = subdir => {
+  console.log(path.join(__dirname, 'src', subdir));
+  return path.join(__dirname, 'src', subdir);
+};
+
 const urlLoader = {
   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
   loader: 'url-loader',
@@ -54,7 +61,15 @@ const webpackConfig = {
   module: {
     rules: [stylusLoader, urlLoader, tsLoader],
   },
-  resolve: { extensions: ['.ts', '.js'] },
+  resolve: {
+    extensions: ['.ts', '.js'],
+    alias: {
+      '@controllers': srcPath('controllers'),
+      '@helpers': srcPath('helpers'),
+      '@models': srcPath('models'),
+      '@interfaces': srcPath('interfaces'),
+    },
+  },
   optimization: {
     minimizer: [
       new TerserPlugin({
