@@ -9,6 +9,12 @@
     "build": "webpack --mode=production",
     "dev": "webpack --watch"
   },
+  "_moduleAliases": {
+    "@controllers": "src/controllers",
+    "@helpers": "src/helpers",
+    "@models": "src/models",
+    "@interfaces": "src/interfaces"
+  },
   "dependencies": {
     "@turf/turf": "^5.1.6",
     "@types/geojson": "^7946.0.7",
@@ -31,6 +37,7 @@
     "leaflet": "^1.5.1",
     "leaflet.markercluster": "^1.4.1",
     "lodash": "^4.17.11",
+    "module-alias": "^2.2.0",
     "mongoose": "^5.5.15",
     "pug": "^2.0.3",
     "typescript": "^3.5.1"

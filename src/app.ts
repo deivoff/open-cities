@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import 'module-alias/register';
 import Koa from 'koa';
 const koaBody = require('koa-body');
 
