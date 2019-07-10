@@ -4,7 +4,7 @@ require('dotenv').config({ path: path.join(__dirname + './../.env') });
 
 const config = {
   mongodb: {
-    url: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@opeb-cities-ffxwj.mongodb.net/myos?retryWrites=true&w=majority`,
+    url: `${process.env.DB_URL}`,
 
     databaseName: 'myos',
 

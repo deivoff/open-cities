@@ -40,12 +40,9 @@ class App {
 
   private mongoSetup(): void {
     mongoose
-      .connect(
-        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@opeb-cities-ffxwj.mongodb.net/myos?retryWrites=true&w=majority`,
-        {
-          useNewUrlParser: true,
-        },
-      )
+      .connect(`${process.env.DB_URL}`, {
+        useNewUrlParser: true,
+      })
       .then((): void => console.log('MongoDB Connected'))
       .catch((err): void => console.log(err));
   }
