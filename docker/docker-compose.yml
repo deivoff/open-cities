@@ -1,14 +1,14 @@
-version: '3'
+version: "3"
 
 services:
   mongodb:
     image: mongo:latest
-    container_name: "mongodb"
-    environment:
-      - MONGO_DATA_DIR=/mongodb/db
-      - MONGO_LOG_DIR=/dev/null
+    container_name: "os-mongodb"
+    restart: unless-stopped
     volumes:
-      - ./mongodb/db:/data/db
+      - ./mongodb:/data/db:rw
     ports:
-        - 27017:27017
+      - 27017:27017
+    user: root
+
     command: mongod --smallfiles --logpath=/dev/null # --quiet
