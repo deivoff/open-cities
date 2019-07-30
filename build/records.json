@@ -1,0 +1,111 @@
+{
+  "mini-css-extract-plugin node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/static/styles/main.styl": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/components/header/header.styl": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/components/banner/banner.styl": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/components/button/button.styl": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "modules": {
+    "byIdentifier": {
+      "css node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/static/styles/main.styl 0": 0,
+      "css node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/static/styles/main.styl 1": 1,
+      "css node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/components/header/header.styl 0": 2,
+      "css node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/components/button/button.styl 0": 3,
+      "css node_modules/css-loader/index.js??ref--6-1!node_modules/stylus-loader/index.js??ref--6-2!frontend/components/banner/banner.styl 0": 4
+    },
+    "usedIds": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4
+    }
+  },
+  "chunks": {
+    "byName": {
+      "commons": 0,
+      "static/runtime/webpack.js": 1,
+      "static/f9-Rqvg7tgEFD__68KtDc/pages/_app.js": 2,
+      "static/f9-Rqvg7tgEFD__68KtDc/pages/_error.js": 3,
+      "static/f9-Rqvg7tgEFD__68KtDc/pages/comments.js": 4,
+      "static/f9-Rqvg7tgEFD__68KtDc/pages/home.js": 5,
+      "static/f9-Rqvg7tgEFD__68KtDc/pages/index.js": 6,
+      "static/runtime/main.js": 7,
+      "styles": 8
+    },
+    "bySource": {},
+    "usedIds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  }
+}

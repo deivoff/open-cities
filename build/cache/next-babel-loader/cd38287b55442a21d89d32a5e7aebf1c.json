@@ -1,0 +1,1 @@
+{"ast":null,"code":"import axios from 'axios'; // Sorry! It's a singleton\n\nvar client = axios.create({\n  baseURL: '/',\n  headers: {\n    Accept: 'application/json',\n    'Content-Type': 'application/json'\n  },\n  withCredentials: true\n});\nexport default client;","map":null,"metadata":{},"sourceType":"module"}

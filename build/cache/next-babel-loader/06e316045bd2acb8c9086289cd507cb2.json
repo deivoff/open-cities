@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function withSSR() {\n  return function adapter(ScreenComponent) {\n    // eslint-disable-next-line no-param-reassign\n    ScreenComponent.getInitialProps = function getInitialProps(_ref) {\n      var query = _ref.query;\n      return query;\n    };\n\n    return ScreenComponent;\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

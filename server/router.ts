@@ -7,14 +7,14 @@ export const createRouter = async () => {
   router.get('/', async (ctx: any) => {
     // You can `await` or `return` the ctx.render function call
     await ctx.render({
-      screen: 'Home'
+      screen: 'home'
     });
   });
 
   router.get('/comments', async (ctx: any) => {
     const comments = ctx.session.comments || [];
     return ctx.render({
-      screen: 'Comments',
+      screen: 'comments',
       props: {
         comments
       }
