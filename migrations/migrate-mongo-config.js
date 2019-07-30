@@ -1,6 +1,6 @@
 // In this file you can configure migrate-mongo
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname + './../.env') });
+require('dotenv').config({ path: path.join(`${__dirname}./../.env`) });
 
 const config = {
   mongodb: {
@@ -9,15 +9,15 @@ const config = {
     databaseName: 'myos',
 
     options: {
-      useNewUrlParser: true, // removes a deprecation warning when connecting
+      useNewUrlParser: true // removes a deprecation warning when connecting
       //   connectTimeoutMS: 3600000, // increase connection timeout to 1 hour
       //   socketTimeoutMS: 3600000, // increase socket timeout to 1 hour
-    },
+    }
   },
 
   migrationsDir: 'migrations',
-  changelogCollectionName: 'changelog',
+  changelogCollectionName: 'changelog'
 };
 
-//Return the config as a promise
+// Return the config as a promise
 module.exports = config;

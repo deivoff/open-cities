@@ -1,14 +1,52 @@
-.os-header
+@import './../../static/styles/variables.styl'
+@import './../../static/styles/grid.styl'
+
+.header
+  color $w
   padding 20px 30px
   width 100%
   display flex
   justify-content space-between
-  color white
-  background-color #1F324B
+  align-items center
+  background-color $mainColor
 
-  &__logo
-    font-size 1.2em
-    color inherit 
-    text-transform uppercase
-    text-decoration none
-    flex-shrink 0
+  &._transparent
+    background-color transparent
+
+.logo
+  font-size 18px
+  line-height 22px
+  color inherit 
+  text-transform uppercase
+  text-decoration none
+  flex-shrink 0
+
+.nav
+  display flex
+  align-items center
+
+  +below('md')
+    display none
+
+  &__list
+    display flex
+
+  &__elem
+    padding 0 20px
+    cursor pointer
+    height 100%
+    
+    &:hover
+      text-decoration underline
+    
+
+    &._dropdown
+      svg
+        transition-duration .1s
+        margin-left 8px
+        width 16px
+        height 9px
+
+      &:hover
+        svg
+          transform rotate(180deg)

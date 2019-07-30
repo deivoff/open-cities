@@ -1,0 +1,32 @@
+
+rupture.scale = 0px 576px 768px 992px 1200px
+rupture.scale-names = 'xs' 'sm' 'md' 'lg' 'xl'
+
+
+container(type = 'default')
+  width 100%
+  display flex
+  flex-flow row wrap
+  if type == 'default'
+    padding 0
+  if type == 'wrapper'
+    margin auto
+    +between('sm', 'md')
+      padding-left calc(50% - 300px)
+      padding-right calc(50% - 300px)
+    +between('md', 'lg')
+      padding-left calc(50% - 390px)
+      padding-right calc(50% - 390px)
+    +between('lg', 'xl')
+      padding-left calc(50% - 510px)
+      padding-right calc(50% - 510px)
+    +above('xl')
+      padding-left calc(50% - 600px)
+      padding-right calc(50% - 600px)
+
+  
+col(type, size)
+  padding 0 30px
+  +above(type)
+    width (100% / 12) * size
+    flex-basis (100% / 12) * size
