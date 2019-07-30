@@ -27,6 +27,7 @@
   "exclude": [
     "dist",
     ".next",
+    "build",
     "out",
     "next.config.js"
   ],
