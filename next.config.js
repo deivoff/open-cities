@@ -12,35 +12,30 @@ const autoprefixer = require('autoprefixer');
 const nib = require('nib');
 const withPlugins = require('next-compose-plugins');
 
-module.exports = withPlugins(
-  [
-    [
-      withStylus,
-      {
-        cssModules: true,
-        cssLoaderOptions: {
-          importLoaders: 1,
-          localIdentName: '[local]___[hash:base64:4]'
-        },
-        stylusLoaderOptions: {
-          use: [
-            nib(),
-            rupture(),
-            poststylus([
-              autoprefixer({ flexbox: 'no-2009' }),
-              require('postcss-css-variables')
-            ])
-          ]
-        }
-      }
-    ],
-    [
-      withReactSvg,
-      {
-        include: path.resolve(__dirname, 'frontend/assets/svg')
-      }
+const styleConfig = {
+  cssModules: true,
+  cssLoaderOptions: {
+    importLoaders: 1,
+    localIdentName: '[local]___[hash:base64:4]'
+  },
+  stylusLoaderOptions: {
+    use: [
+      nib(),
+      rupture(),
+      poststylus([
+        autoprefixer({ flexbox: 'no-2009' }),
+        require('postcss-css-variables')
+      ])
     ]
-  ],
+  }
+};
+
+const iconConfig = {
+  include: path.resolve(__dirname, 'frontend/assets/svg')
+};
+
+module.exports = withPlugins(
+  [[withStylus, styleConfig], [withReactSvg, iconConfig]],
   {
     distDir: 'build'
   }
