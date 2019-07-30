@@ -13,8 +13,8 @@ export const Header = () => {
       </a>
       <nav className={s.nav}>
         <ul className={cn(s['nav__list'])}>
-          <li className={cn(s['nav__elem'], s['_dropdown'])}>О проекте</li>
-          <li className={cn(s['nav__elem'], s['_dropdown'])}>Исследования</li>
+          <li className={cn(s['nav__elem'])}>О проекте</li>
+          <li className={cn(s['nav__elem'])}>Исследования</li>
           <li className={cn(s['nav__elem'], s['_dropdown'])}>
             Города <ArrowMenu />
           </li>
