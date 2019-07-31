@@ -5,7 +5,11 @@ const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 const s = require('./header.styl');
 const btn = require('./../button/button.styl');
 
-export const Header = () => {
+interface IHeaderProps {
+  signHandler?: any;
+}
+
+export const Header: React.SFC<IHeaderProps> = ({ signHandler }) => {
   return (
     <header className={cn(s.header)}>
       <a className={s.logo} href='/'>
@@ -19,7 +23,11 @@ export const Header = () => {
             Города <ArrowMenu />
           </li>
         </ul>
-        <button className={cn(btn.button, btn['_success'])} type='button'>
+        <button
+          className={cn(btn.button, btn['_success'])}
+          onClick={signHandler}
+          type='button'
+        >
           Войти
         </button>
       </nav>

@@ -1,5 +1,13 @@
 module.exports = {
   extends: ['@tokenfoundry/eslint-config/react', 'prettier'],
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off'
+      }
+    }
+  ],
   rules: {
     'jsx-quotes': [1, 'prefer-single'],
     'prettier/prettier': [

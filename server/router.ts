@@ -7,7 +7,7 @@ export const createRouter = async () => {
   router.get('/', async (ctx: any) => {
     // You can `await` or `return` the ctx.render function call
     await ctx.render({
-      screen: 'home'
+      screen: 'index'
     });
   });
 

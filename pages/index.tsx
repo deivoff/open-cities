@@ -1,9 +1,16 @@
 import React from 'react';
+import Head from 'next/head';
 
-require('../frontend/static/styles/main.styl');
+import { withSSR } from '../utils/_ssr';
+import { Banner } from '../frontend/components/banner/banner';
 
-function Home() {
-  return <div>Welcome to Next.js!</div>;
-}
+const IndexScreen = () => (
+  <>
+    <Head>
+      <title>Открытые города | Главная </title>
+    </Head>
+    <Banner />
+  </>
+);
 
-export default Home;
+export default withSSR()(IndexScreen);
