@@ -41,6 +41,7 @@
     
 
     &._dropdown
+      position relative
       svg
         transition-duration .1s
         margin-left 8px
@@ -50,3 +51,42 @@
       &:hover
         svg
           transform rotate(180deg)
+        .nav
+          &__dropdown
+            display block
+      .nav
+        &__dropdown
+          display none
+          overflow visible
+          position absolute
+          z-index 99
+          top 100%
+          right -100px
+          padding-top 30px
+          height auto
+
+          &:before
+            content ''
+            display block
+            border-left 8px solid transparent;
+            border-right 8px solid transparent;
+            border-bottom 12px solid $w;
+            position absolute
+            top 18px
+            right 150px
+
+          & > .nav__list
+            background-color $w
+            padding 25px 5px
+            border-radius 20px
+            min-width 300px
+            min-height 110px
+            max-height 300px
+            box-shadow 0px 2px 3px rgba(0, 0, 0, 0.25)
+        &__list
+          flex-flow column wrap
+        &__elem
+          color $mainColor
+          margin-bottom 5px
+
+          

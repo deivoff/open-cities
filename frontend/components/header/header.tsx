@@ -21,6 +21,13 @@ export const Header: React.SFC<IHeaderProps> = ({ signHandler }) => {
           <li className={cn(s['nav__elem'])}>Исследования</li>
           <li className={cn(s['nav__elem'], s['_dropdown'])}>
             Города <ArrowMenu />
+            <div className={cn(s['nav__dropdown'])}>
+              <ul className={cn(s['nav__list'])}>
+                <li className={cn(s['nav__elem'])}>Тюмень</li>
+                <li className={cn(s['nav__elem'])}>Екатеринбург</li>
+                <li className={cn(s['nav__elem'])}>Челябинск</li>
+              </ul>
+            </div>
           </li>
         </ul>
         <button

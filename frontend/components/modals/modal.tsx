@@ -1,25 +1,47 @@
 import * as React from 'react';
-import cn from 'classnames';
-import { Portal } from '../portal/portal';
-
-const css = require('./modal.styl');
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 interface IModalProps {
   opened?: boolean;
-  children: any;
+  modals: any;
 }
 
-export const Modal = (props: IModalProps) => {
-  const { opened = true, children } = props;
-  console.log(opened);
-
-  return (
-    <>
-      <Portal selector='#modal'>
-        <div className={cn(css['overlay'])}>
-          <div>{children}</div>
-        </div>
-      </Portal>
-    </>
-  );
+const mapStateToProps = (state: any): IModalProps => {
+  return {
+    modals: state.modals
+  };
 };
+
+class Modal extends React.Component<IModalProps> {
+  el: HTMLDivElement | undefined;
+
+  portal: Element | null | undefined;
+
+  constructor(props: IModalProps) {
+    super(props);
+
+    if (document) {
+      this.el = document.createElement('div');
+      this.portal = document.querySelector('#modal');
+    }
+  }
+
+  componentDidMount() {
+    if (document && this.el && this.portal) {
+      this.portal.appendChild(this.el);
+    }
+  }
+
+  componentWillUnmount() {
+    if (document && this.el && this.portal) {
+      this.portal.removeChild(this.el);
+    }
+  }
+
+  render() {
+    return this.el ? ReactDOM.createPortal(this.props.modals, this.el) : null;
+  }
+}
+
+export default connect(mapStateToProps)(Modal);

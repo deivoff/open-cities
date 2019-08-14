@@ -17,7 +17,9 @@ module.exports = {
         parser: 'flow',
         jsxSingleQuote: true
       }
-    ]
+    ],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn'
   },
   settings: {
     'import/resolver': {
@@ -26,5 +28,5 @@ module.exports = {
       }
     }
   },
-  plugins: ['prettier']
+  plugins: ['prettier', 'react-hooks']
 };
