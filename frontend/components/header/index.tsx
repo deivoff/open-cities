@@ -3,17 +3,16 @@ import { Dispatch } from 'redux';
 
 import { Header } from './header';
 import { openModal } from '../../store/modals/actions';
-import { AuthModal } from '../modals/authModal';
 
-const mapStateToProps = (state: any) => {
-  return { count: state.count };
-};
+export interface IHeaderProps {
+  signHandler?: any;
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  signHandler: () => dispatch(openModal(AuthModal))
+  signHandler: () => dispatch(openModal({ type: 'auth' }))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Header);

@@ -1,47 +1,39 @@
-import * as React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
+// import cn from 'classnames';
+import { IModal } from '../../store/modals/types';
+import { usePortal } from '../portal/portal';
+import { AuthModal } from './authModal';
+import { IModalProps } from '.';
 
-interface IModalProps {
-  opened?: boolean;
-  modals: any;
-}
+const css = require('./modal.styl');
 
-const mapStateToProps = (state: any): IModalProps => {
-  return {
-    modals: state.modals
-  };
+const ModalWrapper = (props: any) => (
+  <div
+    role='button'
+    tabIndex={0}
+    onClick={props.onClick}
+    onKeyPress={props.onClick}
+    className={css['modal-wrapper']}
+  >
+    {props.children}
+  </div>
+);
+
+export const Modal = ({ type, handlerClose }: IModal & IModalProps) => {
+  const target = usePortal('modal');
+  let modalComponent = null;
+  switch (type) {
+    case 'auth': {
+      modalComponent = (
+        <ModalWrapper onClick={handlerClose}>
+          <AuthModal />
+        </ModalWrapper>
+      );
+      break;
+    }
+    default:
+      break;
+  }
+  return target ? ReactDOM.createPortal(modalComponent, target) : null;
 };
-
-class Modal extends React.Component<IModalProps> {
-  el: HTMLDivElement | undefined;
-
-  portal: Element | null | undefined;
-
-  constructor(props: IModalProps) {
-    super(props);
-
-    if (document) {
-      this.el = document.createElement('div');
-      this.portal = document.querySelector('#modal');
-    }
-  }
-
-  componentDidMount() {
-    if (document && this.el && this.portal) {
-      this.portal.appendChild(this.el);
-    }
-  }
-
-  componentWillUnmount() {
-    if (document && this.el && this.portal) {
-      this.portal.removeChild(this.el);
-    }
-  }
-
-  render() {
-    return this.el ? ReactDOM.createPortal(this.props.modals, this.el) : null;
-  }
-}
-
-export default connect(mapStateToProps)(Modal);

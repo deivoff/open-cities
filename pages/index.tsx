@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 
+import Modal from '../frontend/components/modals';
 import { withSSR } from '../utils/_ssr';
-import { Banner, getRandomInt } from '../frontend/components/banner/banner';
+import { Banner } from '../frontend/components/banner/banner';
+import { getRandomInt } from '../frontend/components/banner/utils';
 
 const IndexScreen = () => {
   const [dots, setDots] = useState([{ duration: getRandomInt(4, 8), key: 0 }]);
@@ -10,11 +12,11 @@ const IndexScreen = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (activeDots < 150) {
+      if (activeDots < 200) {
         setDots([...dots, { duration: getRandomInt(3, 5), key: 0 }]);
         setActiveDots(activeDots + 1);
       }
-    }, 200);
+    }, 20);
     return () => clearInterval(interval);
   }, [dots, activeDots]);
 
@@ -24,6 +26,7 @@ const IndexScreen = () => {
         <title>Открытые города | Главная </title>
       </Head>
       <Banner dots={dots} />
+      <Modal />
     </>
   );
 };

@@ -1,13 +1,10 @@
 import React from 'react';
 import cn from 'classnames';
+import { IHeaderProps } from '.';
 
 const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 const s = require('./header.styl');
 const btn = require('./../button/button.styl');
-
-interface IHeaderProps {
-  signHandler?: any;
-}
 
 export const Header: React.SFC<IHeaderProps> = ({ signHandler }) => {
   return (

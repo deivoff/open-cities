@@ -1,9 +1,9 @@
-import { OPEN_MODAL, CLOSE_MODAL } from './types';
+import { OPEN_MODAL, CLOSE_MODAL, IModal } from './types';
 
-export const openModal = (content: any) => {
+export const openModal = (modal: IModal) => {
   return {
     type: OPEN_MODAL,
-    content
+    modal
   };
 };
 
