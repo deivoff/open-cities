@@ -1,6 +1,6 @@
-import { OPEN_MODAL, CLOSE_MODAL } from './types';
+import { OPEN_MODAL, CLOSE_MODAL, IModal } from './types';
 
-export const modalsReducer = (state: any[] = [], action: any) => {
+export const modalsReducer = (state: IModal[] = [], action: any): IModal[] => {
   switch (action.type) {
     case OPEN_MODAL: {
       const { modal } = action;

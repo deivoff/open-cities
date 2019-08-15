@@ -2,7 +2,7 @@ import Router from 'koa-router';
 import nextjs from 'next';
 
 interface IRender {
-  screen?: any;
+  screen?: string;
   props?: any;
   options?: any;
 }

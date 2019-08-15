@@ -1,3 +1,5 @@
+import isString from 'lodash/isString';
+
 export const isArrayExist = (elem: any): boolean => {
   return Array.isArray(elem) && !!elem.length;
 };
@@ -14,7 +16,7 @@ export const deepArrayReverse = (array: any, deep = true) => {
 
 export const deepStringToNumber = (array: any, deep = true) => {
   return array.map((elem: any) => {
-    if (typeof elem === 'string') {
+    if (isString(elem)) {
       return Number.parseFloat(elem);
     } else if (isArrayExist(elem) && deep) {
       return deepStringToNumber(elem, true);

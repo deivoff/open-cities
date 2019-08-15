@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable lodash/prefer-lodash-typecheck */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
+import isFunction from 'lodash/isFunction';
 import { initializeStore } from '../frontend/store';
 
 const isServer = typeof window === 'undefined';
@@ -33,13 +33,25 @@ export default (App: any) => {
     static async getInitialProps(appContext: any) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
-      const reduxStore = getOrCreateStore();
+      // const cities = await;
+      const reduxStore = getOrCreateStore({
+        cities: [
+          {
+            name: 'Тюмень',
+            url: '/tmn'
+          },
+          {
+            name: 'Екатеринбург',
+            url: '/ekb'
+          }
+        ]
+      });
 
       // Provide the store to getInitialProps of pages
       appContext.ctx.reduxStore = reduxStore;
 
       let appProps = {};
-      if (typeof App.getInitialProps === 'function') {
+      if (isFunction(App.getInitialProps)) {
         appProps = await App.getInitialProps(appContext);
       }
 

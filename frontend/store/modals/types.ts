@@ -5,7 +5,3 @@ export interface IModal {
   type: 'auth' | 'form';
   content?: any;
 }
-
-export interface IModalsState {
-  modals: IModal[];
-}

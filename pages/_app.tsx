@@ -6,8 +6,7 @@ import withReduxStore from '../utils/_redux';
 
 require('../frontend/static/styles/main.styl');
 
-const Layout = (props: any) => {
-  const { children } = props;
+const Layout = ({ children }: any) => {
   return (
     <>
       <Header />

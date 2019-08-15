@@ -3,9 +3,11 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { modalsReducer } from './modals/reducers';
+import { ICitySchema } from '../../server/components/city/ICity';
 
 const rootReducer = combineReducers({
-  modals: modalsReducer
+  modals: modalsReducer,
+  cities: (state: ICitySchema[] = []): ICitySchema[] => state
 });
 
 const reducerInitializedStore = createStore(rootReducer).getState();
