@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { modalsReducer } from './modals/reducers';
-import { ICitySchema } from '../../server/components/city/ICity';
+import { ICitySchema } from '../../server/components/city/types';
+import { IUserSchema } from '../../server/components/user/types';
 
 const rootReducer = combineReducers({
   modals: modalsReducer,
-  cities: (state: ICitySchema[] = []): ICitySchema[] => state
+  cities: (state: ICitySchema[] = []): ICitySchema[] => state,
+  profile: (state: IUserSchema = {}): IUserSchema => state
 });
 
 const reducerInitializedStore = createStore(rootReducer).getState();

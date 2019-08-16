@@ -10,6 +10,11 @@ export const createRouter = async () => {
       screen: 'index'
     });
   });
+  router.get('/cities/:city', async (ctx: any) => {
+    return ctx.render({
+      screen: 'city'
+    });
+  });
 
   router.get('/comments', async (ctx: any) => {
     const comments = ctx.session.comments || [];

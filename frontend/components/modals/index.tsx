@@ -1,16 +1,5 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { Modal } from './modal';
-import { closeModal } from '../../store/modals/actions';
-// import { IModal } from '../../store/modals/types';
-
-export interface IModalProps {
-  handlerClose?: any;
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  handlerClose: () => dispatch(closeModal())
-});
 
 const mapStateToProps = ({ modals }: any) => {
   if (modals.length) {
@@ -23,7 +12,4 @@ const mapStateToProps = ({ modals }: any) => {
   return {};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modal);
+export default connect(mapStateToProps)(Modal);

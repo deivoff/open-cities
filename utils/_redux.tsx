@@ -4,6 +4,7 @@
 import React from 'react';
 import isFunction from 'lodash/isFunction';
 import { initializeStore } from '../frontend/store';
+import { getCityList } from '../server/components/city/controllers';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
@@ -33,18 +34,13 @@ export default (App: any) => {
     static async getInitialProps(appContext: any) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
-      // const cities = await;
+      const cities = await getCityList();
       const reduxStore = getOrCreateStore({
-        cities: [
-          {
-            name: 'Тюмень',
-            url: '/tmn'
-          },
-          {
-            name: 'Екатеринбург',
-            url: '/ekb'
-          }
-        ]
+        profile: {
+          userName: 'deivoff',
+          role: 'admin'
+        },
+        cities
       });
 
       // Provide the store to getInitialProps of pages

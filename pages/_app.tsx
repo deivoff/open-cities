@@ -1,6 +1,7 @@
 import React from 'react';
 import App, { Container } from 'next/app';
 import { Provider } from 'react-redux';
+import Modal from '../frontend/components/modals';
 import Header from '../frontend/components/header';
 import withReduxStore from '../utils/_redux';
 
@@ -28,6 +29,7 @@ class MyApp extends App<IApp> {
           <Layout>
             <Component {...pageProps} />
           </Layout>
+          <Modal />
         </Provider>
       </Container>
     );

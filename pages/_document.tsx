@@ -9,7 +9,7 @@ export default class extends Document {
         <Head />
         <body>
           <Main />
-          <div id='modal' />
+          <div id='modal'></div>
           <NextScript />
         </body>
       </html>

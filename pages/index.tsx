@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 
-import Modal from '../frontend/components/modals';
 import { withSSR } from '../utils/_ssr';
 import { Banner } from '../frontend/components/banner/banner';
 import { getRandomInt } from '../frontend/components/banner/utils';
@@ -26,7 +25,6 @@ const IndexScreen = () => {
         <title>Открытые города | Главная </title>
       </Head>
       <Banner dots={dots} />
-      <Modal />
     </>
   );
 };

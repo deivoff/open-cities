@@ -1,27 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import cn from 'classnames';
+import cn from 'classnames';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { IModal } from '../../store/modals/types';
 import { usePortal } from '../portal/portal';
 import { Auth } from '../auth/auth';
-import { IModalProps } from '.';
+import { closeModal } from '../../store/modals/actions';
 
 const css = require('./modal.styl');
 
-const ModalWrapper = (props: any) => (
+export interface IModalProps {
+  handlerClose?: any;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  handlerClose: () => dispatch(closeModal())
+});
+
+const ModalWrapper = connect(
+  null,
+  mapDispatchToProps
+)((props: any) => (
   <div
     role='button'
     tabIndex={0}
-    onClick={props.onClick}
-    onKeyPress={props.onClick}
-    className={css['modal-wrapper']}
+    onClick={props.handlerClose}
+    onKeyPress={props.handlerClose}
+    className={cn(css['modal-wrapper'], css['_shadow'])}
   >
     <div className={css['modal-window']}>
       <button
         type='button'
         className={css['modal-window__close']}
-        onClick={props.onClick}
-        onKeyPress={props.onClick}
+        onClick={props.handlerClose}
+        onKeyPress={props.handlerClose}
       >
         <span />
         <span />
@@ -29,15 +42,15 @@ const ModalWrapper = (props: any) => (
       {props.children}
     </div>
   </div>
-);
+));
 
-export const Modal = ({ type, handlerClose }: IModal & IModalProps) => {
+export const Modal = ({ type }: IModal & IModalProps) => {
   const target = usePortal('modal');
   let modalComponent = null;
   switch (type) {
     case 'auth': {
       modalComponent = (
-        <ModalWrapper onClick={handlerClose}>
+        <ModalWrapper>
           <h2>Вход</h2>
           <Auth />
         </ModalWrapper>

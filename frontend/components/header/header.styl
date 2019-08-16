@@ -9,6 +9,8 @@
   justify-content space-between
   align-items center
   background-color $mainColor
+  +below('md')
+    padding 15px 20px
 
   &._transparent
     background-color transparent
@@ -20,6 +22,9 @@
   text-transform uppercase
   text-decoration none
   flex-shrink 0
+  +below('md')
+    font-size 14px
+    line-height 16px
 
 .nav
   display flex
@@ -27,6 +32,30 @@
 
   +below('md')
     display none
+  
+  &__button
+    display none
+    +below('md')
+      display block
+      border none
+      width 18px
+      height 16px
+      background none
+      padding 0
+      position relative
+      > span
+        position absolute
+        height 1px
+        width 18px
+        display block
+        background-color $w
+        left 0
+        &:nth-child(1)
+          top 0
+        &:nth-child(2)
+          top 50%
+        &:nth-child(3)
+          top 100%
 
   &__list
     display flex

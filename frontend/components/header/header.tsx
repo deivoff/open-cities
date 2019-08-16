@@ -2,8 +2,8 @@
 import React from 'react';
 import cn from 'classnames';
 import Link from 'next/link';
-import { ICitySchema } from '../../../server/components/city/ICity';
 import { IHeaderProps } from '.';
+import Profile from '../panels/profile';
 
 const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 const s = require('./header.styl');
@@ -11,13 +11,19 @@ const btn = require('./../button/button.styl');
 
 export const Header: React.SFC<IHeaderProps> = ({
   signHandler,
-  cities
+  cities,
+  profile
 }: IHeaderProps) => {
   return (
     <header className={cn(s.header)}>
       <a className={s.logo} href='/'>
         Открытые города
       </a>
+      <button type='button' className={s['nav__button']}>
+        <span />
+        <span />
+        <span />
+      </button>
       <nav className={s.nav}>
         <ul className={cn(s['nav__list'])}>
           <li className={cn(s['nav__elem'])}>
@@ -35,9 +41,9 @@ export const Header: React.SFC<IHeaderProps> = ({
             <div className={cn(s['nav__dropdown'])}>
               <ul className={cn(s['nav__list'])}>
                 {cities
-                  ? cities.map(({ name, url }: ICitySchema) => (
+                  ? cities.map(({ name, url }) => (
                       <li className={cn(s['nav__elem'])} key={name}>
-                        <Link href={url}>
+                        <Link href={`/cities/[city]`} as={`/cities/${url}`}>
                           <a>{name}</a>
                         </Link>
                       </li>
@@ -47,13 +53,17 @@ export const Header: React.SFC<IHeaderProps> = ({
             </div>
           </li>
         </ul>
-        <button
-          className={cn(btn.button, btn['_success'])}
-          onClick={signHandler}
-          type='button'
-        >
-          Войти
-        </button>
+        {JSON.stringify(profile) === '{}' ? (
+          <button
+            className={cn(btn.button, btn['_success'])}
+            onClick={signHandler}
+            type='button'
+          >
+            Войти
+          </button>
+        ) : (
+          <Profile />
+        )}
       </nav>
     </header>
   );

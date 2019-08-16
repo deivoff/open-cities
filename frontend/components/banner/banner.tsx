@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Media from 'react-media';
 import cn from 'classnames';
 import { getRandomInt, getRandomNormal } from './utils';
 
@@ -76,11 +75,6 @@ const DotCreate = ({ duration }: IDot) => {
 };
 
 export const Banner = ({ dots }: any) => {
-  const [{ width, height }, setSize] = useState({
-    width: 325,
-    height: 425
-  });
-
   return (
     <section className={cn(css.banner)}>
       <div className={css.description}>
@@ -93,19 +87,11 @@ export const Banner = ({ dots }: any) => {
         </p>
       </div>
       <div className={css.decorative}>
-        <Media
-          query='(max-width: 1200px)'
-          onChange={matches =>
-            matches
-              ? setSize({ width: 1888, height: 904 })
-              : setSize({ width: 1888, height: 904 })
-          }
-        />
         <svg
           xmlns='http://www.w3.org/2000/svg'
           viewBox='73.5 47.5 1888 904'
-          width={width}
-          height={height}
+          width={1888}
+          height={904}
         >
           <defs>
             <clipPath id='a'>
