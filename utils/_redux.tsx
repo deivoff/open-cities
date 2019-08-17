@@ -34,12 +34,13 @@ export default (App: any) => {
     static async getInitialProps(appContext: any) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
+      console.log('ctx user', appContext.ctx.user);
       const cities = await getCityList();
       const reduxStore = getOrCreateStore({
-        profile: {
+        profile: {/* 
           userName: 'deivoff',
           role: 'admin'
-        },
+         */},
         cities
       });
 

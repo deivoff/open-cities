@@ -5,9 +5,7 @@ require('dotenv').config({ path: path.join(`${__dirname}./../.env`) });
 const config = {
   mongodb: {
     url: `${process.env.DB_URL}`,
-
-    databaseName: 'myos',
-
+    databaseName: `${process.env.DB_NAME}`,
     options: {
       useNewUrlParser: true // removes a deprecation warning when connecting
       //   connectTimeoutMS: 3600000, // increase connection timeout to 1 hour

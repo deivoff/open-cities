@@ -1,22 +1,16 @@
 import Router from 'koa-router';
+import { createPagesRouter } from './components/pages/router';
+import { createAuthRouter } from './components/auth/router';
 
-export const createRouter = async () => {
-  const router = new Router();
+export const createRouters = async () => {
+  const routers: Router[] = [
+    createPagesRouter,
+    createAuthRouter,
+  ].map((createRouter: any) => {
+    return createRouter();
+  })
 
-  // View endpoints
-  router.get('/', async (ctx: any) => {
-    // You can `await` or `return` the ctx.render function call
-    await ctx.render({
-      screen: 'index'
-    });
-  });
-  router.get('/cities/:city', async (ctx: any) => {
-    return ctx.render({
-      screen: 'city'
-    });
-  });
-
-  router.get('/comments', async (ctx: any) => {
+  /* router.get('/comments', async (ctx: any) => {
     const comments = ctx.session.comments || [];
     return ctx.render({
       screen: 'comments',
@@ -43,6 +37,6 @@ export const createRouter = async () => {
     ctx.status = 201;
     ctx.body = comment;
   });
-
-  return router;
+ */
+  return routers;
 };

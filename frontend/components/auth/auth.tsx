@@ -1,10 +1,12 @@
 import React from 'react';
 
+const css = require('./auth.styl');
+
 export const Auth: React.SFC = () => {
   return (
     <div>
-      К сожалению, на данный момент сервер авторизации не подключен. Приносим
-      свои соболезнования :с
+      <p>Авторизуйтесь через следующие приложения: </p>
+      <a href='/auth/google' className={css['auth__google']} />
     </div>
   );
 };

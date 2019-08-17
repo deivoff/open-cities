@@ -51,7 +51,7 @@ export const Modal = ({ type }: IModal & IModalProps) => {
     case 'auth': {
       modalComponent = (
         <ModalWrapper>
-          <h2>Вход</h2>
+          <h2 className={css['modal-window__title']}>Вход</h2>
           <Auth />
         </ModalWrapper>
       );
