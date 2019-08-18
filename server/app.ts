@@ -24,20 +24,24 @@ export const createApp = async () => {
   }
   app.keys = [process.env.SECRET_KEY || 'SECRET_KEY'];
 
-  await setupSSR(app);
-
   // Add middleware
   app.use(logger());
   app.use(bodyParser());
   app.use(statics(path.join(__dirname, '..', 'public')));
-  app.use(session({
-    maxAge: 24 * 60 * 60 * 1000
-  }, app));
+  app.use(
+    session(
+      {
+        maxAge: 24 * 60 * 60 * 1000
+      },
+      app
+    )
+  );
 
   // Add passport
-  app.use(passport.initialize())
-  app.use(passport.session())
+  app.use(passport.initialize());
+  app.use(passport.session());
 
+  await setupSSR(app);
   // TODO: Error handling
 
   // Add routes

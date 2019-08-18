@@ -20,10 +20,6 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/city": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
     "/index": [
       "static/runtime/webpack.js",
       "static/css/styles.chunk.css",

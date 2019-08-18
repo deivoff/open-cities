@@ -6,7 +6,9 @@ export const Auth: React.SFC = () => {
   return (
     <div>
       <p>Авторизуйтесь через следующие приложения: </p>
-      <a href='/auth/google' className={css['auth__google']} />
+      <a href='/auth/google' className={css['auth__google']}>
+        Google
+      </a>
     </div>
   );
 };

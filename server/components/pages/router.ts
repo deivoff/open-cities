@@ -17,4 +17,4 @@ export const createPagesRouter = () => {
   });
 
   return router;
-}
+};

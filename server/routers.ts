@@ -3,12 +3,11 @@ import { createPagesRouter } from './components/pages/router';
 import { createAuthRouter } from './components/auth/router';
 
 export const createRouters = async () => {
-  const routers: Router[] = [
-    createPagesRouter,
-    createAuthRouter,
-  ].map((createRouter: any) => {
-    return createRouter();
-  })
+  const routers: Router[] = [createPagesRouter, createAuthRouter].map(
+    (createRouter: any) => {
+      return createRouter();
+    }
+  );
 
   /* router.get('/comments', async (ctx: any) => {
     const comments = ctx.session.comments || [];

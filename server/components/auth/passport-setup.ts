@@ -1,51 +1,68 @@
 import passport from 'koa-passport';
-const GoogleStrategy = require('passport-google-oauth20');
 import keys from './config';
 import UserModel, { IUserPhotoSchema, IUserSchema } from '../user/types';
 
+const GoogleStrategy = require('passport-google-oauth20');
+
 interface IDoneFunction {
-  (err: any, user: IUserSchema): void;
+  (err: any, user: IUserSchema | null): void;
 }
 
 passport.serializeUser((user: any, done) => {
-  done(null, user.id)
-})
+  done(null, user.id);
+});
 
-passport.deserializeUser((id, done) => {
-   return UserModel.findById(id)
-   .then((user: IUserSchema | null) => {
-    done(null, user)
-  })
-  .catch(err => {
-    done(err, null)
-  })
-})
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user: IUserSchema | null = await UserModel.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
 
-passport.use(new GoogleStrategy({
-  ...keys.google,
-  callbackURL: '/auth/google/redirect'
-}, (accessToken: string, refreshToken: string, profile: any, done: IDoneFunction) => {
-  const { id, name, photos} = profile;
-  console.log(accessToken, refreshToken);
-  UserModel.findOne({
-    googleID: id
-  }).then((currentUser: IUserSchema | null) => {
-    if (currentUser) {
-      done(null, currentUser)
-    } else {
-      new UserModel({
-        googleID: id,
-        name,
-        photos: photos.map(({ value }: any): IUserPhotoSchema => {
-          return {
-          url: value
+passport.use(
+  new GoogleStrategy(
+    {
+      ...keys.google,
+      callbackURL: '/auth/google/redirect'
+    },
+    async (
+      accessToken: string,
+      refreshToken: string,
+      profile: any,
+      done: IDoneFunction
+    ) => {
+      const { id, name, photos } = profile;
+      console.log(accessToken, refreshToken);
+      try {
+        const currentUser: IUserSchema | null = await UserModel.findOne({
+          googleID: id
+        });
+
+        if (currentUser) {
+          return done(null, currentUser);
+        } else {
+          const newUser = new UserModel({
+            googleID: id,
+            name,
+            photos: photos.map(({ value }: any): IUserPhotoSchema => {
+              return {
+                url: value
+              };
+            }),
+            role: 'user'
+          });
+          try {
+            await newUser.save();
+            return done(null, newUser);
+          } catch (error) {
+            return done(error, null);
           }
-        }),
-        role: 'user'
-      }).save().then((newUser: IUserSchema) => {
-        console.log('The user has been saved: ' + newUser)
-        done(null, newUser)
-      })
+        }
+      } catch (error) {
+        return done(error, null);
+      }
     }
-  })
-}));
+  )
+);

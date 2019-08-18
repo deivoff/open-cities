@@ -1,4 +1,5 @@
 import Router from 'koa-router';
+import Koa from 'koa';
 import nextjs from 'next';
 
 interface IRender {
@@ -8,7 +9,7 @@ interface IRender {
 }
 
 // We love async builder functions
-export const setupSSR = async (app: any) => {
+export const setupSSR = async (app: Koa) => {
   // Setup Next.js
   const nextEngine = nextjs({ dev: process.env.NODE_ENV !== 'production' });
   const handle = nextEngine.getRequestHandler();
@@ -21,7 +22,7 @@ export const setupSSR = async (app: any) => {
     options
   }: IRender) {
     const ctx = this;
-
+    // console.log('ctx', ctx.res, ctx.req.user);
     // Here we take the React.js page and convert it to HTML in the server
     // After the browser downloads the JS files (from /_next/) React.js is re-hydrated
 

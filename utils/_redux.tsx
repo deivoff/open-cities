@@ -5,6 +5,7 @@ import React from 'react';
 import isFunction from 'lodash/isFunction';
 import { initializeStore } from '../frontend/store';
 import { getCityList } from '../server/components/city/controllers';
+import { IUserSchema } from '../server/components/user/types';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
@@ -34,13 +35,17 @@ export default (App: any) => {
     static async getInitialProps(appContext: any) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
-      console.log('ctx user', appContext.ctx.user);
       const cities = await getCityList();
+      const user = appContext.ctx.req.user;
+      const profile: IUserSchema | {} = user
+        ? {
+            name: user.name,
+            photos: user.photos,
+            role: user.role
+          }
+        : {};
       const reduxStore = getOrCreateStore({
-        profile: {/* 
-          userName: 'deivoff',
-          role: 'admin'
-         */},
+        profile,
         cities
       });
 
@@ -52,6 +57,7 @@ export default (App: any) => {
         appProps = await App.getInitialProps(appContext);
       }
 
+      console.log('appProps', appProps);
       return {
         ...appProps,
         initialReduxState: reduxStore.getState()
