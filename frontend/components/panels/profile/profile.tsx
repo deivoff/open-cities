@@ -2,7 +2,9 @@ import React from 'react';
 import cn from 'classnames';
 import { IUserSchema } from '../../../../server/components/user/types';
 
-const css = require('./profile.styl');
+const cssHeader = require('../../header/header.styl');
+const cssProfile = require('./profile.styl');
+const ArrowMenu = require('../../../assets/svg/ArrowMenu.svg');
 
 interface IProfileProps {
   profile: IUserSchema;
@@ -10,13 +12,22 @@ interface IProfileProps {
 
 export const ProfilePanel = ({ profile }: IProfileProps) => {
   return (
-    <div className={css.profile}>
-      <div className={css['profile__name']}>
+    <div className={cssProfile.profile}>
+      <div className={cn(cssHeader['nav__elem'], cssHeader['_dropdown'])}>
         {profile.name
           ? `${profile.name.givenName} ${profile.name.familyName}`
           : null}
+        <ArrowMenu />
+        <div className={cn(cssHeader['nav__dropdown'], cssHeader['_profile'])}>
+          <ul className={cn(cssHeader['nav__list'], cssHeader['_profile'])}>
+            <li className={cssHeader['nav__elem']}>Мой профиль</li>
+            <li className={cssHeader['nav__elem']}>Мои карты</li>
+            <li className={cssHeader['nav__elem']}>Мои исследования</li>
+            <li className={cssHeader['nav__elem']}>Выйти</li>
+          </ul>
+        </div>
       </div>
-      <div className={css['profile__photo']}>
+      <div className={cssProfile['profile__photo']}>
         <img
           alt='User thimbnail'
           src={
@@ -28,12 +39,6 @@ export const ProfilePanel = ({ profile }: IProfileProps) => {
               : ''
           }
         />
-      </div>
-      <div className={cn(css['profile__list'], css['_dropdown'])}>
-        <ul>
-          <li>Мои карты</li>
-          <li>Редактор карт</li>
-        </ul>
       </div>
     </div>
   );
