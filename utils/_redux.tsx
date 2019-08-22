@@ -57,7 +57,6 @@ export default (App: any) => {
         appProps = await App.getInitialProps(appContext);
       }
 
-      console.log('appProps', appProps);
       return {
         ...appProps,
         initialReduxState: reduxStore.getState()

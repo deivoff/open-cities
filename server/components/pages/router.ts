@@ -10,9 +10,22 @@ export const createPagesRouter = () => {
       screen: 'index'
     });
   });
+
   router.get('/cities/:city', async (ctx: RouterContext) => {
+    const { city } = ctx.params;
     return ctx.render({
-      screen: 'city'
+      screen: 'city',
+      props: {
+        city: {
+          url: city
+        }
+      }
+    });
+  });
+
+  router.get('/maps', async (ctx: RouterContext) => {
+    return ctx.render({
+      screen: 'maps'
     });
   });
 

@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import cn from 'classnames';
+import Link from 'next/link';
 import { IUserSchema } from '../../../../server/components/user/types';
 
 const cssHeader = require('../../header/header.styl');
@@ -20,10 +22,26 @@ export const ProfilePanel = ({ profile }: IProfileProps) => {
         <ArrowMenu />
         <div className={cn(cssHeader['nav__dropdown'], cssHeader['_profile'])}>
           <ul className={cn(cssHeader['nav__list'], cssHeader['_profile'])}>
-            <li className={cssHeader['nav__elem']}>Мой профиль</li>
-            <li className={cssHeader['nav__elem']}>Мои карты</li>
-            <li className={cssHeader['nav__elem']}>Мои исследования</li>
-            <li className={cssHeader['nav__elem']}>Выйти</li>
+            <li className={cssHeader['nav__elem']}>
+              <Link href='/profile'>
+                <a>Мой профиль</a>
+              </Link>
+            </li>
+            <li className={cssHeader['nav__elem']}>
+              <Link href='/maps'>
+                <a>Мои карты</a>
+              </Link>
+            </li>
+            <li className={cssHeader['nav__elem']}>
+              <Link href='/researches'>
+                <a>Мои исследования</a>
+              </Link>
+            </li>
+            <li className={cssHeader['nav__elem']}>
+              <Link href='/auth/logout'>
+                <a>Выйти</a>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

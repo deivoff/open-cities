@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+// eslint-disable-next-line import/no-unresolved
 import { Geometry, GeoJsonProperties } from 'geojson';
 
 export type IGeometrySchema = Geometry & {
@@ -6,7 +7,6 @@ export type IGeometrySchema = Geometry & {
 };
 
 export interface IGeoSchema {
-  city?: string;
   access?: 0 | 1 | 2;
   author?: string;
   date?: Date;

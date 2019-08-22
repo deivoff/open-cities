@@ -18,6 +18,7 @@ module.exports = {
         jsxSingleQuote: true
       }
     ],
+    'no-console': 1,
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn'
   },

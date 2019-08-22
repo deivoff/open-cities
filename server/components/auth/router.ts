@@ -10,20 +10,32 @@ export const createAuthRouter = () => {
 
   // Auth endpoints
   router.get('/login', async (ctx: RouterContext) => {
-      await (ctx.body = 'login')
-  })
+    await (ctx.body = 'login');
+  });
 
   router.get('/logout', async (ctx: RouterContext) => {
-    await (ctx.body = 'logout')
-  })
+    if (ctx.isAuthenticated()) {
+      ctx.logout();
+      await ctx.redirect('back');
+    } else {
+      await ctx.redirect('back');
+    }
+  });
 
-  router.get('/google', passport.authenticate('google',{
-    scope: ['profile']
-  }))
+  router.get(
+    '/google',
+    passport.authenticate('google', {
+      scope: ['profile']
+    })
+  );
 
-  router.get('/google/redirect', passport.authenticate('google'), async (ctx: RouterContext) => {
-    await ctx.redirect('back'); 
-  })
+  router.get(
+    '/google/redirect',
+    passport.authenticate('google'),
+    async (ctx: RouterContext) => {
+      await ctx.redirect('back');
+    }
+  );
 
   return router;
-}
+};

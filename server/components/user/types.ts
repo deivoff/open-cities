@@ -1,5 +1,13 @@
 import mongoose from 'mongoose';
 
+export interface IUserNameSchema {
+  familyName?: string;
+  givenName?: string;
+}
+
+export interface IUserPhotoSchema {
+  url?: string;
+}
 export interface IUserSchema {
   name?: IUserNameSchema;
   googleID?: string;
@@ -7,31 +15,23 @@ export interface IUserSchema {
   role?: string;
 }
 
-export interface IUserNameSchema {
-  familyName?: string;
-  givenName?: string
-}
-
-export interface IUserPhotoSchema {
-  url?: string;
-}
-
 export type IUserDocument = mongoose.Document & IUserSchema;
 
 export const UserSchema = new mongoose.Schema<IUserSchema>({
   name: {
     familyName: String,
-    givenName: String,
+    givenName: String
   },
   googleID: String,
   role: String,
   photos: [
     {
-      url: String,
+      url: String
     }
   ]
-})
+});
 
+// eslint-disable-next-line import/no-mutable-exports
 let UserModel: mongoose.Model<IUserDocument>;
 
 try {

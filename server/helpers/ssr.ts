@@ -1,10 +1,11 @@
 import Router from 'koa-router';
 import Koa from 'koa';
 import nextjs from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
-interface IRender {
+interface IRender<T> {
   screen?: string;
-  props?: any;
+  props?: ParsedUrlQuery & (T | {});
   options?: any;
 }
 
@@ -16,11 +17,12 @@ export const setupSSR = async (app: Koa) => {
   await nextEngine.prepare();
 
   // eslint-disable-next-line no-param-reassign
-  app.context.render = async function render({
+  app.context.render = async function render<T>({
+    // eslint-disable-next-line no-shadow
     screen,
     props = {},
     options
-  }: IRender) {
+  }: IRender<T>) {
     const ctx = this;
     // console.log('ctx', ctx.res, ctx.req.user);
     // Here we take the React.js page and convert it to HTML in the server

@@ -4,10 +4,10 @@ import cn from 'classnames';
 import Link from 'next/link';
 import { IHeaderProps } from '.';
 import Profile from '../panels/profile';
+import { Button } from '../layout';
 
 const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 const s = require('./header.styl');
-const btn = require('./../button/button.styl');
 
 export const Header: React.SFC<IHeaderProps> = ({
   signHandler,
@@ -54,13 +54,7 @@ export const Header: React.SFC<IHeaderProps> = ({
           </li>
         </ul>
         {JSON.stringify(profile) === '{}' ? (
-          <button
-            className={cn(btn.button, btn['_success'])}
-            onClick={signHandler}
-            type='button'
-          >
-            Войти
-          </button>
+          <Button onClick={signHandler}>Войти</Button>
         ) : (
           <Profile />
         )}
