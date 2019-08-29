@@ -7,7 +7,8 @@ const config = {
     url: `${process.env.DB_URL}`,
     databaseName: `${process.env.DB_NAME}`,
     options: {
-      useNewUrlParser: true // removes a deprecation warning when connecting
+      useNewUrlParser: true, // removes a deprecation warning when connecting
+      useUnifiedTopology: true
       //   connectTimeoutMS: 3600000, // increase connection timeout to 1 hour
       //   socketTimeoutMS: 3600000, // increase socket timeout to 1 hour
     }
