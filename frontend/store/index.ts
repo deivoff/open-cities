@@ -5,6 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { modalsReducer } from './modals/reducers';
 import { ICitySchema } from '../../server/components/city/types';
 import { IUserSchema } from '../../server/components/user/types';
+import { IModal } from './modals/types';
+
+export interface IGlobalStore {
+  modals: IModal[];
+  cities: ICitySchema[];
+  profile: IUserSchema;
+}
 
 const rootReducer = combineReducers({
   modals: modalsReducer,

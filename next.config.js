@@ -37,6 +37,12 @@ const iconConfig = {
 module.exports = withPlugins(
   [[withStylus, styleConfig], [withReactSvg, iconConfig]],
   {
-    distDir: 'build'
+    distDir:
+      // eslint-disable-next-line no-nested-ternary
+      process.env.NEXT_ENV
+        ? process.env.NEXT_ENV === 'staged'
+          ? 'build/_next'
+          : 'build'
+        : '_next'
   }
 );

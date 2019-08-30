@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 import { connect } from 'react-redux';
+import { IGlobalStore } from '../frontend/store';
 import { withSSR } from '../utils/_ssr';
 import { ICitySchema } from '../server/components/city/types';
 
@@ -10,7 +11,7 @@ interface ICityScreenProps {
   city?: ICitySchema;
 }
 
-const mapStateToProps = ({ cities }: any) => {
+const mapStateToProps = ({ cities }: IGlobalStore) => {
   return {
     cities
   };
