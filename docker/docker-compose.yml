@@ -11,4 +11,4 @@ services:
       - 27017:27017
     user: root
 
-    command: mongod --smallfiles --logpath=/dev/null # --quiet
+    command: mongod --logpath=/dev/null # --quiet
