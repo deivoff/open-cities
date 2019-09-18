@@ -1,0 +1,44 @@
+$xs: 0px
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+  
+@mixin between($from, $to)
+  @media (min-width: $from) and (max-width: $to)
+    @content
+
+@mixin above($from)
+  @media (min-width: $from) 
+    @content
+
+@mixin below($to)
+  @media (max-width: $to) 
+    @content
+
+@mixin container($type: default)
+  width: 100%
+  display: flex
+  flex-flow: row wrap
+  @if $type = default
+    padding: 0
+  @if $type = wrapper
+    margin: auto
+    @include between($sm, $md)
+      padding-left: calc(50% - 300px)
+      padding-right: calc(50% - 300px)
+    @include between($md, $lg)
+      padding-left: calc(50% - 390px)
+      padding-right: calc(50% - 390px)
+    @include between($lg, $xl)
+      padding-left: calc(50% - 510px)
+      padding-right: calc(50% - 510px)
+    @include above($xl)
+      padding-left: calc(50% - 600px)
+      padding-right: calc(50% - 600px)
+
+@mixin col($from, $size)
+  padding: 0 30px
+  @include above($from)
+    width: (100% / 12) * $size
+    flex-basis: (100% / 12) * $size

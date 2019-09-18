@@ -1,0 +1,36 @@
+@import './../../static/styles/variables.styl'
+
+.button
+  background: none
+  border: none
+  color: $w
+  font-size: 14px
+  line-height: 18px
+  padding: 8px 35px
+  border-radius: 18px
+  cursor: pointer
+  outline: none
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+  transition-duration: .2s
+
+  &:hover
+    transform: translateY(-1px)
+  
+  &:active
+    transform: translateY(-1px) scale(.95)
+
+._success
+  background-color: $successColor
+
+.page
+  &__title
+    font-size: 36px
+    line-height: 43px
+    margin-top: 62px
+    margin-bottom: 62px
+    color: $mainColor
+
+  &__wrapper
+    padding-left: 30px
+    padding-right: 30px
+  
