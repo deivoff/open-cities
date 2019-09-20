@@ -23,7 +23,7 @@ export class GeoResolvers{
       properties,
       geometry,
       layer,
-      author: '5d807c3f29e7697ac18cf66f',
+      author: '5d822dac246ff33f4bfe12dc',
       access: UserType.admin
     });
     try {

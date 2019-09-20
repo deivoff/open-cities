@@ -22,7 +22,7 @@ export class LayerResolvers {
   ): Promise<Layer> {
     const layer = new LayerModel({
       ...layerInput,
-      owner: '5d807c3f29e7697ac18cf66f',
+      owner: '5d822dac246ff33f4bfe12dc',
     });
     try {
       const savedLayer = await layer.save();

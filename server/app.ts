@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import path from 'path';
-import Koa from 'koa';
-import koaBody from 'koa-bodyparser';
+import Koa, { Context } from 'koa';
 import koaRouter from 'koa-router';
 import logger from 'koa-logger';
 import { ApolloServer } from 'apollo-server-koa';
@@ -11,26 +10,46 @@ import { UserResolvers } from './components/user';
 import { CityResolvers } from './components/city';
 import { GeoResolvers } from './components/geo';
 import { LayerResolvers } from './components/layer';
+import { AuthResolvers } from './components/auth';
+import cors from '@koa/cors';
 
+import bodyParser from 'koa-bodyparser';
+
+const config = require('dotenv').config({path: path.join(__dirname + './../.env')});
 
 export const createApp = async () => {
-  const config = await require('dotenv').config({path: path.join(__dirname + './../.env')});
   const app = new Koa();
   const router = new koaRouter();
+  router.get('/oauth/*', (ctx) => {
+    ctx.body = '<script>window.close();</script>'
+    console.log(ctx.request.query)
+  })
   const schema = await buildSchema({
-    resolvers: [UserResolvers, CityResolvers, GeoResolvers, LayerResolvers],
+    resolvers: [
+      UserResolvers, 
+      CityResolvers, 
+      GeoResolvers, 
+      LayerResolvers, 
+      AuthResolvers
+    ],
     emitSchemaFile: true,
     validate: false
   });
 
   // Add middleware
-  app.use(logger());
-  app.use(koaBody());
+  app.use(cors({
+    origin: '*',
+    credentials: true,
+    allowMethods: ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With', 'x-access-token']
+  }))
 
+  app.use(bodyParser());
+  app.use(logger());
 
   const server = new ApolloServer({
     schema,
-    context: (ctx) => ctx,
+    context: (ctx: Context) => ctx,
     playground: true,
     introspection: true
   });
@@ -45,6 +64,7 @@ export const createApp = async () => {
       dbName: `${process.env.DB_NAME}`,
       useUnifiedTopology: true
     });
+    process.env.NODE_ENV === ('development' || 'test') && mongoose.set('debug', true);
     console.log('MongoDB Connected');
   } catch (error) {
     console.log(error);
