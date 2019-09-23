@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import path from 'path';
 import Koa, { Context } from 'koa';
-import koaRouter from 'koa-router';
+import KoaRouter from 'koa-router';
 import logger from 'koa-logger';
 import { ApolloServer } from 'apollo-server-koa';
 import mongoose from 'mongoose';
@@ -14,16 +14,18 @@ import { AuthResolvers } from './components/auth';
 import cors from '@koa/cors';
 
 import bodyParser from 'koa-bodyparser';
+import { oauthHandler } from './helpers/oauth';
 
 const config = require('dotenv').config({path: path.join(__dirname + './../.env')});
 
 export const createApp = async () => {
   const app = new Koa();
-  const router = new koaRouter();
-  router.get('/oauth/*', (ctx) => {
-    ctx.body = '<script>window.close();</script>'
-    console.log(ctx.request.query)
-  })
+  const router = new KoaRouter();
+
+  // OAUTH
+  router.get('/oauth/*', oauthHandler);
+
+
   const schema = await buildSchema({
     resolvers: [
       UserResolvers, 

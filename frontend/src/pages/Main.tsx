@@ -45,12 +45,49 @@ export const MainPage = () => {
 
       const resData = await response.json();
       const { url } = resData.data.getGoogleOAuthRedirect;
-      window.open(url);
+      const test = window.open(url, 'OAuth')!;
+      window.addEventListener('message', authHandler.bind(test));
+      
     } catch (error) {
       throw error;
     }
   }
 
+  async function authHandler(this: Window, e: MessageEvent) {
+    this.close();
+    window.removeEventListener('message', authHandler);
+    const token = e.data;
+
+    const requestBody = {
+      query: `
+      mutation {
+        authGoogle(accessToken: "${token}") {
+          id,
+          email
+        }
+      }
+      `
+    }
+
+    try {
+      const response = await fetch('http://localhost:7000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error('Failed!');
+      };
+
+      const resData = await response.json();
+      console.log(resData);
+    } catch (error) {
+      throw error;
+    };
+  }
   return (
     <>
       <Helmet>

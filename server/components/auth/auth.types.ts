@@ -4,10 +4,7 @@ import { ObjectId } from 'mongodb';
 @ObjectType()
 export class AuthResponse {
   @Field(() => ID)
-  _id!: ObjectId;
-
-  @Field()
-  token!: string;
+  id!: ObjectId;
 
   @Field()
   email!: string;

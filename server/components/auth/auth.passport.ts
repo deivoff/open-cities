@@ -53,14 +53,12 @@ export class GoogleOAuth {
     return url;
   }
 
-  async getGoogleAccountFromCode(code: string) {
+  async serializeAccountFromCode(code: string) {
     try {
       const data = await this.auth.getToken(code);
-      console.log('data', data)
       const tokens = data.tokens;
       this.auth.setCredentials(tokens);
       const plus = this.getGooglePlusApi();
-      console.log(plus)
       const me = await plus.people.get({ userId: 'me' });
       console.log(me);
       const userGoogleId = me.data.id;
@@ -68,46 +66,9 @@ export class GoogleOAuth {
       return {
         id: userGoogleId,
         email: userGoogleEmail,
-        tokens: tokens,
       };
     } catch (error) {
       throw error
     }
   }
 }
-
-/**********/
-/** MAIN **/
-/**********/
-
-/**
- * Part 1: Create a Google URL and send to the client to log in the user.
- */
-
-/**
- * Part 2: Take the "code" parameter which Google gives us once when the user logs in, then get the user's email and id.
- */
-
-
-
-/* export const GoogleTokenStrategyCallback = (accessToken, refreshToken, profile, done) => {
-  console.log(accessToken, refreshToken, profile);
-  return done(null, {
-  
-  accessToken,
-  refreshToken,
-  profile,
-})
-};
-
-passport.use(new GoogleTokenStrategy({
-  clientID: process.env.GOOGlE_CLIENT_ID!,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-}, GoogleTokenStrategyCallback));
-
-export const authenticateGoogle = (ctx, next) => new Promise<{ data: AuthData, info: any}>((resolve, reject) => {
-  passport.authenticate('google-token', { session: false }, (err, data: AuthData, info) => {
-      if (err) reject(err);
-      resolve({ data, info });
-  })(ctx, next)
-}); */
