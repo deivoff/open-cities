@@ -15,7 +15,7 @@ export interface ILogin {
   ): void;
 }
 
-export default React.createContext<IAuthContext>({
+export const AuthContext = React.createContext<IAuthContext>({
   token: null,
   userId: null,
   login: (token, userId, tokenExpiration) => {},

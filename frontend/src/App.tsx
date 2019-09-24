@@ -3,10 +3,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from './apollo';
 
-import AuthContext, { useAuth } from './context/auth-context';
+import { AuthContext, useAuth } from './context';
 import { MainPage } from './pages/Main';
 import { Header } from './components/header';
-import { ILogin } from './context/auth-context';
 
 import './static/styles/_main.sass';
 

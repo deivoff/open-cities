@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, MouseEvent, useContext } from 'react';
 import cn from 'classnames';
-import { Button, GoogleButton } from '../layout';
-import s from './header.module.sass';
 import { Link } from 'react-router-dom';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { Button, GoogleButton } from '../layout';
 import { GET_GOOGLE_REDIRECT_URL, AUTH_GOOGLE, GET_CITIES } from '../../apollo';
 import { Modal } from '../modal';
 import { Spiner } from '../spiner';
-import AuthContext, { IAuthContext } from '../../context/auth-context';
+import { AuthContext, IAuthContext } from '../../context';
 
+import s from './header.module.sass';
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
 const CitiesList = () => {
