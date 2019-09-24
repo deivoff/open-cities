@@ -1,11 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState, MouseEvent, useContext } from 'react';
 import cn from 'classnames';
-import { Button } from '../layout';
+import { Button, GoogleButton } from '../layout';
 import s from './header.module.sass';
 import { Link } from 'react-router-dom';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import { GET_GOOGLE_REDIRECT_URL, AUTH_GOOGLE, GET_CITIES } from '../../apollo';
+import { Modal } from '../modal';
+import { Spiner } from '../spiner';
+import AuthContext, { IAuthContext } from '../../context/auth-context';
 
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
@@ -23,7 +26,7 @@ const CitiesList = () => {
         {cities ? cities.map(({ name, url }: any) => (
               <li className={cn(s['nav__elem'])} key={name}>
                 <Link to={`/cities/${url}`}>
-                  <a>{name}</a>
+                  {name}
                 </Link>
               </li>
             ))
@@ -34,17 +37,30 @@ const CitiesList = () => {
 }
 
 export const Header: React.SFC = () => {
+  const [isAuthModalOpen, setAuthModal] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
+
+  const context = useContext<IAuthContext>(AuthContext)
   const apolloClient = useApolloClient();
-  
+
+  const openModalHandler = () => {
+    setAuthModal(true);
+  }
+
+  const closeModalHandler = () => {
+    setAuthModal(false);
+  }
+
   const signHandler = async (e: MouseEvent) => {
     e.preventDefault()
-
+    setAuthLoading(true);
+  
     try {
       const { data } = await apolloClient.query({ query: GET_GOOGLE_REDIRECT_URL })
       const { url } = data.getGoogleOAuthRedirect;
       const test = window.open(url, 'OAuth')!;
-      window.addEventListener('message', authHandler.bind(test));
       
+      window.addEventListener('message', authHandler.bind(test));
     } catch (error) {
       throw error;
     }
@@ -61,7 +77,10 @@ export const Header: React.SFC = () => {
       console.log(data);
     } catch (error) {
       throw error;
-    };
+    } finally {
+      setAuthLoading(false);
+      setAuthModal(false);;
+    }
   }
   return (
     <header className={cn(s.header)}>
@@ -77,12 +96,12 @@ export const Header: React.SFC = () => {
         <ul className={cn(s['nav__list'])}>
           <li className={cn(s['nav__elem'])}>
             <Link to='/about'>
-              <a>О проекте</a>
+              О проекте
             </Link>
           </li>
           <li className={cn(s['nav__elem'])}>
             <Link to='/research'>
-              <a>Исследования</a>
+              Исследования
             </Link>
           </li>
           <li className={cn(s['nav__elem'], s['_dropdown'])}>
@@ -90,7 +109,25 @@ export const Header: React.SFC = () => {
             <CitiesList />
           </li>
         </ul>
-        <Button onClick={signHandler}>Войти</Button>
+        <Button onClick={openModalHandler}>Войти</Button>
+        <Modal 
+          isOpen={isAuthModalOpen}
+          onRequestClose={closeModalHandler}
+          shouldCloseOnOverlayClick={true}
+        >
+          <Modal.Title>Вход через социальные сети</Modal.Title>
+          { authLoading 
+            ? <Spiner />
+            : (<>
+                <Modal.Body>
+                  Авторизуйтесь через следующие приложения:
+                </Modal.Body>
+                <GoogleButton onClick={signHandler}>
+                  Google
+                </GoogleButton>
+              </>)
+            }
+        </Modal>
       </nav>
     </header>
   );

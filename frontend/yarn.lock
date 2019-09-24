@@ -1252,6 +1252,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-modal@^3.8.3":
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.8.3.tgz#e7fb1ab42203d7344d33ec04c99e99bfeab4d34f"
+  integrity sha512-UBSa21GApA6Jly7ll9OQnZmEDttEJ8joy2TrfIEdf5bK6Sr8VTb3zHX0sPx7FTFDFdM9NpG4X0s5Dd2OXVTRhg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-router-dom@^4.3.5":
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.3.5.tgz#72f229967690c890d00f96e6b85e9ee5780db31f"

@@ -13,6 +13,16 @@ export const Button = (props: any) => {
   );
 };
 
+export const GoogleButton = (props: any) => {
+  return (
+    <button
+      className={css['google-button']}
+      type='button'
+      {...props}
+    />
+  );
+}
+
 export const H1 = (props: any) => {
   return <h1 className={cn(css['page__title'])} {...props} />;
 };
