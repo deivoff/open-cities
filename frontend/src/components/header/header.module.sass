@@ -1,0 +1,131 @@
+@import './../../static/styles/variables'
+@import './../../static/styles/grid'
+
+.header
+  color: $w
+  padding: 20px 30px
+  width: 100%
+  display: flex
+  justify-content: space-between
+  align-items: center
+  background-color: $mainColor
+  @include below($md)
+    padding: 15px 20px
+
+  &._transparent
+    background-color: transparent
+
+.logo
+  font-size: 18px
+  line-height: 22px
+  color: inherit 
+  text-transform: uppercase
+  text-decoration: none
+  flex-shrink: 0
+  @include below($md)
+    font-size: 14px
+    line-height: 16px
+
+.nav
+  display: flex
+  align-items: center
+
+  @include below($md)
+    display: none
+  
+  &__button
+    display: none
+    @include below($md)
+      display: block
+      border: none
+      width: 18px
+      height: 16px
+      background: none
+      padding: 0
+      position: relative
+      > span
+        position: absolute
+        height: 1px
+        width: 18px
+        display: block
+        background-color: $w
+        left: 0
+        &:nth-child(1)
+          top: 0
+        &:nth-child(2)
+          top: 50%
+        &:nth-child(3)
+          top: 100%
+
+  &__list
+    display: flex
+
+  &__elem
+    padding: 0 20px
+    cursor: pointer
+    height: 100%
+    
+    &:hover
+      text-decoration: underline
+    
+
+    &._dropdown
+      position: relative
+      svg
+        transition-duration: .1s
+        margin-left: 8px
+        width: 16px
+        height: 9px
+
+      &:hover
+        svg
+          transform: rotate(180deg)
+        .nav
+          &__dropdown
+            display: block
+      .nav
+        &__dropdown
+          display: none
+          overflow: visible
+          position: absolute
+          z-index: 99
+          top: 100%
+          right: -100px
+          padding-top: 32px
+          height: auto
+
+          &._profile
+            right: -50px
+
+          &:before
+            content: ''
+            display: block
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 12px solid $w;
+            position: absolute
+            top: 20px
+            right: 150px
+
+          & > .nav__list
+            background-color: $w
+            padding: 25px 5px
+            border-radius: 20px
+            min-width: 300px
+            min-height: 110px
+            max-height: 300px
+            box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25)
+
+            &._profile
+              min-width: 240px
+
+              & > .nav__elem
+                margin-bottom: 0
+                padding-bottom: 13px
+                &:last-child
+                  padding-bottom: 0
+        &__list
+          flex-flow: column wrap
+        &__elem
+          color: $mainColor
+          margin-bottom: 5px

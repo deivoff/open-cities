@@ -7,3 +7,12 @@ export const GET_GOOGLE_REDIRECT_URL = gql`
     }
   }
 `;
+
+export const GET_CITIES = gql`
+  {
+    cities {
+      name
+      url
+    }
+  }
+`;
