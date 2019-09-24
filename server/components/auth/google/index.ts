@@ -1,14 +1,12 @@
 import path from 'path';
-import { AuthData } from '.';
 import { google, plus_v1 } from 'googleapis';
-import { OAuth2Client } from 'googleapis-common';
-import { Context } from 'koa';
 
-require('dotenv').config({path: path.join(__dirname + './../../../.env')});
+require('dotenv').config({path: path.join(__dirname + './../../../../.env')});
 
 
 
 export class GoogleOAuth {
+
   /*******************/
   /** CONFIGURATION **/
   /*******************/
@@ -48,7 +46,7 @@ export class GoogleOAuth {
     return google.plus({ version: 'v1', auth: this.auth });
   }
 
-  urlGoogle() {
+  urlGoogle(): string {
     const url = this.getConnectionUrl();
     return url;
   }

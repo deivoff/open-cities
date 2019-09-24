@@ -1,10 +1,15 @@
 import React, { useState, useEffect, MouseEvent } from 'react';
+import { useApolloClient } from '@apollo/react-hooks';
 import { Helmet } from 'react-helmet';
 import { getRandomInt } from '../widgets/MainBanner/utils';
-import { Banner } from '../widgets/MainBanner/MainBanner';
+import { Banner } from '../widgets/MainBanner';
+import { GET_GOOGLE_REDIRECT_URL, AUTH_GOOGLE } from '../apollo';
+
+
 
 export const MainPage = () => {
   const [dots, setDots] = useState([{ duration: getRandomInt(4, 8), key: 0 }]);
+  const apolloClient = useApolloClient();
   const [activeDots, setActiveDots] = useState(0);
 
   useEffect(() => {
@@ -20,31 +25,9 @@ export const MainPage = () => {
   const redirectHandler = async (e: MouseEvent) => {
     e.preventDefault()
 
-    const requestBody = {
-      query: `
-        {
-          getGoogleOAuthRedirect {
-            url
-          }
-        }
-      `
-    }
-
     try {
-      const response = await fetch('http://localhost:7000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
-      if (response.status !== 200 && response.status !== 201) {
-        throw new Error('Failed!');
-      };
-
-      const resData = await response.json();
-      const { url } = resData.data.getGoogleOAuthRedirect;
+      const { data } = await apolloClient.query({ query: GET_GOOGLE_REDIRECT_URL })
+      const { url } = data.getGoogleOAuthRedirect;
       const test = window.open(url, 'OAuth')!;
       window.addEventListener('message', authHandler.bind(test));
       
@@ -54,40 +37,19 @@ export const MainPage = () => {
   }
 
   async function authHandler(this: Window, e: MessageEvent) {
+    // 'this' = children window 
     this.close();
     window.removeEventListener('message', authHandler);
-    const token = e.data;
-
-    const requestBody = {
-      query: `
-      mutation {
-        authGoogle(accessToken: "${token}") {
-          id,
-          email
-        }
-      }
-      `
-    }
+    const code = e.data;
 
     try {
-      const response = await fetch('http://localhost:7000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
-      if (response.status !== 200 && response.status !== 201) {
-        throw new Error('Failed!');
-      };
-
-      const resData = await response.json();
-      console.log(resData);
+      const { data } = await apolloClient.mutate({ mutation: AUTH_GOOGLE, variables: { code } });
+      console.log(data);
     } catch (error) {
       throw error;
     };
   }
+
   return (
     <>
       <Helmet>

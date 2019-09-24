@@ -91,16 +91,15 @@ export class User extends Typegoose {
 
   @staticMethod
   async upsertGoogleUser(this: ModelType<User> & typeof User, { accessToken, refreshToken, profile }: AuthData) {
-    const { emails, name, id } = profile;
+    const { email, name, id } = profile;
     const user = await UserModel.findOne({ 'social.googleProvider.id': id });
 
-    // no user was found, lets create a new one
     if (!user) {
         const newUser = await UserModel.create({
             name,
-            email: emails[0].value,
+            email,
             'social.googleProvider': {
-                id: profile.id,
+                id,
                 token: accessToken,
             },
             role: UserType.user,

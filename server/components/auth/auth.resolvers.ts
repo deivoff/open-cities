@@ -1,9 +1,7 @@
 import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql'
 import { AuthResponse, AuthRedirect } from '.';
 import { Context } from 'koa';
-import { UserModel, User } from '../user';
-import {  } from './auth.types';
-import { GoogleOAuth } from './auth.passport';
+import { GoogleOAuth } from './google';
 
 @Resolver(of => AuthResponse)
 export class AuthResolvers {
@@ -18,11 +16,11 @@ export class AuthResolvers {
 
   @Mutation(returns => AuthResponse)
   async authGoogle(
-    @Arg('accessToken') accessToken: string,
+    @Arg('code') code: string,
     @Ctx() { ctx }: Context
   ) /* : Promise<AuthResponse>  */{
     try {
-      const data = await this.googleOAuth.serializeAccountFromCode(accessToken)
+      const data = await this.googleOAuth.serializeAccountFromCode(code)
       return (data)!;
     } catch (error) {
       return error;
