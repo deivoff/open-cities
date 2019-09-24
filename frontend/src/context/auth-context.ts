@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export interface IAuthContext {
   token: string | null;
@@ -21,3 +21,20 @@ export default React.createContext<IAuthContext>({
   login: (token, userId, tokenExpiration) => {},
   logout: () => {}
 });
+
+export const useAuth = (): IAuthContext => {
+  const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const login: ILogin = (token, userId, tokenExpiration) => {
+    setToken(token);
+    setUserId(userId);
+  }
+
+  const logout = () => {
+    setToken(null);
+    setUserId(null);
+  }
+
+  return {login, logout, userId, token}
+}

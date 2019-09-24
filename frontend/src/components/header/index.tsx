@@ -40,7 +40,7 @@ export const Header: React.SFC = () => {
   const [isAuthModalOpen, setAuthModal] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
 
-  const context = useContext<IAuthContext>(AuthContext)
+  const { token, login, logout, userId } = useContext<IAuthContext>(AuthContext)
   const apolloClient = useApolloClient();
 
   const openModalHandler = () => {
