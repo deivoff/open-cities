@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from './apollo';
+import { Header } from './components/header';
 
 import { AuthContext, useAuth } from './context';
-import { MainPage } from './pages/Main';
-import { Header } from './components/header';
+import { MainPage, MapPage } from './pages';
 
 import './static/styles/_main.sass';
 
@@ -18,7 +18,8 @@ const App: React.FC = () => {
         <Header />
         <main className='main-content'>
           <Switch>
-            <Route path='/' component={MainPage} />
+            <Route exact path='/' component={MainPage} />
+            <Route path='/cities/:city' component={MapPage} />
           </Switch>
         </main>
       </AuthContext.Provider>

@@ -4,7 +4,7 @@
 .header
   color: $w
   padding: 20px 30px
-  min-height: 74px
+  min-height: 80px
   width: 100%
   display: flex
   justify-content: space-between
@@ -12,6 +12,7 @@
   background-color: $mainColor
   @include below($md)
     padding: 15px 20px
+    min-height: 0px
 
   &._transparent
     background-color: transparent
@@ -108,7 +109,7 @@
           display: none
           overflow: visible
           position: absolute
-          z-index: 99
+          z-index: 999
           top: 100%
           right: -100px
           padding-top: 32px

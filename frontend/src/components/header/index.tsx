@@ -136,9 +136,9 @@ export const Header: React.SFC = () => {
   }
   return (
     <header className={cn(s.header)}>
-      <a className={s.logo} href='/'>
+      <Link className={s.logo} to='/'>
         Открытые города
-      </a>
+      </Link>
       <button type='button' className={s['nav__button']}>
         <span />
         <span />

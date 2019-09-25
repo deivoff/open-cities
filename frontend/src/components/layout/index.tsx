@@ -35,6 +35,10 @@ Page.Wrapper = function Wrapper(props: any) {
   return <div className={cn(css['page__wrapper'])} {...props} />;
 };
 
+Page.Map = function Map(props: any) {
+  return(<div className={cn(css['page__map'])} {...props} />);
+}
+
 export function Card(props: any) {
   return <div className={cn(css['card'])} {...props} />;
 }

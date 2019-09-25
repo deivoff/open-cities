@@ -92,7 +92,6 @@ export class User extends Typegoose {
   @staticMethod
   static async upsertGoogleUser({ accessToken, refreshToken, profile: { email, name, id, photo } }: AuthData) {
     try {
-      console.log(id, email, 'static');
       const user = await UserModel.findOne({ 'social.googleProvider.id': id });
       
       if (!user) {
