@@ -8,6 +8,7 @@ import {
   staticMethod
 } from '@hasezoey/typegoose';
 import jwt from 'jsonwebtoken';
+import path from 'path';
 import { Model, Document } from 'mongoose';
 import { Field, ObjectType } from 'type-graphql';
 import { ID } from 'type-graphql';
@@ -15,6 +16,7 @@ import { ObjectId } from 'mongodb';
 import { UserType } from '.';
 import { AuthData } from '../auth';
 
+require('dotenv').config({path: path.join(__dirname + './../../../.env')});
 @ObjectType()
 export class UserPhoto extends Typegoose {
   @Field(() => String)
@@ -86,7 +88,7 @@ export class User extends Typegoose {
         email: this.email,
         id: this._id,
         exp: expirationDate.getTime() / 1000,
-    }, 'secret');
+    }, process.env.SECRET_KEY!);
   }
 
   @staticMethod

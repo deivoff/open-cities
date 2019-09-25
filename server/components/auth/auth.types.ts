@@ -25,3 +25,9 @@ export interface AuthData {
   refreshToken: string;
   profile: any;
 }
+
+export interface DecodedToken {
+  id: string;
+  email: string;
+  exp: number;
+}

@@ -31,6 +31,7 @@
     "@types/react-dom": "16.9.0",
     "apollo-boost": "^0.4.4",
     "classnames": "^2.2.6",
+    "formic": "^0.0.10",
     "graphql": "^14.5.7",
     "leaflet": "^1.5.1",
     "node-sass": "^4.12.0",

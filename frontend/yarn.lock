@@ -4360,6 +4360,14 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
+formic@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/formic/-/formic-0.0.10.tgz#7084323a924503393bcd0289813f2f4f04d075f8"
+  integrity sha512-bCV8czSbPIKtMW2StaSki4z6Yl+laAwOaE9BAPMXZsY5UXiJFKEz0tl78AOTQUsfWOyrF+GJPJXyp3UGy0o4cQ==
+  dependencies:
+    camelcase "^4.1.0"
+    lodash "^4.17.5"
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"

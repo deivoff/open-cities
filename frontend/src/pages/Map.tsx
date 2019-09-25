@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Page } from '../components/layout';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapControllers } from '../widgets/MapControllers';
 
 
 export const MapPage = () => {
@@ -12,6 +13,7 @@ export const MapPage = () => {
         <title>Открытые города | Карта </title>
       </Helmet>
       <Page.Map>
+        <MapControllers />
         <Map center={position} zoom={13} style={{height: "calc(100vh - 80px)"}} >
           <TileLayer
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import path from 'path';
-import Koa, { Context } from 'koa';
+import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import logger from 'koa-logger';
 import { ApolloServer } from 'apollo-server-koa';
@@ -14,7 +14,9 @@ import { AuthResolvers } from './components/auth';
 import cors from '@koa/cors';
 
 import bodyParser from 'koa-bodyparser';
-import { oauthHandler } from './helpers/oauth';
+import { oauthHandler } from './helpers';
+import { isAuth } from './middleware/auth';
+import { Context } from './types';
 
 const config = require('dotenv').config({path: path.join(__dirname + './../.env')});
 
@@ -45,9 +47,9 @@ export const createApp = async () => {
     allowMethods: ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With', 'x-access-token']
   }))
-
   app.use(bodyParser());
   app.use(logger());
+  app.use(isAuth)
 
   const server = new ApolloServer({
     schema,

@@ -1,7 +1,9 @@
-import { Resolver, Query, Arg, Mutation, FieldResolver, Root } from 'type-graphql';
+import { Resolver, Query, Arg, Mutation, FieldResolver, Root, Ctx } from 'type-graphql';
 import { Layer, LayerModel, LayerInput, LayerDocument } from '.';
 import { User, UserModel } from '../user';
 import { Geo, GeoModel } from '../geo';
+import { Context } from './../../types';
+import { checkAuth } from './../../middleware/auth';
 
 @Resolver(of => Layer)
 export class LayerResolvers {
@@ -18,11 +20,13 @@ export class LayerResolvers {
 
   @Mutation(returns => Layer)
   async createLayer(
-    @Arg('layerInput', type => LayerInput) layerInput: LayerInput
+    @Arg('layerInput', type => LayerInput) layerInput: LayerInput,
+    @Ctx() { ctx }: { ctx: Context }
   ): Promise<Layer> {
+    checkAuth(ctx);
     const layer = new LayerModel({
       ...layerInput,
-      owner: '5d822dac246ff33f4bfe12dc',
+      owner: ctx.state.decodedUser.id,
     });
     try {
       const savedLayer = await layer.save();

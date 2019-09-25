@@ -2,6 +2,8 @@ import { Resolver, Mutation, Arg, Ctx, Query, FieldResolver, Root } from "type-g
 import { GeoInput, Geo, GeoModel, GeoDocument } from ".";
 import { User, UserModel, UserType } from '../user';
 import { Layer, LayerModel } from "../layer";
+import { Context } from "./../../types";
+import { checkAuth } from "./../../middleware/auth";
 
 @Resolver(of => Geo)
 export class GeoResolvers{
@@ -18,12 +20,14 @@ export class GeoResolvers{
   @Mutation(returns => Geo)
   async createGeo(
     @Arg('geoInput', type => GeoInput) { properties, geometry, layer }: GeoInput,
+    @Ctx() { ctx }: { ctx: Context }
   ): Promise<Geo> {
+    checkAuth(ctx);
     const geo = new GeoModel({
       properties,
       geometry,
       layer,
-      author: '5d822dac246ff33f4bfe12dc',
+      author: ctx.state.decodedUser!.id ,
       access: UserType.admin
     });
     try {
