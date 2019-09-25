@@ -2,39 +2,47 @@ import React, { useState } from 'react';
 
 export interface IAuthContext {
   token: string | null;
-  userId: string | null;
+  user: IUser | null;
   login: ILogin;
   logout: () => void;
 }
 
+export interface IUser {
+  name: {
+    givenName: string,
+    familyName: string,
+  }
+  photos: [{
+    url: string
+  }]
+}
 export interface ILogin {
   (
     token: string | null,
-    userId: string | null,
-    tokenExpiration: number
+    user: any,
   ): void;
 }
 
 export const AuthContext = React.createContext<IAuthContext>({
   token: null,
-  userId: null,
-  login: (token, userId, tokenExpiration) => {},
+  user: null,
+  login: (token) => {},
   logout: () => {}
 });
 
 export const useAuth = (): IAuthContext => {
   const [token, setToken] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [user, setUser] = useState<IUser| null>(null);
 
-  const login: ILogin = (token, userId, tokenExpiration) => {
+  const login: ILogin = (token, user) => {
     setToken(token);
-    setUserId(userId);
+    setUser(user);
   }
 
   const logout = () => {
     setToken(null);
-    setUserId(null);
+    setUser(null);
   }
 
-  return {login, logout, userId, token}
+  return {login, logout, token, user}
 }

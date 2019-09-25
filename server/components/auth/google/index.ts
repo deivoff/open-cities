@@ -58,12 +58,22 @@ export class GoogleOAuth {
       this.auth.setCredentials(tokens);
       const plus = this.getGooglePlusApi();
       const me = await plus.people.get({ userId: 'me' });
-      console.log(me);
       const userGoogleId = me.data.id;
-      const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
+      const userName = {
+        familyName: me.data.name!.familyName!,
+        givenName: me.data.name!.givenName!
+      }
+      const userPhoto = me.data.image!.url;
+      const userGoogleEmail = me.data.emails![0].value;
       return {
-        id: userGoogleId,
-        email: userGoogleEmail,
+        accessToken: tokens.access_token!,
+        refreshToken: tokens.refresh_token!,
+        profile: {
+          id: userGoogleId!,
+          email: userGoogleEmail!,
+          name: userName!,
+          photo: userPhoto!
+        }
       };
     } catch (error) {
       throw error

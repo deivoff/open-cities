@@ -4,6 +4,7 @@
 .header
   color: $w
   padding: 20px 30px
+  min-height: 74px
   width: 100%
   display: flex
   justify-content: space-between
@@ -32,7 +33,26 @@
 
   @include below($md)
     display: none
+
+
+  &__profile
+    display: flex
+    align-items: center
   
+  &__photo
+    background: white
+    width: 40px
+    height: 40px
+    border-radius: 100%
+    overflow: hidden
+
+    img
+      object-fit: cover
+      max-width: 100%
+      max-height: 100%
+  
+  &__spiner
+    width: 110px
   &__button
     display: none
     @include below($md)

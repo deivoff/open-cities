@@ -16,7 +16,7 @@ import { UserType } from '.';
 import { AuthData } from '../auth';
 
 @ObjectType()
-class UserPhoto extends Typegoose {
+export class UserPhoto extends Typegoose {
   @Field(() => String)
   @Property({ required: true })
   url!: string;
@@ -36,12 +36,12 @@ class GoogleProvider extends Typegoose {
 @ObjectType()
 class UserSocial extends Typegoose {
   @Field(() => GoogleProvider)
-  @Property()
+  @Property({ _id: false })
   googleProvider!: GoogleProvider;
 }
 
 @ObjectType()
-class UserName extends Typegoose {
+export class UserName extends Typegoose {
   @Field(() => String)
   @Property({ required: true })
   familyName!: string;
@@ -61,7 +61,7 @@ export class User extends Typegoose {
   email!: string;
 
   @Field(() => UserName)
-  @Property()
+  @Property({ _id: false })
   name!: UserName;
 
   @Field(type => UserType)
@@ -69,15 +69,15 @@ export class User extends Typegoose {
   role!: UserType;
 
   @Field(() => [UserPhoto])
-  @Properties({ items: UserPhoto })
+  @Properties({ items: UserPhoto, _id: false })
   photos?: UserPhoto[];
 
   @Field(() => UserSocial)
-  @Property()
+  @Property({ _id: false })
   social!: UserSocial;
 
   @instanceMethod
-  generateJWT(this: InstanceType<User>) {
+  generateJWT() {
     const today = new Date();
     const expirationDate = new Date(today);
     expirationDate.setDate(today.getDate() + 60);
@@ -90,24 +90,29 @@ export class User extends Typegoose {
   }
 
   @staticMethod
-  async upsertGoogleUser(this: ModelType<User> & typeof User, { accessToken, refreshToken, profile }: AuthData) {
-    const { email, name, id } = profile;
-    const user = await UserModel.findOne({ 'social.googleProvider.id': id });
-
-    if (!user) {
-        const newUser = await UserModel.create({
-            name,
-            email,
-            'social.googleProvider': {
-                id,
-                token: accessToken,
-            },
-            role: UserType.user,
-        });
-
-        return newUser;
+  static async upsertGoogleUser({ accessToken, refreshToken, profile: { email, name, id, photo } }: AuthData) {
+    try {
+      console.log(id, email, 'static');
+      const user = await UserModel.findOne({ 'social.googleProvider.id': id });
+      
+      if (!user) {
+          const newUser = await UserModel.create({
+              name,
+              email,
+              'social.googleProvider': {
+                  id,
+                  token: accessToken,
+              },
+              photos: [{ url: photo }],
+              role: UserType.user,
+          });
+        
+          return newUser;
+      }
+      return user;   
+    } catch (error) {
+      throw error;
     }
-    return user;
   }
 }
 

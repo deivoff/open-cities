@@ -1,13 +1,17 @@
 import { ObjectType, ID, Field, Int } from 'type-graphql';
 import { ObjectId } from 'mongodb';
+import { UserName, UserPhoto } from '../user';
 
 @ObjectType()
 export class AuthResponse {
-  @Field(() => ID)
-  id!: ObjectId;
-
   @Field()
-  email!: string;
+  token!: string;
+
+  @Field(() => UserName)
+  name!: UserName
+
+  @Field(() => [UserPhoto])
+  photos?: UserPhoto[]
 }
 
 @ObjectType()
