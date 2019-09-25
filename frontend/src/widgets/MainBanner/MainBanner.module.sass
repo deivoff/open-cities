@@ -1,0 +1,48 @@
+@import './../../static/styles/variables'
+@import './../../static/styles/grid'
+
+.banner
+  @include container(wrapper)
+  position: relative
+  height: 80vh
+  display: flex
+  background-color: $mainColor
+
+.description
+  @include col($lg, 8)
+  @include col($xl, 6)
+  padding-top: 22vh
+  color: $w
+  z-index: 1
+
+.title
+  font-weight: bold
+  font-size: 48px
+  line-height: 58px
+
+.text
+  margin-top: 30px
+  font-weight: 300
+  font-size: 18px
+  line-height: 22px
+
+.decorative
+  overflow: hidden
+  width: 60%
+  min-width: 800px
+  height: 100%
+  position: absolute
+  top: 0
+  display: flex
+  justify-content: center
+  align-items: center
+  right: 0
+  z-index: 0
+  &:before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    width: 100%
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 2%, rgba(193, 198, 205, 0) 10%, rgba(31, 50, 75, 0.41) 31%, #1f324b 61%)

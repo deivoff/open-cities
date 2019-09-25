@@ -36,5 +36,8 @@ Thumbs.db
 # Ignore built ts files
 dist/**/*
 
+# Ignore schema.gql file
+schema.gql
+
 #lock-files
 package-lock.json
