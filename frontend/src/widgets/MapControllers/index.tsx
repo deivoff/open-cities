@@ -14,13 +14,13 @@ interface MapControllersProps {
   defaultCity: string;
 }
 
+interface CreateLayerProps {
+  city: string;
+}
 
-export const MapControllers = ({ defaultCity }: MapControllersProps) => {
+export const CreateLayerModal = ({ city }: CreateLayerProps) => {
   const [isCreateLayerModalOpen, setCreateLayerModalOpen] = useState(false);
-  const { data: layersData, loading: layersLoading, error: layersError} = useQuery(GET_LAYERS, { variables: { city: defaultCity }});
-  console.log( layersData );
   const [createLayer, { data }] = useMutation(CREATE_LAYER);
-  console.log(defaultCity);
 
   const openModalHandler = () => {
     setCreateLayerModalOpen(true);
@@ -48,7 +48,7 @@ export const MapControllers = ({ defaultCity }: MapControllersProps) => {
           variables: {
             name,
             description,
-            city: defaultCity,
+            city,
           }
         })
         setSubmitting(false)
@@ -68,6 +68,17 @@ export const MapControllers = ({ defaultCity }: MapControllersProps) => {
       )}
     />
       </Modal>
+    </>
+  )
+}
+
+
+export const MapControllers = ({ defaultCity }: MapControllersProps) => {
+  const { data: layersData, loading: layersLoading, error: layersError} = useQuery(GET_LAYERS, { variables: { city: defaultCity }});
+  
+  return(
+    <>
+      <CreateLayerModal city={defaultCity}/>
     </>
   )
 }

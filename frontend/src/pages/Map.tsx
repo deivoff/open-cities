@@ -6,15 +6,16 @@ import { MapControllers } from '../widgets/MapControllers';
 
 interface MapProps {
   city: string;
+  cityName: string;
   center: [number, number];
   zoom: number
 }
 
-export const MapPage = ({ city, center, zoom }: MapProps) => {
+export const MapPage = ({ city, center, zoom, cityName }: MapProps) => {
   return (
     <>
       <Helmet>
-        <title>Открытые города | Карта </title>
+        <title>Открытые города | {cityName} </title>
       </Helmet>
       <Page.Map>
         <MapControllers defaultCity={city}/>

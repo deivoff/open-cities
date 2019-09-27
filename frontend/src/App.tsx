@@ -17,6 +17,7 @@ interface MapMatchParams {
 interface MapLocationState {
   center: [number, number];
   zoom: number;
+  name: string;
 }
 
 const App: React.FC = () => {
@@ -31,9 +32,9 @@ const App: React.FC = () => {
             <Route exact path='/' component={MainPage} />
             <Route path='/cities/:city' component={
               (
-                { match, location: { state: { center, zoom } } }: RouteChildrenProps<MapMatchParams, MapLocationState>
+                { match, location: { state: { center, zoom, name } } }: RouteChildrenProps<MapMatchParams, MapLocationState>
               ) => (
-                <MapPage city={match!.params.city} center={center} zoom={zoom}/>
+                <MapPage city={match!.params.city} center={center} zoom={zoom} cityName={name}/>
               )
             } />
           </Switch>

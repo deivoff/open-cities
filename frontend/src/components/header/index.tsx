@@ -34,7 +34,7 @@ const CitiesList = () => {
               <li className={cn(s['nav__elem'])} key={name}>
                 <Link to={{
                   pathname: `/cities/${url}`,
-                  state: { center, zoom }
+                  state: { center, zoom, name }
                 }}>
                   {name}
                 </Link>
