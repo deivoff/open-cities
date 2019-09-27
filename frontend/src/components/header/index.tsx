@@ -12,6 +12,13 @@ import { AuthContext, IAuthContext, IUser } from '../../context';
 import s from './header.module.sass';
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
+interface City {
+  name: string;
+  url: string;
+  center: [number, number];
+  zoom: number;
+}
+
 const CitiesList = () => {
   const { data, loading: citiesLoading, error: citiesError} = useQuery(GET_CITIES);
 
@@ -23,9 +30,12 @@ const CitiesList = () => {
   return (
     <div className={cn(s['nav__dropdown'])}>
       <ul className={cn(s['nav__list'])}>
-        {cities ? cities.map(({ name, url }: any) => (
+        {cities ? (cities as City[]).map(({ name, url, zoom, center }: any) => (
               <li className={cn(s['nav__elem'])} key={name}>
-                <Link to={`/cities/${url}`}>
+                <Link to={{
+                  pathname: `/cities/${url}`,
+                  state: { center, zoom }
+                }}>
                   {name}
                 </Link>
               </li>
@@ -74,7 +84,6 @@ const Profile = ({user: { name, photos }, logout }: IProfile) => {
         <img
           alt='User thimbnail'
           src={
-            // eslint-disable-next-line no-nested-ternary
             photos
               ? photos[photos.length - 1].url
                 ? photos[photos.length - 1].url
@@ -125,8 +134,8 @@ export const Header: React.SFC = () => {
 
     try {
       const { data } = await apolloClient.mutate({ mutation: AUTH_GOOGLE, variables: { code } });
-      const { name, photos, token: responseToken } = data.authGoogle;
-      login(responseToken, { name, photos });
+      const { token: responseToken } = data.authGoogle;
+      login(responseToken);
     } catch (error) {
       throw error;
     } finally {

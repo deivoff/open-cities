@@ -1,18 +1,24 @@
 import { Resolver, Query, Arg, Mutation, FieldResolver, Root, Ctx } from 'type-graphql';
 import { Layer, LayerModel, LayerInput, LayerDocument } from '.';
-import { User, UserModel } from '../user';
+import { User, UserModel, UserType } from '../user';
 import { Geo, GeoModel } from '../geo';
 import { Context } from './../../types';
 import { checkAuth } from './../../middleware/auth';
+import { DecodedToken } from '../auth';
 
 @Resolver(of => Layer)
 export class LayerResolvers {
   @Query(returns => [Layer])
   async layers(
-    @Arg('userID', type => String) userID: string
+    @Arg('city') city: string,
+    @Ctx() { ctx }: { ctx: Context }
   ): Promise<Layer[]> {
     try {
-      return (await LayerModel.find({ owner: userID }))!
+      const { decodedUser } = ctx;
+      if (decodedUser) {
+        return(await LayerModel.find({ access: (decodedUser as DecodedToken).access, city }))
+      }
+      return (await LayerModel.find({ access: UserType.user, city }))!
     } catch (error) {
       throw error;
     }
@@ -27,6 +33,7 @@ export class LayerResolvers {
     const layer = new LayerModel({
       ...layerInput,
       owner: ctx.state.decodedUser.id,
+      access: ctx.state.decodedUser.access
     });
     try {
       const savedLayer = await layer.save();

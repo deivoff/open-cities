@@ -19,15 +19,13 @@ export class AuthResolvers {
   async authGoogle(
     @Arg('code') code: string,
     @Ctx() { ctx }: Context
-  )/* : Promise<AuthResponse> */{
+  ): Promise<AuthResponse>{
     try {
       const { accessToken, refreshToken, profile } = await this.googleOAuth.serializeAccountFromCode(code)
       const user = await User.upsertGoogleUser({ accessToken, refreshToken, profile });
       const token = user.generateJWT();
       return ({
-        token,
-        name: user.name,
-        photos: user.photos,
+        token
       })!;
     } catch (error) {
       return error;

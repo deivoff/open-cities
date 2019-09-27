@@ -4,22 +4,26 @@ import { Page } from '../components/layout';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { MapControllers } from '../widgets/MapControllers';
 
+interface MapProps {
+  city: string;
+  center: [number, number];
+  zoom: number
+}
 
-export const MapPage = () => {
-  const position: [number, number] = [57.153033, 65.534328];
+export const MapPage = ({ city, center, zoom }: MapProps) => {
   return (
     <>
       <Helmet>
         <title>Открытые города | Карта </title>
       </Helmet>
       <Page.Map>
-        <MapControllers />
-        <Map center={position} zoom={13} style={{height: "calc(100vh - 80px)"}} >
+        <MapControllers defaultCity={city}/>
+        <Map center={center} zoom={zoom} style={{height: "calc(100vh - 80px)"}} >
           <TileLayer
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           />
-          <Marker position={position}>
+          <Marker position={center}>
             <Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
           </Marker>
         </Map>

@@ -86,6 +86,9 @@ export class User extends Typegoose {
 
     return jwt.sign({
         email: this.email,
+        name: this.name,
+        photos: this.photos ? this.photos : [],
+        access: this.role,
         id: this._id,
         exp: expirationDate.getTime() / 1000,
     }, process.env.SECRET_KEY!);

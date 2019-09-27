@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import jwtDecode from 'jwt-decode';
 
 export interface IAuthContext {
   token: string | null;
@@ -8,6 +9,8 @@ export interface IAuthContext {
 }
 
 export interface IUser {
+  id: string,
+  email: string,
   name: {
     givenName: string,
     familyName: string,
@@ -18,15 +21,14 @@ export interface IUser {
 }
 export interface ILogin {
   (
-    token: string | null,
-    user: any,
+    token: string,
   ): void;
 }
 
 export const AuthContext = React.createContext<IAuthContext>({
   token: null,
   user: null,
-  login: (token) => {},
+  login: (token: string) => {},
   logout: () => {}
 });
 
@@ -34,13 +36,25 @@ export const useAuth = (): IAuthContext => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<IUser| null>(null);
 
-  const login: ILogin = (token, user) => {
+  useEffect(() => {
+    const savedToken = localStorage.getItem('token')
+    if (savedToken) {
+      setToken(savedToken);
+      const { email, name, photos, id }: IUser = jwtDecode(savedToken);
+      setUser({email, name, photos, id});
+    }
+  }, [])
+
+  const login: ILogin = (token: string) => {
     setToken(token);
-    setUser(user);
+    localStorage.setItem('token', token);
+    const { email, name, photos, id }: IUser = jwtDecode(token);
+    setUser({email, name, photos, id});
   }
 
   const logout = () => {
     setToken(null);
+    localStorage.removeItem('token');
     setUser(null);
   }
 

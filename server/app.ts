@@ -40,14 +40,21 @@ export const createApp = async () => {
     validate: false
   });
 
-  // Add middleware
   app.use(cors({
     origin: '*',
     credentials: true,
-    allowMethods: ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With', 'x-access-token']
   }))
   app.use(bodyParser());
+  app.use(async (ctx, next) => {
+    ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Requested-With, x-access-token');
+    ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+
+    if (ctx.method === 'OPTIONS') {
+      return ctx.status = 200
+    }
+
+    await next();
+  });
   app.use(logger());
   app.use(isAuth)
 

@@ -6,7 +6,7 @@ import {
 } from '@hasezoey/typegoose';
 import { ObjectType, Field, ID } from "type-graphql";
 import { ObjectId } from 'mongodb';
-import { User } from '../user';
+import { User, UserType } from '../user';
 import { Geo } from '../geo';
 import { Model, Document } from 'mongoose';
 
@@ -32,6 +32,14 @@ export class Layer extends Typegoose{
   @Field(() => User)
   @Property({ required: true, ref: User })
   owner!: Ref<User>;
+
+  @Field(() => UserType)
+  @Property({ required: true, enum: UserType })
+  access!: UserType
+
+  @Field()
+  @Property({ required: true })
+  city!: string;
 
   @Field(() => [User])
   @Properties({ itemsRef: { name: 'User' } })

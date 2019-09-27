@@ -7,5 +7,8 @@ export class LayerInput implements Partial<Layer> {
   name!: string;
 
   @Field()
-  description?: string;
+  description!: string;
+
+  @Field()
+  city!: string;
 }

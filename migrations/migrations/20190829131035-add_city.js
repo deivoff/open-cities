@@ -3,11 +3,15 @@ module.exports = {
     await db.collection('cities').insertMany([
       {
         name: 'Тюмень',
-        url: 'tmn'
+        url: 'tmn',
+        center: [57.1668968, 65.5152054],
+        zoom: 12,
       },
       {
         name: 'Екатеринбург',
-        url: 'ekb'
+        url: 'ekb',
+        center: [56.8381042, 60.6011887],
+        zoom: 12,
       }
     ]);
   },

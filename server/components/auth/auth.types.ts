@@ -1,17 +1,10 @@
-import { ObjectType, ID, Field, Int } from 'type-graphql';
-import { ObjectId } from 'mongodb';
-import { UserName, UserPhoto } from '../user';
+import { ObjectType, Field } from 'type-graphql';
+import { UserName, UserPhoto, UserType } from '../user';
 
 @ObjectType()
 export class AuthResponse {
   @Field()
   token!: string;
-
-  @Field(() => UserName)
-  name!: UserName
-
-  @Field(() => [UserPhoto])
-  photos?: UserPhoto[]
 }
 
 @ObjectType()
@@ -29,5 +22,8 @@ export interface AuthData {
 export interface DecodedToken {
   id: string;
   email: string;
+  name: UserName;
+  photos?: UserPhoto[];
+  access: UserType;
   exp: number;
 }
