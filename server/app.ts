@@ -40,7 +40,6 @@ export const createApp = async () => {
     validate: false
   });
 
-  // Test commit
   app.use(cors({
     origin: '*',
     credentials: true,
