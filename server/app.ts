@@ -40,6 +40,8 @@ export const createApp = async () => {
     validate: false
   });
 
+  //
+
   app.use(cors({
     origin: '*',
     credentials: true,
