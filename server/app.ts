@@ -11,6 +11,8 @@ import { CityResolvers } from './components/city';
 import { GeoResolvers } from './components/geo';
 import { LayerResolvers } from './components/layer';
 import { AuthResolvers } from './components/auth';
+// import { MapResolvers } from './components/map';
+
 import cors from '@koa/cors';
 
 import bodyParser from 'koa-bodyparser';
@@ -34,7 +36,8 @@ export const createApp = async () => {
       CityResolvers, 
       GeoResolvers, 
       LayerResolvers, 
-      AuthResolvers
+      AuthResolvers,
+      // MapResolvers
     ],
     emitSchemaFile: true,
     validate: false
