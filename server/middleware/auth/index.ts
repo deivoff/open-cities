@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import path from'path';
 import { Context } from './../../types';
+import { DecodedToken } from './../../components/auth';
 
 require('dotenv').config({path: path.join(__dirname + './../../../.env')});
 
@@ -30,7 +31,7 @@ export const isAuth = async (ctx: Context, next: () => Promise<any>) => {
   }
 
   ctx.state.isAuth = true;
-  ctx.state.decodedUser = decodedToken;
+  ctx.state.decodedUser = decodedToken as DecodedToken;
   return(await next());
 };
 

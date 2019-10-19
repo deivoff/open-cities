@@ -1,9 +1,9 @@
 import Koa from 'koa';
 import { DecodedToken } from './components/auth';
 
-export type Context = Koa.Context & {
-  state:  { 
-    isAuth?: boolean 
-    decodedUser?: DecodedToken 
-  }
-} 
+type ContextState = {
+  isAuth?: boolean,
+  decodedUser?: DecodedToken
+}
+
+export type Context = Koa.ParameterizedContext<ContextState, {}>

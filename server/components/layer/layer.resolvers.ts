@@ -14,9 +14,9 @@ export class LayerResolvers {
     @Ctx() { ctx }: { ctx: Context }
   ): Promise<Layer[]> {
     try {
-      const { decodedUser } = ctx;
+      const { decodedUser } = ctx.state;
       if (decodedUser) {
-        return(await LayerModel.find({ access: (decodedUser as DecodedToken).access, city }))
+        return(await LayerModel.find({ access: decodedUser.access, city }))
       }
       return (await LayerModel.find({ access: UserType.user, city }))!
     } catch (error) {
@@ -30,10 +30,11 @@ export class LayerResolvers {
     @Ctx() { ctx }: { ctx: Context }
   ): Promise<Layer> {
     checkAuth(ctx);
+    const { decodedUser } = ctx.state; 
     const layer = new LayerModel({
       ...layerInput,
-      owner: ctx.state.decodedUser.id,
-      access: ctx.state.decodedUser.access
+      owner: decodedUser!.id,
+      access: decodedUser!.access
     });
     try {
       const savedLayer = await layer.save();

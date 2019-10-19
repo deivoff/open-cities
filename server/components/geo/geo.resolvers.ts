@@ -23,12 +23,13 @@ export class GeoResolvers{
     @Ctx() { ctx }: { ctx: Context }
   ): Promise<Geo> {
     checkAuth(ctx);
+    const { decodedUser } = ctx.state;
     const geo = new GeoModel({
       properties,
       geometry,
       layer,
-      author: ctx.state.decodedUser!.id ,
-      access: UserType.admin
+      author: decodedUser!.id,
+      access: decodedUser!.access,
     });
     try {
       const savedGeo = await geo.save();
