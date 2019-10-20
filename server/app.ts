@@ -66,7 +66,7 @@ export const createApp = async () => {
   const server = new ApolloServer({
     schema,
     context: (ctx: Context) => ctx,
-    playground: process.env.NODE_ENV === 'development',
+    playground: true, // process.env.NODE_ENV === 'development',
     introspection: true
   });
   app.use(router.routes());
