@@ -8,7 +8,7 @@ export * from './querries';
 // Instantiate required constructor fields
 const cache = new InMemoryCache();
 const httpLink = createHttpLink({
-  uri: 'http://localhost:7000/graphql',
+  uri: process.env.NODE_ENV === 'production' ? 'http://api.open-cities.ru/graphql' : 'http://localhost:7000/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
