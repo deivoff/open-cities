@@ -1,0 +1,8 @@
+{
+  "schemaPath": "schema.gql",
+  "extensions": {
+    "endpoints": {
+      "dev": "http://localhost:7000/graphql"
+    }
+  }
+}
