@@ -1,7 +1,8 @@
 module.exports =  {
   parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
   "plugins": [
-    "security"
+    "security",
+    "graphql"
   ],
   extends:  [
     'plugin:react/recommended',  // Uses the recommended rules from @eslint-plugin-react
@@ -21,6 +22,14 @@ module.exports =  {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/interface-name-prefix": true,
+    "graphql/template-strings": ['error', {
+      env: 'apollo',
+      tagName: 'FirstGQL',
+      schema: require('./schema.gql')
+    }],
+    "graphql/named-operations": ['warn', {
+      schema: require('./schema.gql'),
+    }],
   },
   settings:  {
     react:  {
