@@ -21,7 +21,6 @@ import { isAuth } from './middleware/auth';
 import { Context } from './types';
 
 const config = require('dotenv').config({path: path.join(__dirname + './../.env')});
-console.log(process.env);
 
 export const createApp = async () => {
   const app = new Koa();
