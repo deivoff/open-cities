@@ -18,6 +18,7 @@ coverage
 
 # API keys and secrets
 .env
+.ecosystem.config.js
 LICENSE
 
 # Dependency directory
