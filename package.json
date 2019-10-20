@@ -8,8 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch 'server/**/*' -e ts,tsx --exec ts-node ./server/index.ts node -r dotenv/config",
-    "build": "webpack --config webpack.config.js",
-    "dev": "webpack --watch"
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "@hasezoey/typegoose": "^5.9.1",
