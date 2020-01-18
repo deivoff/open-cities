@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import css from './MapControllers.module.sass';
 import { Modal } from '../../components/modal';
-import { Formik, Field, Form, FormikActions } from 'formik';
+import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { CREATE_LAYER, GET_CITIES, GET_LAYERS } from '../../apollo';
 
@@ -24,16 +24,16 @@ export const CreateLayerModal = ({ city }: CreateLayerProps) => {
 
   const openModalHandler = () => {
     setCreateLayerModalOpen(true);
-  }
+  };
 
   const closeModalHandler = () => {
     setCreateLayerModalOpen(false);
-  }
+  };
 
   return(
     <>
       <button onClick={openModalHandler} className={css.add}>+</button>
-      <Modal 
+      <Modal
         isOpen={isCreateLayerModalOpen}
         onRequestClose={closeModalHandler}
         shouldCloseOnOverlayClick={true}
@@ -43,14 +43,14 @@ export const CreateLayerModal = ({ city }: CreateLayerProps) => {
         name: '',
         description: '',
       }}
-      onSubmit={({ name, description}: Values, { setSubmitting }: FormikActions<Values>) => {
+      onSubmit={({ name, description}: Values, { setSubmitting }: FormikHelpers<Values>) => {
         createLayer({
           variables: {
             name,
             description,
             city,
           }
-        })
+        });
         setSubmitting(false)
       }}
       render={() => (
@@ -70,15 +70,15 @@ export const CreateLayerModal = ({ city }: CreateLayerProps) => {
       </Modal>
     </>
   )
-}
+};
 
 
 export const MapControllers = ({ defaultCity }: MapControllersProps) => {
   const { data: layersData, loading: layersLoading, error: layersError} = useQuery(GET_LAYERS, { variables: { city: defaultCity }});
-  
+
   return(
     <>
       <CreateLayerModal city={defaultCity}/>
     </>
   )
-}
+};

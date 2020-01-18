@@ -62,7 +62,7 @@ export class GoogleOAuth {
       const userName = {
         familyName: me.data.name!.familyName!,
         givenName: me.data.name!.givenName!
-      }
+      };
       const userPhoto = me.data.image!.url;
       const userGoogleEmail = me.data.emails![0].value;
       return {

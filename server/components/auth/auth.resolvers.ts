@@ -2,7 +2,7 @@ import { Resolver, Query, Arg, Mutation, Ctx } from 'type-graphql'
 import { AuthResponse, AuthRedirect } from '.';
 import { Context } from 'koa';
 import { GoogleOAuth } from './google';
-import { UserModel, User } from '../user';
+import { User } from '../user';
 
 @Resolver(of => AuthResponse)
 export class AuthResolvers {
@@ -21,7 +21,7 @@ export class AuthResolvers {
     @Ctx() { ctx }: Context
   ): Promise<AuthResponse>{
     try {
-      const { accessToken, refreshToken, profile } = await this.googleOAuth.serializeAccountFromCode(code)
+      const { accessToken, refreshToken, profile } = await this.googleOAuth.serializeAccountFromCode(code);
       const user = await User.upsertGoogleUser({ accessToken, refreshToken, profile });
       const token = user.generateJWT();
       return ({

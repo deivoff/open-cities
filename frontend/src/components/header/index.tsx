@@ -7,7 +7,7 @@ import { Button, GoogleButton } from '../layout';
 import { GET_GOOGLE_REDIRECT_URL, AUTH_GOOGLE, GET_CITIES } from '../../apollo';
 import { Modal } from '../modal';
 import { Spiner } from '../spiner';
-import { AuthContext, IAuthContext, IUser } from '../../context';
+import { AuthContext, User } from '../../context';
 
 import s from './header.module.sass';
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
@@ -22,8 +22,8 @@ interface City {
 const CitiesList = () => {
   const { data, loading: citiesLoading, error: citiesError} = useQuery(GET_CITIES);
 
-  if (citiesLoading) return null
-  if (citiesError) return null
+  if (citiesLoading) return null;
+  if (citiesError) return null;
 
   const { cities } = data;
 
@@ -44,13 +44,13 @@ const CitiesList = () => {
       </ul>
     </div>
   )
-}
+};
 
-interface IProfile {
-  user: IUser;
+interface Profile {
+  user: User;
   logout: () => void;
 }
-const Profile = ({user: { name, photos }, logout }: IProfile) => {
+const Profile = ({user: { name, photos }, logout }: Profile) => {
   return(
     <div className={s['nav__profile']}>
       <div className={cn(s['nav__elem'], s['_dropdown'])}>
@@ -94,40 +94,40 @@ const Profile = ({user: { name, photos }, logout }: IProfile) => {
       </div>
     </div>
   )
-}
+};
 
 export const Header: React.SFC = () => {
   const [isAuthModalOpen, setAuthModal] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
 
-  const { token, user, login, logout } = useContext<IAuthContext>(AuthContext)
+  const { token, user, login, logout } = useContext<AuthContext>(AuthContext);
   const apolloClient = useApolloClient();
 
   const openModalHandler = () => {
     setAuthModal(true);
-  }
+  };
 
   const closeModalHandler = () => {
     setAuthModal(false);
-  }
+  };
 
   const googleSignHandler = async (e: MouseEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     setAuthLoading(true);
-  
+
     try {
-      const { data } = await apolloClient.query({ query: GET_GOOGLE_REDIRECT_URL })
+      const { data } = await apolloClient.query({ query: GET_GOOGLE_REDIRECT_URL });
       const { url } = data.getGoogleOAuthRedirect;
       const test = window.open(url, 'OAuth')!;
-      
+
       window.addEventListener('message', authHandler.bind(test));
     } catch (error) {
       throw error;
     }
-  }
+  };
 
   async function authHandler(this: Window, e: MessageEvent) {
-    // 'this' = children window 
+    // 'this' = children window
     this.close();
     window.removeEventListener('message', authHandler);
     const code = e.data;
@@ -140,7 +140,7 @@ export const Header: React.SFC = () => {
       throw error;
     } finally {
       setAuthLoading(false);
-      setAuthModal(false);;
+      setAuthModal(false);
     }
   }
   return (
@@ -171,18 +171,18 @@ export const Header: React.SFC = () => {
           </li>
         </ul>
         {
-          authLoading 
+          authLoading
           ? <div className={s['nav__spiner']}><Spiner /></div>
           : (token && user)
             ? <Profile user={user} logout={logout}/>
             : <Button onClick={openModalHandler}>Войти</Button> }
-        <Modal 
+        <Modal
           isOpen={isAuthModalOpen}
           onRequestClose={closeModalHandler}
           shouldCloseOnOverlayClick={true}
         >
           <Modal.Title>Вход через социальные сети</Modal.Title>
-          { authLoading 
+          { authLoading
             ? <Spiner />
             : (<>
                 <Modal.Body>
