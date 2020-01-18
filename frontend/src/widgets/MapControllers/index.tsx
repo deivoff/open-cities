@@ -21,7 +21,7 @@ interface CreateLayerProps {
   city: string;
 }
 
-export const CreateLayerModal = ({ city }: CreateLayerProps) => {
+export const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
   const [isCreateLayerModalOpen, setCreateLayerModalOpen] = useState(false);
   const [createLayer, { data }] = useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER);
 
@@ -76,7 +76,7 @@ export const CreateLayerModal = ({ city }: CreateLayerProps) => {
 };
 
 
-export const MapControllers = ({ defaultCity }: MapControllersProps) => {
+export const MapControllers: React.FC<MapControllersProps> = ({ defaultCity }) => {
   const {
     data: layersData,
     loading: layersLoading,

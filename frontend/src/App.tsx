@@ -36,14 +36,14 @@ const App: React.FC = () => {
               ) => (
                 <MapPage city={match!.params.city} center={center} zoom={zoom} cityName={name}/>
               )
-            } />
+            }/>
           </Switch>
         </main>
       </AuthContext.Provider>
       </BrowserRouter>
     </ApolloProvider>
-    
+
   );
-}
+};
 
 export default App;

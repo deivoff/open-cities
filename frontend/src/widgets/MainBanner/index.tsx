@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { getRandomInt, getRandomNormal } from './utils';
 import css from './MainBanner.module.sass';
 
-export interface IDot {
+export type Dot = {
   duration: number;
 }
 
-interface IDotProperies {
+interface DotProperties {
   x: string;
   y: string;
   radius: number;
 }
 
-const getRandomCircle = (): IDotProperies => {
+const getRandomCircle = (): DotProperties => {
   const randomIntOrNormal = Math.random() > 0.33;
   return {
     x: `${randomIntOrNormal ? getRandomInt(0, 100) : getRandomNormal(10, 80)}%`,
@@ -21,7 +21,7 @@ const getRandomCircle = (): IDotProperies => {
   };
 };
 
-const DotCreate = ({ duration }: IDot) => {
+const DotCreate: React.FC<Dot> = ({ duration }) => {
   const [{ x, y, radius }, setCircle] = useState(getRandomCircle());
 
   useEffect(() => {
@@ -72,7 +72,10 @@ const DotCreate = ({ duration }: IDot) => {
   );
 };
 
-export const Banner = ({ dots }: any) => {
+interface BannerProps {
+  dots: Dot[];
+}
+export const Banner: React.FC<BannerProps> = ({ dots }) => {
   return (
     <section className={css.banner}>
       <div className={css.description}>
@@ -118,8 +121,7 @@ export const Banner = ({ dots }: any) => {
               vectorEffect='non-scaling-stroke'
             />
           </g>
-          {dots.map(({ duration }: IDot, i: number) => (
-            // eslint-disable-next-line react/no-array-index-key
+          {dots.map(({ duration }, i: number) => (
             <DotCreate key={`dot_${i}`} duration={duration} />
           ))}
         </svg>

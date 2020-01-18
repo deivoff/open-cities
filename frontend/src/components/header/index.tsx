@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, MouseEvent, useContext } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
@@ -12,7 +11,7 @@ import { AuthContext, User } from '../../context';
 import s from './header.module.sass';
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
-const CitiesList = () => {
+const CitiesList: React.FC = () => {
   const {
     data,
     loading: citiesLoading,
@@ -48,7 +47,7 @@ interface Profile {
   user: User;
   logout: () => void;
 }
-const Profile = ({user: { name, photos }, logout }: Profile) => {
+const Profile: React.FC<Profile> = ({user: { name, photos }, logout }) => {
   return(
     <div className={s['nav__profile']}>
       <div className={cn(s['nav__elem'], s['_dropdown'])}>

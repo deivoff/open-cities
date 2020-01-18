@@ -11,7 +11,7 @@ interface MapProps {
   zoom: number
 }
 
-export const MapPage = ({ city, center, zoom, cityName }: MapProps) => {
+export const MapPage: React.FC<MapProps> = ({ city, center, zoom, cityName }) => {
   return (
     <>
       <Helmet>
