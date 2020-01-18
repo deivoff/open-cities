@@ -1,6 +1,8 @@
+const schema = require('./schema.gql');
+
 module.exports =  {
   parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
-  "plugins": [
+  plugins: [
     "security",
     "graphql"
   ],
@@ -12,11 +14,11 @@ module.exports =  {
     "plugin:security/recommended"
   ],
   parserOptions:  {
-  ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
-  sourceType:  'module',  // Allows for the use of imports
-  ecmaFeatures:  {
-    jsx:  true,  // Allows for the parsing of JSX
-  },
+    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+    sourceType:  'module',  // Allows for the use of imports
+    ecmaFeatures:  {
+      jsx:  true,  // Allows for the parsing of JSX
+    },
   },
   rules:  {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
@@ -25,10 +27,10 @@ module.exports =  {
     "graphql/template-strings": ['error', {
       env: 'apollo',
       tagName: 'FirstGQL',
-      schema: require('./schema.gql')
+      schema,
     }],
     "graphql/named-operations": ['warn', {
-      schema: require('./schema.gql'),
+      schema,
     }],
   },
   settings:  {

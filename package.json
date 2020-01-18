@@ -8,7 +8,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch 'server/**/*' -e ts,tsx --exec ts-node ./server/index.ts node -r dotenv/config",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "typegen": "apollo client:codegen types --localSchemaFile=schema.gql --target=typescript --includes=frontend/src/**/*.ts"
   },
   "dependencies": {
     "@hasezoey/typegoose": "^5.9.2",

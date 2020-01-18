@@ -3,7 +3,10 @@ import css from './MapControllers.module.sass';
 import { Modal } from '../../components/modal';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { CREATE_LAYER, GET_CITIES, GET_LAYERS } from '../../apollo';
+import {
+  CREATE_LAYER, GET_CITIES, GET_LAYERS,
+  CreateLayer, CreateLayerVariables, GetLayers, GetLayersVariables,
+} from '../../apollo';
 
 interface Values {
   name: string;
@@ -20,7 +23,7 @@ interface CreateLayerProps {
 
 export const CreateLayerModal = ({ city }: CreateLayerProps) => {
   const [isCreateLayerModalOpen, setCreateLayerModalOpen] = useState(false);
-  const [createLayer, { data }] = useMutation(CREATE_LAYER);
+  const [createLayer, { data }] = useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER);
 
   const openModalHandler = () => {
     setCreateLayerModalOpen(true);
@@ -74,7 +77,13 @@ export const CreateLayerModal = ({ city }: CreateLayerProps) => {
 
 
 export const MapControllers = ({ defaultCity }: MapControllersProps) => {
-  const { data: layersData, loading: layersLoading, error: layersError} = useQuery(GET_LAYERS, { variables: { city: defaultCity }});
+  const {
+    data: layersData,
+    loading: layersLoading,
+    error: layersError
+  } = useQuery<GetLayers, GetLayersVariables>(
+    GET_LAYERS,
+    { variables: { city: defaultCity }});
 
   return(
     <>

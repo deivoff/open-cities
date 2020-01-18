@@ -31,4 +31,4 @@ export const MapPage = ({ city, center, zoom, cityName }: MapProps) => {
       </Page.Map>
     </>
   )
-}
+};

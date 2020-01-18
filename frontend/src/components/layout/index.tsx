@@ -21,7 +21,7 @@ export const GoogleButton = (props: any) => {
       {...props}
     />
   );
-}
+};
 
 export const H1 = (props: any) => {
   return <h1 className={cn(css['page__title'])} {...props} />;
@@ -31,17 +31,17 @@ export const Page = ({ children }: any) => {
   return <>{children}</>;
 };
 
+export const Card = (props: any) => {
+  return <div className={cn(css['card'])} {...props} />;
+};
+
 Page.Wrapper = function Wrapper(props: any) {
   return <div className={cn(css['page__wrapper'])} {...props} />;
 };
 
 Page.Map = function Map(props: any) {
   return(<div className={cn(css['page__map'])} {...props} />);
-}
-
-export function Card(props: any) {
-  return <div className={cn(css['card'])} {...props} />;
-}
+};
 
 Card.Title = function Title(props: any) {
   return <div className={cn(css['card__title'])} {...props} />;

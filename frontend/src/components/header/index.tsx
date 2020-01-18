@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import { Button, GoogleButton } from '../layout';
-import { GET_GOOGLE_REDIRECT_URL, AUTH_GOOGLE, GET_CITIES } from '../../apollo';
+import { GET_GOOGLE_REDIRECT_URL, AUTH_GOOGLE, GET_CITIES, GetCities } from '../../apollo';
 import { Modal } from '../modal';
 import { Spiner } from '../spiner';
 import { AuthContext, User } from '../../context';
@@ -12,25 +12,23 @@ import { AuthContext, User } from '../../context';
 import s from './header.module.sass';
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
-interface City {
-  name: string;
-  url: string;
-  center: [number, number];
-  zoom: number;
-}
-
 const CitiesList = () => {
-  const { data, loading: citiesLoading, error: citiesError} = useQuery(GET_CITIES);
+  const {
+    data,
+    loading: citiesLoading,
+    error: citiesError
+  } = useQuery<GetCities>(GET_CITIES);
 
   if (citiesLoading) return null;
   if (citiesError) return null;
+  if (!data) return null;
 
   const { cities } = data;
 
   return (
     <div className={cn(s['nav__dropdown'])}>
       <ul className={cn(s['nav__list'])}>
-        {cities ? (cities as City[]).map(({ name, url, zoom, center }: any) => (
+        {cities ? cities.map(({ name, url, zoom, center }) => (
               <li className={cn(s['nav__elem'])} key={name}>
                 <Link to={{
                   pathname: `/cities/${url}`,
