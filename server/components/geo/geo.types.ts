@@ -1,6 +1,4 @@
-import { GeometryType } from ".";
-
-
+import { GeometryType } from '.';
 
 export type GeometryJson = Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon;
 
@@ -34,5 +32,4 @@ export interface MultiPolygon {
   coordinates: Position[][][];
 }
 
-export type Position = [number, number] | [number, number, number]
-
+export type Position = [number, number] | [number, number, number];

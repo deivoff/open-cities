@@ -1,4 +1,4 @@
-import { InputType, Field, ID } from 'type-graphql'
+import { InputType, Field, ID } from 'type-graphql';
 import { GeoJsonProperties } from 'geojson';
 import { Geo, Geometry } from '.';
 import { GraphQLJSON } from './../../helpers';

@@ -1,17 +1,12 @@
-import {
-  prop as Property,
-  Typegoose,
-  Ref,
-  arrayProp as Properties
-} from '@hasezoey/typegoose';
-import { ObjectType, Field, ID } from "type-graphql";
+import { prop as Property, Typegoose, Ref, arrayProp as Properties } from '@hasezoey/typegoose';
+import { ObjectType, Field, ID } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 import { User, UserType } from '../user';
 import { Geo } from '../geo';
 import { Model, Document } from 'mongoose';
 
 @ObjectType()
-export class Layer extends Typegoose{
+export class Layer extends Typegoose {
   @Field(() => ID)
   readonly _id!: ObjectId;
 
@@ -22,7 +17,7 @@ export class Layer extends Typegoose{
   readonly updatedAt!: Date;
 
   @Field()
-  @Property({ required: true})
+  @Property({ required: true })
   name!: string;
 
   @Field()
@@ -35,7 +30,7 @@ export class Layer extends Typegoose{
 
   @Field(() => UserType)
   @Property({ required: true, enum: UserType })
-  access!: UserType
+  access!: UserType;
 
   @Field()
   @Property({ required: true })
@@ -43,12 +38,11 @@ export class Layer extends Typegoose{
 
   @Field(() => [User])
   @Properties({ itemsRef: { name: 'User' } })
-  subscribers?: Ref<User[]>
+  subscribers?: Ref<User[]>;
 
   @Field(() => [Geo])
-  geoCollection?: Ref<Geo[]>
+  geoCollection?: Ref<Geo[]>;
 }
-
 
 export type LayerDocument = Layer & Document;
 export type LayerModel = Model<LayerDocument>;

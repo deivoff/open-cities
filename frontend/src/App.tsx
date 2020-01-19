@@ -25,24 +25,27 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-      <AuthContext.Provider value={authContext}>
-        <Header />
-        <main className='main-content'>
-          <Switch>
-            <Route exact path='/' component={MainPage} />
-            <Route path='/cities/:city' component={
-              (
-                { match, location: { state: { center, zoom, name } } }: RouteChildrenProps<MapMatchParams, MapLocationState>
-              ) => (
-                <MapPage city={match!.params.city} center={center} zoom={zoom} cityName={name}/>
-              )
-            }/>
-          </Switch>
-        </main>
-      </AuthContext.Provider>
+        <AuthContext.Provider value={authContext}>
+          <Header />
+          <main className="main-content">
+            <Switch>
+              <Route exact path="/" component={MainPage} />
+              <Route
+                path="/cities/:city"
+                component={({
+                  match,
+                  location: {
+                    state: { center, zoom, name },
+                  },
+                }: RouteChildrenProps<MapMatchParams, MapLocationState>) => (
+                  <MapPage city={match!.params.city} center={center} zoom={zoom} cityName={name} />
+                )}
+              />
+            </Switch>
+          </main>
+        </AuthContext.Provider>
       </BrowserRouter>
     </ApolloProvider>
-
   );
 };
 

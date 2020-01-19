@@ -1,17 +1,5 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 
-export const GeometryCoords = new GraphQLScalarType({
-  name: 'GeometryCoords',
-  description: 'Coordinates scalar type',
-  serialize(value: any) {
-    return value // value sent to the client
-  },
-  parseValue(value: any) {
-    return value
-  },
-  parseLiteral
-});
-
 export function parseLiteral(ast, variables) {
   switch (ast.kind) {
     case Kind.STRING:
@@ -30,3 +18,15 @@ export function parseLiteral(ast, variables) {
       return undefined;
   }
 }
+
+export const GeometryCoords = new GraphQLScalarType({
+  name: 'GeometryCoords',
+  description: 'Coordinates scalar type',
+  serialize(value: any) {
+    return value; // value sent to the client
+  },
+  parseValue(value: any) {
+    return value;
+  },
+  parseLiteral,
+});

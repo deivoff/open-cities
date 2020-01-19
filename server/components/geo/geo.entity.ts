@@ -1,9 +1,4 @@
-import {
-  prop as Property,
-  Typegoose,
-  Ref,
-  arrayProp as Properties
-} from '@hasezoey/typegoose';
+import { prop as Property, Typegoose, Ref, arrayProp as Properties } from '@hasezoey/typegoose';
 import { ObjectType, ID, Field, InputType, Float, Int } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 import { User, UserType } from '../user';
@@ -17,16 +12,16 @@ import { Layer } from '../layer';
 @InputType('GeometryInput')
 export class Geometry {
   @Field(type => GeometryType)
-  @Property({ required: true, enum: GeometryType})
-  type!: GeometryType
+  @Property({ required: true, enum: GeometryType })
+  type!: GeometryType;
 
   @Field(type => GeometryCoords)
   @Properties({ items: Array })
-  coords!: Position | Position[] | Position[][] | Position[][]
+  coords!: Position | Position[] | Position[][] | Position[][];
 }
 
 @ObjectType()
-export class Geo extends Typegoose{
+export class Geo extends Typegoose {
   @Field(() => ID)
   readonly _id!: ObjectId;
 
@@ -57,7 +52,7 @@ export class Geo extends Typegoose{
   properties?: GeoJsonProperties;
 }
 
-export class GeoSum extends Geo{
+export class GeoSum extends Geo {
   @Field(() => Float)
   sum!: number;
 

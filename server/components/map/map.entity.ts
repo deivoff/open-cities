@@ -1,9 +1,4 @@
-import {
-  prop as Property,
-  Typegoose,
-  Ref,
-  arrayProp as Properties
-} from '@hasezoey/typegoose';
+import { prop as Property, Typegoose, Ref, arrayProp as Properties } from '@hasezoey/typegoose';
 import { Model, Document } from 'mongoose';
 import { User, UserType } from '../user';
 import { ID, Field, Int } from 'type-graphql';

@@ -1,5 +1,5 @@
-import { InputType, Field } from "type-graphql";
-import { Layer } from ".";
+import { InputType, Field } from 'type-graphql';
+import { Layer } from '.';
 
 @InputType()
 export class LayerInput implements Partial<Layer> {

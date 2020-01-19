@@ -7,9 +7,7 @@ export const isArrayExist = (elem: any): boolean => {
 export const deepArrayReverse = (array: any, deep = true) => {
   let result = array.reverse();
   if (deep) {
-    result = result.map((arr: any) =>
-      isArrayExist(arr) ? deepArrayReverse(arr, true) : arr
-    );
+    result = result.map((arr: any) => (isArrayExist(arr) ? deepArrayReverse(arr, true) : arr));
   }
   return result;
 };

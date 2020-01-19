@@ -5,7 +5,7 @@ import {
   instanceMethod,
   InstanceType,
   ModelType,
-  staticMethod
+  staticMethod,
 } from '@hasezoey/typegoose';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -16,7 +16,7 @@ import { ObjectId } from 'mongodb';
 import { UserType } from '.';
 import { AuthData } from '../auth';
 
-require('dotenv').config({path: path.join(__dirname + './../../../.env')});
+require('dotenv').config({ path: path.join(__dirname + './../../../.env') });
 @ObjectType()
 export class UserPhoto extends Typegoose {
   @Field(() => String)
@@ -84,36 +84,39 @@ export class User extends Typegoose {
     const expirationDate = new Date(today);
     expirationDate.setDate(today.getDate() + 60);
 
-    return jwt.sign({
+    return jwt.sign(
+      {
         email: this.email,
         name: this.name,
         photos: this.photos ? this.photos : [],
         access: this.role,
         id: this._id,
         exp: expirationDate.getTime() / 1000,
-    }, process.env.SECRET_KEY!);
+      },
+      process.env.SECRET_KEY!,
+    );
   }
 
   @staticMethod
   static async upsertGoogleUser({ accessToken, refreshToken, profile: { email, name, id, photo } }: AuthData) {
     try {
       const user = await UserModel.findOne({ 'social.googleProvider.id': id });
-      
+
       if (!user) {
-          const newUser = await UserModel.create({
-              name,
-              email,
-              'social.googleProvider': {
-                  id,
-                  token: accessToken,
-              },
-              photos: [{ url: photo }],
-              role: UserType.user,
-          });
-        
-          return newUser;
+        const newUser = await UserModel.create({
+          name,
+          email,
+          'social.googleProvider': {
+            id,
+            token: accessToken,
+          },
+          photos: [{ url: photo }],
+          role: UserType.user,
+        });
+
+        return newUser;
       }
-      return user;   
+      return user;
     } catch (error) {
       throw error;
     }
@@ -122,7 +125,7 @@ export class User extends Typegoose {
 
 export type UserDocument = User & Document;
 export interface UserModel extends Model<UserDocument> {
-  upsertGoogleUser: (data: AuthData) => Promise<UserDocument>,
+  upsertGoogleUser: (data: AuthData) => Promise<UserDocument>;
   generateJWT: () => string;
-};
+}
 export const UserModel: UserModel = new User().getModelForClass(User);

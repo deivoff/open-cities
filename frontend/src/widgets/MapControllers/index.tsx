@@ -4,8 +4,13 @@ import { Modal } from '../../components/modal';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import {
-  CREATE_LAYER, GET_CITIES, GET_LAYERS,
-  CreateLayer, CreateLayerVariables, GetLayers, GetLayersVariables,
+  CREATE_LAYER,
+  GET_CITIES,
+  GET_LAYERS,
+  CreateLayer,
+  CreateLayerVariables,
+  GetLayers,
+  GetLayersVariables,
 } from '../../apollo';
 
 interface Values {
@@ -33,61 +38,55 @@ export const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
     setCreateLayerModalOpen(false);
   };
 
-  return(
+  return (
     <>
-      <button onClick={openModalHandler} className={css.add}>+</button>
-      <Modal
-        isOpen={isCreateLayerModalOpen}
-        onRequestClose={closeModalHandler}
-        shouldCloseOnOverlayClick={true}
-      >
+      <button onClick={openModalHandler} className={css.add}>
+        +
+      </button>
+      <Modal isOpen={isCreateLayerModalOpen} onRequestClose={closeModalHandler} shouldCloseOnOverlayClick={true}>
         <Formik
-      initialValues={{
-        name: '',
-        description: '',
-      }}
-      onSubmit={({ name, description}: Values, { setSubmitting }: FormikHelpers<Values>) => {
-        createLayer({
-          variables: {
-            name,
-            description,
-            city,
-          }
-        });
-        setSubmitting(false)
-      }}
-      render={() => (
-        <Form>
-          <label htmlFor="name">Название слоя</label>
-          <Field id="name" name="name" placeholder="Ваше название" type="text" />
+          initialValues={{
+            name: '',
+            description: '',
+          }}
+          onSubmit={({ name, description }: Values, { setSubmitting }: FormikHelpers<Values>) => {
+            createLayer({
+              variables: {
+                name,
+                description,
+                city,
+              },
+            });
+            setSubmitting(false);
+          }}
+          render={() => (
+            <Form>
+              <label htmlFor="name">Название слоя</label>
+              <Field id="name" name="name" placeholder="Ваше название" type="text" />
 
-          <label htmlFor="description">Описание слоя</label>
-          <Field component='textarea' id="description" name="description" placeholder="Ваше описание" type="text" />
+              <label htmlFor="description">Описание слоя</label>
+              <Field component="textarea" id="description" name="description" placeholder="Ваше описание" type="text" />
 
-          <button type="submit" style={{ display: 'block' }}>
-            Отправить
-          </button>
-        </Form>
-      )}
-    />
+              <button type="submit" style={{ display: 'block' }}>
+                Отправить
+              </button>
+            </Form>
+          )}
+        />
       </Modal>
     </>
-  )
+  );
 };
 
-
 export const MapControllers: React.FC<MapControllersProps> = ({ defaultCity }) => {
-  const {
-    data: layersData,
-    loading: layersLoading,
-    error: layersError
-  } = useQuery<GetLayers, GetLayersVariables>(
+  const { data: layersData, loading: layersLoading, error: layersError } = useQuery<GetLayers, GetLayersVariables>(
     GET_LAYERS,
-    { variables: { city: defaultCity }});
+    { variables: { city: defaultCity } },
+  );
 
-  return(
+  return (
     <>
-      <CreateLayerModal city={defaultCity}/>
+      <CreateLayerModal city={defaultCity} />
     </>
-  )
+  );
 };

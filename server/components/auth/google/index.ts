@@ -1,12 +1,10 @@
 import path from 'path';
+// eslint-disable-next-line @typescript-eslint/camelcase
 import { google, plus_v1 } from 'googleapis';
 
-require('dotenv').config({path: path.join(__dirname + './../../../../.env')});
-
-
+require('dotenv').config({ path: path.join(__dirname + './../../../../.env') });
 
 export class GoogleOAuth {
-
   /*******************/
   /** CONFIGURATION **/
   /*******************/
@@ -14,7 +12,7 @@ export class GoogleOAuth {
   googleConfig = {
     clientId: process.env.GOOGLE_CLIENT_ID!, // e.g. asdfghjkljhgfdsghjk.apps.googleusercontent.com
     clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // e.g. _ASDFA%DFASDFASDFASD#FAD-
-    redirectUrl: process.env.GOOGLE_REDIRECT_URL
+    redirectUrl: process.env.GOOGLE_REDIRECT_URL,
   };
 
   defaultScope = [
@@ -23,25 +21,26 @@ export class GoogleOAuth {
     'https://www.googleapis.com/auth/userinfo.profile',
   ];
 
-
   /*************/
   /** HELPERS **/
   /*************/
 
   auth = new google.auth.OAuth2(
-      this.googleConfig.clientId,
-      this.googleConfig.clientSecret,
-      this.googleConfig.redirectUrl
+    this.googleConfig.clientId,
+    this.googleConfig.clientSecret,
+    this.googleConfig.redirectUrl,
   );
 
   getConnectionUrl(): string {
     return this.auth.generateAuthUrl({
+      // eslint-disable-next-line @typescript-eslint/camelcase
       access_type: 'offline',
       prompt: 'consent',
-      scope: this.defaultScope
+      scope: this.defaultScope,
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/camelcase
   getGooglePlusApi(): plus_v1.Plus {
     return google.plus({ version: 'v1', auth: this.auth });
   }
@@ -61,7 +60,7 @@ export class GoogleOAuth {
       const userGoogleId = me.data.id;
       const userName = {
         familyName: me.data.name!.familyName!,
-        givenName: me.data.name!.givenName!
+        givenName: me.data.name!.givenName!,
       };
       const userPhoto = me.data.image!.url;
       const userGoogleEmail = me.data.emails![0].value;
@@ -72,11 +71,11 @@ export class GoogleOAuth {
           id: userGoogleId!,
           email: userGoogleEmail!,
           name: userName!,
-          photo: userPhoto!
-        }
+          photo: userPhoto!,
+        },
       };
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

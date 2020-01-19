@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import { getRandomInt } from '../widgets/MainBanner/utils';
 import { Banner } from '../widgets/MainBanner';
 
-
 export const MainPage: React.FC = () => {
   const [dots, setDots] = useState([{ duration: getRandomInt(4, 8), key: 0 }]);
   const [activeDots, setActiveDots] = useState(0);

@@ -9,16 +9,13 @@ import { DecodedToken } from '../auth';
 @Resolver(of => Layer)
 export class LayerResolvers {
   @Query(returns => [Layer])
-  async layers(
-    @Arg('city') city: string,
-    @Ctx() { ctx }: { ctx: Context }
-  ): Promise<Layer[]> {
+  async layers(@Arg('city') city: string, @Ctx() { ctx }: { ctx: Context }): Promise<Layer[]> {
     try {
       const { decodedUser } = ctx.state;
       if (decodedUser) {
-        return(await LayerModel.find({ access: decodedUser.access, city }))
+        return await LayerModel.find({ access: decodedUser.access, city });
       }
-      return (await LayerModel.find({ access: UserType.user, city }))!
+      return (await LayerModel.find({ access: UserType.user, city }))!;
     } catch (error) {
       throw error;
     }
@@ -27,14 +24,14 @@ export class LayerResolvers {
   @Mutation(returns => Layer)
   async createLayer(
     @Arg('layerInput', type => LayerInput) layerInput: LayerInput,
-    @Ctx() { ctx }: { ctx: Context }
+    @Ctx() { ctx }: { ctx: Context },
   ): Promise<Layer> {
     checkAuth(ctx);
-    const { decodedUser } = ctx.state; 
+    const { decodedUser } = ctx.state;
     const layer = new LayerModel({
       ...layerInput,
       owner: decodedUser!.id,
-      access: decodedUser!.access
+      access: decodedUser!.access,
     });
     try {
       const savedLayer = await layer.save();
@@ -45,9 +42,7 @@ export class LayerResolvers {
   }
 
   @FieldResolver(() => User)
-  async owner(
-    @Root() layer: LayerDocument
-  ):Promise<User> { 
+  async owner(@Root() layer: LayerDocument): Promise<User> {
     try {
       const { owner } = layer;
       return (await UserModel.findById(owner))!;
@@ -57,9 +52,7 @@ export class LayerResolvers {
   }
 
   @FieldResolver(() => [Geo])
-  async geoCollection(
-    @Root() layer: LayerDocument
-  ): Promise<Geo[]> {
+  async geoCollection(@Root() layer: LayerDocument): Promise<Geo[]> {
     try {
       const { _id } = layer;
       return (await GeoModel.find({ layer: String(_id) }))!;

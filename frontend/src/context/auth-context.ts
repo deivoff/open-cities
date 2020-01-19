@@ -9,39 +9,43 @@ export interface AuthContext {
 }
 
 export interface User {
-  id: string,
-  email: string,
+  id: string;
+  email: string;
   name: {
-    givenName: string,
-    familyName: string,
-  }
-  photos: [{
-    url: string
-  }]
+    givenName: string;
+    familyName: string;
+  };
+  photos: [
+    {
+      url: string;
+    },
+  ];
 }
 export interface Login {
-  (
-    token: string,
-  ): void;
+  (token: string): void;
 }
 
 export const AuthContext = React.createContext<AuthContext>({
   token: null,
   user: null,
-  login: (token: string) => {},
-  logout: () => {}
+  login: (token: string) => {
+    /* do nothing. */
+  },
+  logout: () => {
+    /* do nothing. */
+  },
 });
 
 export const useAuth = (): AuthContext => {
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<User| null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
     if (savedToken) {
       setToken(savedToken);
       const { email, name, photos, id }: User = jwtDecode(savedToken);
-      setUser({email, name, photos, id});
+      setUser({ email, name, photos, id });
     }
   }, []);
 
@@ -49,7 +53,7 @@ export const useAuth = (): AuthContext => {
     setToken(token);
     localStorage.setItem('token', token);
     const { email, name, photos, id }: User = jwtDecode(token);
-    setUser({email, name, photos, id});
+    setUser({ email, name, photos, id });
   };
 
   const logout = () => {
@@ -58,5 +62,5 @@ export const useAuth = (): AuthContext => {
     setUser(null);
   };
 
-  return {login, logout, token, user}
+  return { login, logout, token, user };
 };

@@ -3,7 +3,7 @@ import { registerEnumType } from 'type-graphql';
 export enum UserType {
   user = 'user',
   researcher = 'researcher',
-  admin = 'admin'
+  admin = 'admin',
 }
 
 registerEnumType(UserType, {

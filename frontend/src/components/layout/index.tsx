@@ -1,38 +1,29 @@
-/* eslint-disable jsx-a11y/heading-has-content */
 import React from 'react';
 import cn from 'classnames';
 import css from './page.module.sass';
 
-export const Button = (props: any) => {
+type Button = React.FC<React.ButtonHTMLAttributes<{}>>;
+export const Button: Button = ({ type = 'button', ...rest }) => {
+  return <button className={cn(css.button, css['_success'])} type={type} {...rest} />;
+};
+
+export const GoogleButton: Button = ({ type = 'button', ...rest}) => {
+  return <button className={css['google-button']} type={type} {...rest} />;
+};
+
+export const H1: React.FC = ({ children, ...rest }) => {
   return (
-    <button
-      className={cn(css.button, css['_success'])}
-      type='button'
-      {...props}
-    />
+    <h1 className={cn(css['page__title'])} {...rest}>
+      {children}
+    </h1>
   );
 };
-
-export const GoogleButton = (props: any) => {
-  return (
-    <button
-      className={css['google-button']}
-      type='button'
-      {...props}
-    />
-  );
-};
-
-export const H1: React.FC = (props) => {
-  return <h1 className={cn(css['page__title'])} {...props} />;
-};
-
 
 interface Page extends React.FC {
   Wrapper: React.FC;
   Map: React.FC;
 }
-export const Page: Page  = ({ children }) => {
+export const Page: Page = ({ children }) => {
   return <>{children}</>;
 };
 
@@ -40,7 +31,7 @@ interface Card extends React.FC {
   Title: React.FC;
   Body: React.FC;
 }
-export const Card: Card = (props) => {
+export const Card: Card = props => {
   return <div className={cn(css['card'])} {...props} />;
 };
 
@@ -49,7 +40,7 @@ Page.Wrapper = function Wrapper(props) {
 };
 
 Page.Map = function Map(props) {
-  return(<div className={cn(css['page__map'])} {...props} />);
+  return <div className={cn(css['page__map'])} {...props} />;
 };
 
 Card.Title = function Title(props) {

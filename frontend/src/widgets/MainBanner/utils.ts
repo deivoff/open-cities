@@ -2,11 +2,7 @@ export const getRandomInt = (min: number, max: number) => {
   return -(-(Math.random() * (max - min) + min)).toFixed(2);
 };
 
-export const getRandomNormal = (
-  min: number,
-  max: number,
-  skew: number = 1
-): number => {
+export const getRandomNormal = (min: number, max: number, skew = 1): number => {
   let u = 0;
   let v = 0;
   while (u === 0) u = Math.random(); // Converting [0,1) to (0,1)

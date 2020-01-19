@@ -6,7 +6,7 @@ export enum GeometryType {
   LineString = 'LineString',
   MultiLineString = 'MultiLineString',
   Polygon = 'Polygon',
-  MultiPolygon = 'MultiPolygon'
+  MultiPolygon = 'MultiPolygon',
 }
 
 registerEnumType(GeometryType, {

@@ -1,4 +1,4 @@
-const schema = require('./schema.gql');
+// const schema = require('./schema.gql');
 
 module.exports =  {
   parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
@@ -20,18 +20,26 @@ module.exports =  {
       jsx:  true,  // Allows for the parsing of JSX
     },
   },
+  overrides: [{
+    files: ['*.tsx', '*.ts'],
+    rules: {
+      'react/prop-types': 0,
+      'jsx-a11y/media-has-caption': 0,
+      'no-unused-vars': 0
+    }
+  }],
   rules:  {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/interface-name-prefix": true,
-    "graphql/template-strings": ['error', {
-      env: 'apollo',
-      tagName: 'FirstGQL',
-      schema,
-    }],
-    "graphql/named-operations": ['warn', {
-      schema,
-    }],
+    "@typescript-eslint/interface-name-prefix": 0,
+    // "graphql/template-strings": ['error', {
+    //   env: 'apollo',
+    //   tagName: 'FirstGQL',
+    //   schema,
+    // }],
+    // "graphql/named-operations": ['warn', {
+    //   schema,
+    // }],
   },
   settings:  {
     react:  {

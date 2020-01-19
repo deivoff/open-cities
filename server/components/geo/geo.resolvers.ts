@@ -1,17 +1,17 @@
-import { Resolver, Mutation, Arg, Ctx, Query, FieldResolver, Root } from "type-graphql";
-import { GeoInput, Geo, GeoModel, GeoDocument } from ".";
+import { Resolver, Mutation, Arg, Ctx, Query, FieldResolver, Root } from 'type-graphql';
+import { GeoInput, Geo, GeoModel, GeoDocument } from '.';
 import { User, UserModel, UserType } from '../user';
-import { Layer, LayerModel } from "../layer";
-import { Context } from "./../../types";
-import { checkAuth } from "./../../middleware/auth";
+import { Layer, LayerModel } from '../layer';
+import { Context } from './../../types';
+import { checkAuth } from './../../middleware/auth';
 
 @Resolver(of => Geo)
-export class GeoResolvers{
+export class GeoResolvers {
   @Query(returns => [Geo])
   async geos(): Promise<Geo[]> {
     try {
       console.log(await GeoModel.find());
-      return (await GeoModel.find())
+      return await GeoModel.find();
     } catch (error) {
       throw error;
     }
@@ -20,7 +20,7 @@ export class GeoResolvers{
   @Mutation(returns => Geo)
   async createGeo(
     @Arg('geoInput', type => GeoInput) { properties, geometry, layer }: GeoInput,
-    @Ctx() { ctx }: { ctx: Context }
+    @Ctx() { ctx }: { ctx: Context },
   ): Promise<Geo> {
     checkAuth(ctx);
     const { decodedUser } = ctx.state;
@@ -40,9 +40,7 @@ export class GeoResolvers{
   }
 
   @FieldResolver(() => User)
-  async author(
-    @Root() geo: GeoDocument
-  ):Promise<User> { 
+  async author(@Root() geo: GeoDocument): Promise<User> {
     try {
       const { author } = geo;
       return (await UserModel.findById(author))!;
@@ -52,15 +50,13 @@ export class GeoResolvers{
   }
 
   @FieldResolver(() => Layer)
-  async layer(
-    @Root() geo: GeoDocument
-    ):Promise<Layer> { 
-      try {
-        const { layer } = geo;
-        console.log(layer);
-        return (await LayerModel.findById(layer))!;
-      } catch (error) {
-        throw error;
-      }
+  async layer(@Root() geo: GeoDocument): Promise<Layer> {
+    try {
+      const { layer } = geo;
+      console.log(layer);
+      return (await LayerModel.findById(layer))!;
+    } catch (error) {
+      throw error;
     }
+  }
 }

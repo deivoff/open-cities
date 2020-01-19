@@ -4,9 +4,9 @@ import { City, CityModel } from '.';
 @Resolver(of => City)
 export class CityResolvers {
   @Query(returns => [City])
-  async cities():Promise<City[]> {
+  async cities(): Promise<City[]> {
     try {
-      return (await CityModel.find())
+      return await CityModel.find();
     } catch (error) {
       throw error;
     }
