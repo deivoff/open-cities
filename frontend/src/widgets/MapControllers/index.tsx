@@ -1,22 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import css from './MapControllers.module.sass';
 import { Modal } from '../../components/modal';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import {
-  CREATE_LAYER,
-  GET_CITIES,
-  GET_LAYERS,
-  CreateLayer,
-  CreateLayerVariables,
-  GetLayers,
-  GetLayersVariables,
-} from '../../apollo';
-
-interface Values {
-  name: string;
-  description: string;
-}
+import { AuthContext } from '../../context';
+import { CreateLayerForm } from './CreateLayerForm';
+import { useQuery } from '@apollo/react-hooks';
+import { GET_LAYERS, GetLayers, GetLayersVariables } from '../../apollo';
 
 interface MapControllersProps {
   defaultCity: string;
@@ -28,7 +16,7 @@ interface CreateLayerProps {
 
 export const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
   const [isCreateLayerModalOpen, setCreateLayerModalOpen] = useState(false);
-  const [createLayer, { data }] = useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER);
+  const { token } = useContext<AuthContext>(AuthContext);
 
   const openModalHandler = () => {
     setCreateLayerModalOpen(true);
@@ -44,35 +32,11 @@ export const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
         +
       </button>
       <Modal isOpen={isCreateLayerModalOpen} onRequestClose={closeModalHandler} shouldCloseOnOverlayClick={true}>
-        <Formik
-          initialValues={{
-            name: '',
-            description: '',
-          }}
-          onSubmit={({ name, description }: Values, { setSubmitting }: FormikHelpers<Values>) => {
-            createLayer({
-              variables: {
-                name,
-                description,
-                city,
-              },
-            });
-            setSubmitting(false);
-          }}
-          render={() => (
-            <Form>
-              <label htmlFor="name">Название слоя</label>
-              <Field id="name" name="name" placeholder="Ваше название" type="text" />
-
-              <label htmlFor="description">Описание слоя</label>
-              <Field component="textarea" id="description" name="description" placeholder="Ваше описание" type="text" />
-
-              <button type="submit" style={{ display: 'block' }}>
-                Отправить
-              </button>
-            </Form>
-          )}
-        />
+        {token ? (
+          <CreateLayerForm city={city} />
+        ) : (
+          'Чтобы взаимодействовать со слоями, вам необходимо зарегистрироваться!'
+        )}
       </Modal>
     </>
   );
@@ -83,6 +47,9 @@ export const MapControllers: React.FC<MapControllersProps> = ({ defaultCity }) =
     GET_LAYERS,
     { variables: { city: defaultCity } },
   );
+
+  if (layersError) return null;
+  if (layersLoading) return null;
 
   return (
     <>

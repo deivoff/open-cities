@@ -39,6 +39,7 @@ dist/**/*
 
 # Ignore schema.gql file
 schema.gql
+schema.json
 
 #lock-files
 package-lock.json
