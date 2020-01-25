@@ -31,7 +31,8 @@ export const CreateLayerForm: React.FC<Props> = ({ city }) => {
         });
         setSubmitting(false);
       }}
-      render={() => (
+    >
+      {() => (
         <Form>
           <label htmlFor="name">Название слоя</label>
           <Field id="name" name="name" placeholder="Ваше название" type="text" />
@@ -44,6 +45,6 @@ export const CreateLayerForm: React.FC<Props> = ({ city }) => {
           </Button>
         </Form>
       )}
-    />
+    </Formik>
   );
 };
