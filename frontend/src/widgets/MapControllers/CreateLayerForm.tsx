@@ -1,8 +1,8 @@
 import React from 'react';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
-import { CREATE_LAYER, CreateLayer, CreateLayerVariables } from '../../apollo/mutations';
-import { Button } from '../../components/layout';
+import { CREATE_LAYER, CreateLayer, CreateLayerVariables } from '../../apollo';
+import { Button } from '../../components';
 
 interface Values {
   name: string;

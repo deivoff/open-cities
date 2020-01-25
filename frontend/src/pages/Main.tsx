@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { getRandomInt } from '../widgets/MainBanner/utils';
-import { Banner } from '../widgets/MainBanner';
+import { Banner } from '../widgets';
 
 export const MainPage: React.FC = () => {
   const MAX_DOTS = 200;

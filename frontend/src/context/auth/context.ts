@@ -28,7 +28,7 @@ export interface Login {
 export const AuthContext = React.createContext<AuthContext>({
   token: null,
   user: null,
-  login: (token: string) => {
+  login: () => {
     /* do nothing. */
   },
   logout: () => {
@@ -44,7 +44,7 @@ export const useAuth = (): AuthContext => {
     const savedToken = localStorage.getItem('token');
     if (savedToken) {
       setToken(savedToken);
-      const { email, name, photos, id }: User = jwtDecode(savedToken);
+      const { email, name, photos, id } = jwtDecode<User>(savedToken);
       setUser({ email, name, photos, id });
     }
   }, []);

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import css from './MapControllers.module.sass';
-import { Modal } from '../../components/modal';
+import { Modal } from '../../components';
 import { AuthContext } from '../../context';
 import { CreateLayerForm } from './CreateLayerForm';
 import { useQuery } from '@apollo/react-hooks';
