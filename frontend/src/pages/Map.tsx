@@ -13,11 +13,13 @@ interface MapProps {
   zoom: number;
 }
 
+const useGetLayersQuery = (city: string) => useQuery<GetLayers, GetLayersVariables>(
+  GET_LAYERS,
+  { variables: { city } },
+);
+
 export const MapPage: React.FC<MapProps> = ({ city, center, zoom, cityName }) => {
-  const { data: layersData, loading: layersLoading, error: layersError } = useQuery<GetLayers, GetLayersVariables>(
-    GET_LAYERS,
-    { variables: { city } },
-  );
+  const { data: layersData, loading: layersLoading, error: layersError } = useGetLayersQuery(city);
 
   if (layersError) return null;
   if (layersLoading || !layersData) return null;
@@ -36,7 +38,7 @@ export const MapPage: React.FC<MapProps> = ({ city, center, zoom, cityName }) =>
           />
           {layersData && (
             <LayersControl position="topright">
-              {layersData?.layers.map(({ name, _id }) => (
+              {layersData.layers.map(({ name, _id }) => (
                 <LayersControl.Overlay name={name} key={_id}>
                   <Marker position={center}>
                     <Popup>

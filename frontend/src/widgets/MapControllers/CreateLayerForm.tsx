@@ -12,8 +12,10 @@ interface Props {
   city: string;
 }
 
+const useCreateLayerMutation = () => useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER);
+
 export const CreateLayerForm: React.FC<Props> = ({ city }) => {
-  const [createLayer, { data }] = useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER);
+  const [createLayer, { data }] = useCreateLayerMutation();
 
   return (
     <Formik

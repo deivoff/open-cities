@@ -2,7 +2,10 @@ import ReactModal from 'react-modal';
 import React from 'react';
 import css from './modal.module.sass';
 
-interface Modal extends React.FC<ReactModal.Props> {
+type ModalProps = ReactModal.Props & {
+  onRequestClose: NonNullable<ReactModal.Props['onRequestClose']>
+}
+interface Modal extends React.FC<ModalProps> {
   Title: React.FC;
   Body: React.FC;
 }
