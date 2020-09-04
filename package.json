@@ -34,7 +34,7 @@
     "morgan": "^1.9.1",
     "reflect-metadata": "^0.1.13",
     "tslib": "^1.10.0",
-    "type-graphql": "^0.17.5",
+    "type-graphql": "^0.17.6",
     "typegoose": "^5.9.1"
   },
   "devDependencies": {
